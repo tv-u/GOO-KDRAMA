@@ -1,8 +1,7 @@
 /*
   X-Content-Type-Options: nosniff
-  Referrer-Policy: strict-origin-when-cross-origin
-  X-Frame-Options: SAMEORIGIN
-  Permissions-Policy: autoplay=(*), fullscreen=(*), picture-in-picture=(*)
+  Referrer-Policy: no-referrer-when-downgrade
+  Permissions-Policy: autoplay=*, fullscreen=*, picture-in-picture=*, encrypted-media=*
 
 /assets/*
   Cache-Control: public, max-age=31536000, immutable

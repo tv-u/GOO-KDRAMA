@@ -263,6 +263,9 @@ export async function onRequestGet(context: CFContext): Promise<Response> {
         'Cache-Control': url.searchParams.has('q')
           ? 'no-store'
           : 'public, s-maxage=300, stale-while-revalidate=86400',
+        'X-Robots-Tag': url.searchParams.has('q')
+          ? 'noindex, follow'
+          : 'index, follow, max-image-preview:large, max-video-preview:-1, max-snippet:-1',
         'X-SSR-Engine': 'HindiDrama-Cloudflare-Edge-SSR',
       },
     });

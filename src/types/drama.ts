@@ -41,6 +41,8 @@ export interface TmdbEpisodeMeta {
   overview: string;
   backdrop: string;
   runtime?: number;
+  imdbId?: string;
+  youtubeKey?: string;
   spokenLanguages: { iso_639_1: string; english_name: string; name: string }[];
 }
 
@@ -63,6 +65,7 @@ export interface Drama {
   status: 'Completed' | 'Ongoing' | 'Upcoming';
   type: 'tv' | 'movie';
   language: string;
+  hindiOnly?: boolean;
   latestEpisode: number;
   season?: number;
   masterHlsUrl?: string;
@@ -91,7 +94,7 @@ export interface DramaRequest {
   status: 'Pending' | 'Added' | 'Reviewing';
 }
 
-export type DramaCategory = 'all' | 'trending' | 'korean' | 'chinese' | 'japanese' | 'indian';
+export type DramaCategory = 'all' | 'hindi-dubbed' | 'trending' | 'korean' | 'chinese' | 'japanese' | 'indian';
 
 export type SortOption = 'latest' | 'views' | 'rating' | 'title';
 

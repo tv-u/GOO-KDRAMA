@@ -32,6 +32,7 @@ export const Navbar: React.FC<NavbarProps> = ({
 
   const categories: { label: string; value: DramaCategory }[] = [
     { label: 'All Drama', value: 'all' },
+    { label: 'Hindi Dubbed K-Drama', value: 'hindi-dubbed' },
     { label: 'Trending', value: 'trending' },
     { label: 'Korean', value: 'korean' },
     { label: 'Chinese', value: 'chinese' },

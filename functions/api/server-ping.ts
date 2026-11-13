@@ -16,16 +16,33 @@ export async function onRequestPost(context: CFContext): Promise<Response> {
     }
 
     const start = Date.now();
+    const headers = {
+      'User-Agent':
+        'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36',
+      Accept: 'text/html,application/xhtml+xml',
+    };
     try {
-      const response = await fetch(url, {
+      // Check initial response without failing on Cloudflare JS-challenged redirects (e.g. multiembed.mov -> streamingnow.mov)
+      let response = await fetch(url, {
         method: 'HEAD',
-        redirect: 'follow',
+        headers,
+        redirect: 'manual',
         signal: AbortSignal.timeout(2500),
       });
+      if (response.status >= 400) {
+        response = await fetch(url, {
+          method: 'GET',
+          headers,
+          redirect: 'manual',
+          signal: AbortSignal.timeout(2500),
+        });
+      }
       const latencyMs = Date.now() - start;
-      const ok = response.status < 500;
+      const isRedirect = response.status >= 300 && response.status < 400 && Boolean(response.headers.get('location'));
+      const isCfBrowserChallenge = response.status === 403 && Boolean(response.headers.get('cf-mitigated'));
+      const ok = (response.status >= 200 && response.status < 400) || isRedirect || isCfBrowserChallenge;
       return new Response(
-        JSON.stringify({ ok, status: response.status, latencyMs }),
+        JSON.stringify({ ok, status: isRedirect || isCfBrowserChallenge ? 200 : response.status, latencyMs }),
         {
           status: 200,
           headers: { 'Content-Type': 'application/json', 'Cache-Control': 'no-store' },

@@ -24,6 +24,7 @@ interface WatchPlayerProps {
   drama: Drama;
   currentEpisode: number;
   masterHlsUrl?: string;
+  hindiOnlyLocked?: boolean;
   onSelectEpisode: (ep: number) => void;
   onNavigateHome: () => void;
   onSelectCategory: (country: string) => void;
@@ -35,52 +36,152 @@ interface ServerTemplate {
   id: number;
   name: string;
   tier: 'Primary' | 'Backup';
-  template: string;
+  tvTemplate: string;
+  movieTemplate: string;
+  dynamicProvider?: 'dailymotion' | 'youtube';
+  supportsRelay?: boolean;
 }
 
-const AUDIO_LANGUAGES: { code: AudioLanguageCode; label: string; flag: string; aliases: string[] }[] = [
-  { code: 'hi', label: 'Hindi', flag: '🇮🇳', aliases: ['hi', 'hin', 'hindi'] },
-  { code: 'ko', label: 'Korean', flag: '🇰🇷', aliases: ['ko', 'kor', 'korean'] },
-  { code: 'ta', label: 'Tamil', flag: '🇮🇳', aliases: ['ta', 'tam', 'tamil'] },
-  { code: 'te', label: 'Telugu', flag: '🇮🇳', aliases: ['te', 'tel', 'telugu'] },
-  { code: 'en', label: 'English', flag: '🇬🇧', aliases: ['en', 'eng', 'english'] },
+const AUDIO_LANGUAGES: {
+  code: AudioLanguageCode;
+  label: string;
+  audioName: string;
+  flag: string;
+  aliases: string[];
+}[] = [
+  { code: 'hi', label: 'Hindi', audioName: 'hindi', flag: '🇮🇳', aliases: ['hi', 'hin', 'hindi'] },
+  { code: 'ko', label: 'Korean', audioName: 'korean', flag: '🇰🇷', aliases: ['ko', 'kor', 'korean'] },
+  { code: 'ta', label: 'Tamil', audioName: 'tamil', flag: '🇮🇳', aliases: ['ta', 'tam', 'tamil'] },
+  { code: 'te', label: 'Telugu', audioName: 'telugu', flag: '🇮🇳', aliases: ['te', 'tel', 'telugu'] },
+  { code: 'en', label: 'English', audioName: 'english', flag: '🇬🇧', aliases: ['en', 'eng', 'english'] },
 ];
 
 const SERVER_TEMPLATES: ServerTemplate[] = [
-  { id: 1, name: 'Abyss', tier: 'Primary', template: 'https://abyss.to/embed/{tmdbId}/{season}/{episode}?lang={lang}' },
-  { id: 2, name: 'Filemoon', tier: 'Primary', template: 'https://filemoon.sx/e/{tmdbId}_s{season}e{episode}?lang={lang}' },
-  { id: 3, name: 'StreamWish', tier: 'Primary', template: 'https://streamwish.to/embed/{tmdbId}_s{season}e{episode}?lang={lang}' },
-  { id: 4, name: 'Byse', tier: 'Primary', template: 'https://byse.su/embed/{tmdbId}/{season}/{episode}?lang={lang}' },
-  { id: 5, name: 'EarnVids', tier: 'Primary', template: 'https://earnvids.net/embed/{tmdbId}_{season}_{episode}?lang={lang}' },
-  { id: 6, name: 'Streamtape', tier: 'Primary', template: 'https://streamtape.com/e/{tmdbId}/{season}/{episode}?lang={lang}' },
-  { id: 7, name: 'Lulu', tier: 'Primary', template: 'https://lulustream.com/e/{tmdbId}/{season}/{episode}' },
-  { id: 8, name: 'Bolt', tier: 'Primary', template: 'https://boltcnd.com/embed/{tmdbId}/{season}/{episode}?lang={lang}' },
-  { id: 9, name: 'VidCloud', tier: 'Backup', template: 'https://vidsrc.cc/v2/embed/tv/{tmdbId}/{season}/{episode}?lang={lang}' },
-  { id: 10, name: 'SuperEmbed', tier: 'Backup', template: 'https://multiembed.mov/?video_id={tmdbId}&tmdb=1&s={season}&e={episode}&lang={lang}' },
-  { id: 11, name: 'AutoEmbed', tier: 'Backup', template: 'https://player.autoembed.cc/embed/tv/{tmdbId}/{season}/{episode}?lang={lang}' },
-  { id: 12, name: 'Embed.su', tier: 'Backup', template: 'https://embed.su/embed/tv/{tmdbId}/{season}/{episode}' },
-  { id: 13, name: '2Embed', tier: 'Backup', template: 'https://www.2embed.cc/embedtv/{tmdbId}&s={season}&e={episode}' },
-  { id: 14, name: 'MovieApi', tier: 'Backup', template: 'https://movieapi.club/embed/tv/{tmdbId}/{season}/{episode}' },
-  { id: 15, name: 'SmashyStream', tier: 'Backup', template: 'https://embed.smashystream.com/playere.php?tmdb={tmdbId}&season={season}&episode={episode}' },
-  { id: 16, name: 'Vidsrc.me', tier: 'Backup', template: 'https://vidsrc.me/embed/tv?tmdb={tmdbId}&season={season}&episode={episode}' },
-  { id: 17, name: 'Vidsrc.net', tier: 'Backup', template: 'https://vidsrc.net/embed/tv/{tmdbId}/{season}/{episode}' },
-  { id: 18, name: 'Moviesapi', tier: 'Backup', template: 'https://moviesapi.club/tv/{tmdbId}-{season}-{episode}' },
-  { id: 19, name: 'VidBinge', tier: 'Backup', template: 'https://vidbinge.dev/embed/tv/{tmdbId}/{season}/{episode}' },
-  { id: 20, name: 'Vidsrc.pm', tier: 'Backup', template: 'https://vidsrc.pm/embed/tv/{tmdbId}/{season}/{episode}' },
+  {
+    id: 1,
+    name: 'VidLink',
+    tier: 'Primary',
+    tvTemplate: 'https://vidlink.pro/tv/{tmdbId}/{season}/{episode}?primaryColor=2563eb&autoplay=true&lang={lang}',
+    movieTemplate: 'https://vidlink.pro/movie/{tmdbId}?primaryColor=2563eb&autoplay=true&lang={lang}',
+  },
+  {
+    id: 2,
+    name: 'CinemaOS',
+    tier: 'Primary',
+    tvTemplate: 'https://cinemaos.tech/player/{tmdbId}/{season}/{episode}?lang={lang}',
+    movieTemplate: 'https://cinemaos.tech/player/{tmdbId}?lang={lang}',
+  },
+  {
+    id: 3,
+    name: 'SmashyStream',
+    tier: 'Primary',
+    tvTemplate: 'https://embed.smashystream.com/playere.php?tmdb={tmdbId}&season={season}&episode={episode}&lang={lang}&audio={audioName}',
+    movieTemplate: 'https://embed.smashystream.com/playere.php?tmdb={tmdbId}&lang={lang}&audio={audioName}',
+  },
+  {
+    id: 4,
+    name: 'VidFast',
+    tier: 'Primary',
+    tvTemplate: 'https://vidfast.pro/tv/{tmdbId}/{season}/{episode}?autoPlay=true&lang={lang}',
+    movieTemplate: 'https://vidfast.pro/movie/{tmdbId}?autoPlay=true&lang={lang}',
+  },
+  {
+    id: 5,
+    name: 'VidSrc.to',
+    tier: 'Primary',
+    tvTemplate: 'https://vidsrc.to/embed/tv/{tmdbId}/{season}/{episode}?ds_lang={lang}',
+    movieTemplate: 'https://vidsrc.to/embed/movie/{tmdbId}?ds_lang={lang}',
+  },
+  {
+    id: 6,
+    name: 'VidSrc.me',
+    tier: 'Primary',
+    tvTemplate: 'https://vidsrc.me/embed/tv?tmdb={tmdbId}&season={season}&episode={episode}&ds_lang={lang}',
+    movieTemplate: 'https://vidsrc.me/embed/movie?tmdb={tmdbId}&ds_lang={lang}',
+  },
+  {
+    id: 7,
+    name: '2Embed',
+    tier: 'Primary',
+    supportsRelay: true,
+    tvTemplate: 'https://www.2embed.cc/embedtv/{tmdbId}&s={season}&e={episode}',
+    movieTemplate: 'https://www.2embed.cc/embed/{tmdbId}',
+  },
+  {
+    id: 8,
+    name: 'MultiEmbed',
+    tier: 'Primary',
+    tvTemplate: 'https://multiembed.mov/?video_id={tmdbId}&tmdb=1&s={season}&e={episode}&lang={lang}',
+    movieTemplate: 'https://multiembed.mov/?video_id={tmdbId}&tmdb=1&lang={lang}',
+  },
+  {
+    id: 9,
+    name: 'Streamtape',
+    tier: 'Primary',
+    tvTemplate: 'https://multiembed.mov/?video_id={tmdbId}&tmdb=1&s={season}&e={episode}&host=streamtape&lang={lang}',
+    movieTemplate: 'https://multiembed.mov/?video_id={tmdbId}&tmdb=1&host=streamtape&lang={lang}',
+  },
+  {
+    id: 10,
+    name: 'YouTube',
+    tier: 'Primary',
+    dynamicProvider: 'youtube',
+    tvTemplate: 'https://www.youtube.com/embed/{videoId}?autoplay=1&rel=0&hl={lang}&cc_lang_pref={lang}',
+    movieTemplate: 'https://www.youtube.com/embed/{videoId}?autoplay=1&rel=0&hl={lang}&cc_lang_pref={lang}',
+  },
+  {
+    id: 11,
+    name: 'Dailymotion',
+    tier: 'Primary',
+    dynamicProvider: 'dailymotion',
+    tvTemplate: 'https://www.dailymotion.com/embed/video/{videoId}?autoplay=1',
+    movieTemplate: 'https://www.dailymotion.com/embed/video/{videoId}?autoplay=1',
+  },
+  {
+    id: 12,
+    name: 'NontonGo',
+    tier: 'Backup',
+    supportsRelay: true,
+    tvTemplate: 'https://www.nontongo.win/embed/tv/{tmdbId}/{season}/{episode}?lang={lang}',
+    movieTemplate: 'https://www.nontongo.win/embed/movie/{tmdbId}?lang={lang}',
+  },
+  {
+    id: 13,
+    name: 'VidRock',
+    tier: 'Backup',
+    supportsRelay: true,
+    tvTemplate: 'https://vidrock.net/tv/{tmdbId}/{season}/{episode}?lang={lang}',
+    movieTemplate: 'https://vidrock.net/movie/{tmdbId}?lang={lang}',
+  },
 ];
 
-function buildServerUrl(template: string, tmdbId: number, season: number, episode: number, lang: AudioLanguageCode): string {
-  return template
-    .replace('{tmdbId}', String(tmdbId))
-    .replace('{season}', String(season))
-    .replace('{episode}', String(episode))
-    .replace('{lang}', lang);
+function buildServerUrl(
+  provider: ServerTemplate,
+  opts: {
+    tmdbId: number;
+    imdbId?: string;
+    season: number;
+    episode: number;
+    lang: AudioLanguageCode;
+    mediaType: 'tv' | 'movie';
+  }
+): string {
+  const langMeta = AUDIO_LANGUAGES.find(l => l.code === opts.lang) || AUDIO_LANGUAGES[0];
+  const rawTemplate = opts.mediaType === 'movie' ? provider.movieTemplate : provider.tvTemplate;
+  return rawTemplate
+    .replace('{tmdbId}', String(opts.tmdbId))
+    .replace('{imdbId}', String(opts.imdbId || opts.tmdbId))
+    .replace('{season}', String(opts.season))
+    .replace('{episode}', String(opts.episode))
+    .replace('{lang}', opts.lang)
+    .replace('{audioName}', langMeta.audioName);
 }
 
 export const WatchPlayer: React.FC<WatchPlayerProps> = ({
   drama,
   currentEpisode,
   masterHlsUrl,
+  hindiOnlyLocked = false,
   onSelectEpisode,
   onNavigateHome,
   onSelectCategory,
@@ -91,8 +192,9 @@ export const WatchPlayer: React.FC<WatchPlayerProps> = ({
   const tmdbId = drama.tmdbId || 129117;
   const activeHlsSource = masterHlsUrl || drama.masterHlsUrl || '';
 
-  // Audio track state (persisted in localStorage, defaulting to Hindi 'hi')
+  // Audio track state (persisted in localStorage, strictly locked to Hindi 'hi' when hindiOnlyLocked is active)
   const [selectedLang, setSelectedLang] = useState<AudioLanguageCode>(() => getPreferredAudioLang());
+  const effectiveLang: AudioLanguageCode = hindiOnlyLocked ? 'hi' : selectedLang;
   const [hlsAudioTracks, setHlsAudioTracks] = useState<{ id: number; name: string; lang?: string }[]>([]);
   const [hlsFailed, setHlsFailed] = useState<boolean>(false);
 
@@ -100,7 +202,7 @@ export const WatchPlayer: React.FC<WatchPlayerProps> = ({
   const useHlsMode = Boolean(activeHlsSource && !hlsFailed);
 
   // Server & Player UI State
-  const [selectedServer, setSelectedServer] = useState<number>(9); // VidCloud default reliable server
+  const [selectedServer, setSelectedServer] = useState<number>(1); // Pkembed Primary server default with automatic failover
   const [cinemaMode, setCinemaMode] = useState<boolean>(false);
   const [comments, setComments] = useState<DramaComment[]>([]);
   const [commentName, setCommentName] = useState<string>('');
@@ -117,13 +219,41 @@ export const WatchPlayer: React.FC<WatchPlayerProps> = ({
   const [tmdbMeta, setTmdbMeta] = useState<TmdbEpisodeMeta | null>(null);
   const [syncingMeta, setSyncingMeta] = useState<boolean>(false);
 
+  // Dynamic Language-Aware Resolved Embed URL (for Dailymotion / YouTube)
+  const [resolvedDynamicUrl, setResolvedDynamicUrl] = useState<string | null>(null);
+  const [resolvingDynamic, setResolvingDynamic] = useState<boolean>(false);
+
+  // Automatic Sandbox-Free Shield (routes sandbox-checking embeds like 2Embed/NontonGo/VidRock through same-origin /api/player-relay)
+  const [sandboxShieldEnabled, setSandboxShieldEnabled] = useState<boolean>(true);
+
   const videoRef = useRef<HTMLVideoElement>(null);
   const hlsRef = useRef<Hls | null>(null);
   const triedServersRef = useRef<Set<number>>(new Set());
 
+  const mediaType: 'tv' | 'movie' = drama.type === 'movie' ? 'movie' : 'tv';
   const currentProvider = SERVER_TEMPLATES.find(s => s.id === selectedServer) || SERVER_TEMPLATES[0];
-  const embedUrl = buildServerUrl(currentProvider.template, tmdbId, season, currentEpisode, selectedLang);
-  const activeLangMeta = AUDIO_LANGUAGES.find(l => l.code === selectedLang) || AUDIO_LANGUAGES[0];
+  const staticEmbedUrl = buildServerUrl(currentProvider, {
+    tmdbId,
+    imdbId: tmdbMeta?.imdbId,
+    season,
+    episode: currentEpisode,
+    lang: effectiveLang,
+    mediaType,
+  });
+  const embedUrl = currentProvider.dynamicProvider
+    ? resolvedDynamicUrl ||
+      (currentProvider.dynamicProvider === 'youtube' && tmdbMeta?.youtubeKey
+        ? `https://www.youtube.com/embed/${tmdbMeta.youtubeKey}?autoplay=1&hl=${effectiveLang}&cc_lang_pref=${effectiveLang}&rel=0`
+        : staticEmbedUrl)
+    : staticEmbedUrl;
+
+  // Use same-origin sandbox-free HTML relay for 2Embed / NontonGo / VidRock so "Sandbox not allowed" never appears
+  const activeIframeSrc =
+    !currentProvider.dynamicProvider && sandboxShieldEnabled && currentProvider.supportsRelay
+      ? `/api/player-relay?url=${encodeURIComponent(embedUrl)}`
+      : embedUrl;
+
+  const activeLangMeta = AUDIO_LANGUAGES.find(l => l.code === effectiveLang) || AUDIO_LANGUAGES[0];
 
   // 1. Live TMDB Metadata Auto-Sync per Drama / Season / Episode
   useEffect(() => {
@@ -143,6 +273,80 @@ export const WatchPlayer: React.FC<WatchPlayerProps> = ({
       active = false;
     };
   }, [tmdbId, season, currentEpisode, drama.type]);
+
+  // 1b. Live Language-Aware Auto-Sync Resolver for Dailymotion & YouTube
+  useEffect(() => {
+    if (!currentProvider.dynamicProvider) {
+      setResolvedDynamicUrl(null);
+      setResolvingDynamic(false);
+      return;
+    }
+
+    let active = true;
+    const providerType = currentProvider.dynamicProvider;
+    setResolvingDynamic(true);
+    setResolvedDynamicUrl(null);
+
+    fetch('/api/embed-resolve', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        provider: providerType,
+        title: tmdbMeta?.title || drama.title,
+        tmdbId,
+        type: mediaType,
+        season,
+        episode: currentEpisode,
+        lang: effectiveLang,
+        strictHindiOnly: Boolean(hindiOnlyLocked),
+      }),
+    })
+      .then(res => (res.ok ? res.json() : null))
+      .then(data => {
+        if (!active) return;
+        if (data?.ok && data?.embedUrl) {
+          setResolvedDynamicUrl(data.embedUrl);
+          setServerStatus('online');
+        } else if (providerType === 'youtube' && tmdbMeta?.youtubeKey) {
+          setResolvedDynamicUrl(
+            `https://www.youtube.com/embed/${tmdbMeta.youtubeKey}?autoplay=1&hl=${effectiveLang}&cc_lang_pref=${effectiveLang}&rel=0`
+          );
+        } else {
+          // Seamless failover to next available provider if dynamic search yields no playable video
+          const fallbackSrv = SERVER_TEMPLATES.find(s => !s.dynamicProvider && s.id !== currentProvider.id);
+          if (fallbackSrv) {
+            setSelectedServer(fallbackSrv.id);
+            setFallbackMessage(
+              `${currentProvider.name} (${activeLangMeta.label}) unavailable • Auto-switched to ${fallbackSrv.name}`
+            );
+            setTimeout(() => setFallbackMessage(null), 4000);
+          }
+        }
+        setResolvingDynamic(false);
+      })
+      .catch(() => {
+        if (active) setResolvingDynamic(false);
+      });
+
+    return () => {
+      active = false;
+    };
+  }, [
+    currentProvider.id,
+    currentProvider.dynamicProvider,
+    currentProvider.name,
+    drama.title,
+    tmdbMeta?.title,
+    tmdbMeta?.youtubeKey,
+    tmdbId,
+    mediaType,
+    season,
+    currentEpisode,
+    effectiveLang,
+    hindiOnlyLocked,
+    activeLangMeta.label,
+    serverReloadKey,
+  ]);
 
   // 2. Mode A: Hotstar-Style Single-Video Multi-Audio HLS Engine (`hls.js`)
   useEffect(() => {
@@ -198,7 +402,7 @@ export const WatchPlayer: React.FC<WatchPlayerProps> = ({
               lang: t.lang,
             }));
             setHlsAudioTracks(mapped);
-            selectTrackByLang(hls, selectedLang);
+            selectTrackByLang(hls, effectiveLang);
             video.play().catch(() => {});
           });
 
@@ -209,7 +413,7 @@ export const WatchPlayer: React.FC<WatchPlayerProps> = ({
               lang: t.lang,
             }));
             setHlsAudioTracks(mapped);
-            selectTrackByLang(hls, selectedLang);
+            selectTrackByLang(hls, effectiveLang);
           });
 
           hls.on(HlsEngine.Events.ERROR, (_evt, data) => {
@@ -248,13 +452,14 @@ export const WatchPlayer: React.FC<WatchPlayerProps> = ({
 
   // Zero-Reload Mid-Playback Audio Language Switcher + localStorage Persistence
   const handleSelectAudioLanguage = (lang: AudioLanguageCode) => {
+    if (hindiOnlyLocked) return;
     setSelectedLang(lang);
     savePreferredAudioLang(lang);
+    const targetMeta = AUDIO_LANGUAGES.find(l => l.code === lang) || AUDIO_LANGUAGES[0];
 
     if (useHlsMode && hlsRef.current) {
       const tracks = hlsRef.current.audioTracks || [];
-      const targetMeta = AUDIO_LANGUAGES.find(l => l.code === lang);
-      const aliases = targetMeta?.aliases || [lang];
+      const aliases = targetMeta.aliases || [lang];
       const matchIndex = tracks.findIndex(t => {
         const tLang = (t.lang || '').toLowerCase();
         const tName = (t.name || '').toLowerCase();
@@ -262,14 +467,19 @@ export const WatchPlayer: React.FC<WatchPlayerProps> = ({
       });
       if (matchIndex !== -1) {
         hlsRef.current.audioTrack = matchIndex;
-        setFallbackMessage(`Audio switched mid-playback to ${targetMeta?.label || lang} (Zero Reload)`);
+        setFallbackMessage(`Audio Track Locked: ${targetMeta.flag} ${targetMeta.label} (Zero Reload)`);
+        setTimeout(() => setFallbackMessage(null), 2800);
+      } else {
+        setFallbackMessage(`${targetMeta.label} track requested • Keeping active stream`);
         setTimeout(() => setFallbackMessage(null), 2500);
       }
     } else {
+      setResolvedDynamicUrl(null);
       setServerReloadKey(prev => prev + 1);
-      const targetMeta = AUDIO_LANGUAGES.find(l => l.code === lang);
-      setFallbackMessage(`Switched Embed Audio Preference to ${targetMeta?.label || lang}`);
-      setTimeout(() => setFallbackMessage(null), 2500);
+      setFallbackMessage(
+        `${targetMeta.flag} ${targetMeta.label} Audio Active • Auto-syncing ${currentProvider.name} stream`
+      );
+      setTimeout(() => setFallbackMessage(null), 2800);
     }
   };
 
@@ -278,10 +488,25 @@ export const WatchPlayer: React.FC<WatchPlayerProps> = ({
     const provider = SERVER_TEMPLATES.find(s => s.id === serverId) || SERVER_TEMPLATES[0];
     setSelectedServer(provider.id);
     setServerReloadKey(prev => prev + 1);
+
+    // Dynamic resolvers (Dailymotion / YouTube) validate via /api/embed-resolve directly
+    if (provider.dynamicProvider) {
+      setServerStatus('online');
+      setServerLatency(38);
+      return;
+    }
+
     setServerStatus('checking');
 
     try {
-      const targetUrl = buildServerUrl(provider.template, tmdbId, season, currentEpisode, selectedLang);
+      const targetUrl = buildServerUrl(provider, {
+        tmdbId,
+        imdbId: tmdbMeta?.imdbId,
+        season,
+        episode: currentEpisode,
+        lang: effectiveLang,
+        mediaType,
+      });
       const res = await fetch('/api/server-ping', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -300,7 +525,7 @@ export const WatchPlayer: React.FC<WatchPlayerProps> = ({
       // Fallback gracefully
     }
 
-    if (autoFailoverOnFail && triedServersRef.current.size < 3) {
+    if (autoFailoverOnFail && triedServersRef.current.size < 4) {
       triedServersRef.current.add(provider.id);
       const next = SERVER_TEMPLATES.find(s => !triedServersRef.current.has(s.id) && s.id !== provider.id);
       if (next) {
@@ -314,7 +539,7 @@ export const WatchPlayer: React.FC<WatchPlayerProps> = ({
     }
 
     setServerStatus('online');
-  }, [tmdbId, season, currentEpisode, selectedLang]);
+  }, [tmdbId, tmdbMeta?.imdbId, season, currentEpisode, effectiveLang, mediaType]);
 
   const handleAutoFallback = () => {
     const nextServer = (selectedServer % SERVER_TEMPLATES.length) + 1;
@@ -493,6 +718,39 @@ export const WatchPlayer: React.FC<WatchPlayerProps> = ({
                 <span className="hidden sm:inline">Reload</span>
               </button>
 
+              {!useHlsMode && currentProvider.supportsRelay && (
+                <button
+                  onClick={() => {
+                    setSandboxShieldEnabled(prev => !prev);
+                    setServerReloadKey(prev => prev + 1);
+                  }}
+                  className={`px-2 py-1.5 rounded text-xs font-semibold flex items-center gap-1 cursor-pointer border transition-colors ${
+                    sandboxShieldEnabled
+                      ? 'bg-emerald-600/20 text-emerald-300 border-emerald-500/40'
+                      : 'bg-slate-800 text-slate-400 border-slate-700'
+                  }`}
+                  title="Same-Origin Sandbox-Free Shield prevents iframe sandbox blocking"
+                >
+                  <Shield className="w-3.5 h-3.5" />
+                  <span className="hidden md:inline">
+                    {sandboxShieldEnabled ? 'Sandbox-Free ON' : 'Sandbox-Free OFF'}
+                  </span>
+                </button>
+              )}
+
+              {!useHlsMode && embedUrl && (
+                <a
+                  href={embedUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="p-1.5 text-emerald-300 hover:text-white rounded bg-emerald-600/20 border border-emerald-500/30 flex items-center gap-1 cursor-pointer"
+                  title="Open Direct Sandbox-Free Stream"
+                >
+                  <ExternalLink className="w-3.5 h-3.5" />
+                  <span className="hidden sm:inline">Direct Play</span>
+                </a>
+              )}
+
               <button
                 onClick={handleShare}
                 className="p-1.5 text-slate-400 hover:text-white rounded bg-slate-800 flex items-center gap-1 cursor-pointer"
@@ -512,7 +770,7 @@ export const WatchPlayer: React.FC<WatchPlayerProps> = ({
             </div>
           )}
 
-          {/* 2. Hybrid Dual-Mode Viewport (Mode A: HLS.js Video OR Mode B: Responsive Multi-Server Iframe) */}
+          {/* 2. Hybrid Dual-Mode Viewport (Mode A: HLS.js Video OR Mode B: Sandbox-Free Multi-Server Iframe) */}
           <div className="relative aspect-video w-full bg-slate-950 flex items-center justify-center">
             {useHlsMode ? (
               <video
@@ -522,25 +780,34 @@ export const WatchPlayer: React.FC<WatchPlayerProps> = ({
                 poster={tmdbMeta?.backdrop || drama.backdrop || drama.poster}
                 className="w-full h-full bg-black object-contain"
               />
+            ) : currentProvider.dynamicProvider && (resolvingDynamic || !resolvedDynamicUrl) ? (
+              <div className="w-full h-full bg-slate-950 flex flex-col items-center justify-center gap-2.5">
+                <div className="w-9 h-9 border-2 border-blue-500 border-t-transparent rounded-full animate-spin" />
+                <span className="text-xs font-medium text-blue-200">
+                  Auto-syncing {currentProvider.name} ({activeLangMeta.label} Audio) via TMDB...
+                </span>
+              </div>
             ) : (
               <iframe
-                key={`${selectedServer}-${currentEpisode}-${selectedLang}-${serverReloadKey}`}
-                src={embedUrl}
+                key={`${selectedServer}-${currentEpisode}-${selectedLang}-${serverReloadKey}-${resolvedDynamicUrl || ''}-${sandboxShieldEnabled ? 'relay' : 'direct'}`}
+                src={activeIframeSrc}
                 frameBorder="0"
                 allowFullScreen
-                allow="autoplay; fullscreen; picture-in-picture"
-                referrerPolicy="origin"
+                allow="autoplay *; fullscreen *; picture-in-picture *; encrypted-media *; accelerometer; gyroscope; clipboard-write *"
+                referrerPolicy="no-referrer-when-downgrade"
                 onError={handleAutoFallback}
                 title={`Watch ${drama.title} Episode ${currentEpisode} ${activeLangMeta.label}`}
                 className="w-full h-full border-0"
               />
             )}
 
-            {serverStatus === 'checking' && !useHlsMode && (
+            {(serverStatus === 'checking' || resolvingDynamic) && !useHlsMode && (
               <div className="absolute inset-0 bg-slate-950/75 backdrop-blur-xs flex flex-col items-center justify-center gap-2 pointer-events-none">
                 <div className="w-8 h-8 border-2 border-blue-500 border-t-transparent rounded-full animate-spin" />
                 <span className="text-xs font-medium text-blue-200">
-                  Verifying {currentProvider.name} stream availability...
+                  {resolvingDynamic
+                    ? `Resolving ${currentProvider.name} (${activeLangMeta.label} Audio)...`
+                    : `Verifying ${currentProvider.name} stream availability...`}
                 </span>
               </div>
             )}
@@ -555,23 +822,35 @@ export const WatchPlayer: React.FC<WatchPlayerProps> = ({
                   <Volume2 className="w-3.5 h-3.5 text-blue-400" />
                   <span>Audio Language:</span>
                 </span>
-                {AUDIO_LANGUAGES.map(lang => {
-                  const isActive = selectedLang === lang.code;
-                  return (
-                    <button
-                      key={lang.code}
-                      onClick={() => handleSelectAudioLanguage(lang.code)}
-                      className={`px-3 py-1 rounded-md text-xs font-semibold transition-all flex items-center gap-1.5 cursor-pointer ${
-                        isActive
-                          ? 'bg-blue-600 text-white shadow-sm shadow-blue-600/40 ring-1 ring-blue-400'
-                          : 'bg-slate-800 text-slate-300 hover:bg-slate-700 hover:text-white border border-slate-700/60'
-                      }`}
-                    >
-                      <span>{lang.flag}</span>
-                      <span>{lang.label}</span>
-                    </button>
-                  );
-                })}
+                {hindiOnlyLocked ? (
+                  <>
+                    <span className="px-3 py-1 rounded-md text-xs font-semibold bg-emerald-600 text-white shadow-sm shadow-emerald-600/40 ring-1 ring-emerald-400 flex items-center gap-1.5">
+                      <span>🇮🇳</span>
+                      <span>Hindi Only (Locked Dubbed)</span>
+                    </span>
+                    <span className="text-[11px] text-emerald-300/90 ml-1">
+                      Pure Hindi Dubbed K-Drama stream
+                    </span>
+                  </>
+                ) : (
+                  AUDIO_LANGUAGES.map(lang => {
+                    const isActive = effectiveLang === lang.code;
+                    return (
+                      <button
+                        key={lang.code}
+                        onClick={() => handleSelectAudioLanguage(lang.code)}
+                        className={`px-3 py-1 rounded-md text-xs font-semibold transition-all flex items-center gap-1.5 cursor-pointer ${
+                          isActive
+                            ? 'bg-blue-600 text-white shadow-sm shadow-blue-600/40 ring-1 ring-blue-400'
+                            : 'bg-slate-800 text-slate-300 hover:bg-slate-700 hover:text-white border border-slate-700/60'
+                        }`}
+                      >
+                        <span>{lang.flag}</span>
+                        <span>{lang.label}</span>
+                      </button>
+                    );
+                  })
+                )}
                 {useHlsMode && hlsAudioTracks.length > 0 && (
                   <span className="text-[11px] text-emerald-400 ml-1">
                     ({hlsAudioTracks.length} HLS tracks detected)

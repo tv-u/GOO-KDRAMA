@@ -1,4 +1,11 @@
 import type { CastProfile, Drama, DramaFAQ } from '../types/drama.ts';
+import {
+  TOP_50_WORLD_LANGUAGES,
+  TOP_50_LANGUAGE_NAMES,
+  TOP_50_LOCALIZED_PHRASES,
+  ZERO_COMPETITION_CATEGORY_KEYWORDS,
+  buildLongTailDramaKeywords,
+} from './worldwideSeo.ts';
 
 export interface SeoMetadata {
   title: string;
@@ -24,7 +31,11 @@ export function getDramaFaqs(drama: Drama, episode?: number): DramaFAQ[] {
   return [
     {
       question: `Where can I watch ${drama.title} ${episode ? `Episode ${epNum} ` : ''}in Hindi Dubbed online?`,
-      answer: `You can stream ${drama.title} (${drama.year}) ${episode ? `Episode ${epNum} ` : 'all episodes '}in Hindi Dubbed 1080p HD for free on HindiDrama.net using fast multi-provider servers including StreamWish, Abyss, Byse, EarnVids, and VidCloud.`
+      answer: `You can stream ${drama.title} (${drama.year}) ${episode ? `Episode ${epNum} ` : 'all episodes '}in Hindi Dubbed 1080p HD for free on HindiDrama.net using fast unlimited active servers including VidLink, CinemaOS, SmashyStream, VidFast, VidSrc, 2Embed, MultiEmbed, Streamtape, YouTube, Dailymotion, NontonGo, and VidRock.`
+    },
+    {
+      question: `Is ${drama.title} available in pure Hindi dubbed audio without subtitles?`,
+      answer: `Yes, ${drama.title} (${drama.country} Drama) is available in full Hindi Dubbed audio inside our dedicated Hindi Dubbed K-Drama category with instant 1080p streaming and zero registration.`
     },
     {
       question: `How many total episodes are in ${drama.title} Hindi Dubbed?`,
@@ -49,6 +60,15 @@ function escapeHtmlAttr(value: string): string {
     .replace(/>/g, '&gt;');
 }
 
+const WORLDWIDE_AUDIENCE = {
+  '@type': 'Audience',
+  audienceType: 'Worldwide Asian & K-Drama Viewers',
+  geographicArea: {
+    '@type': 'AdministrativeArea',
+    name: 'Worldwide',
+  },
+};
+
 export function buildSeoMetadata(params: {
   path: string;
   origin: string;
@@ -64,22 +84,33 @@ export function buildSeoMetadata(params: {
   const cleanOrigin = params.origin.replace(/\/$/, '') || 'https://hindidrama.net';
   const normalizedPath = params.path === '/' ? '' : params.path;
   const canonicalUrl = `${cleanOrigin}${normalizedPath || '/'}`;
+  const availableLanguage = TOP_50_LANGUAGE_NAMES;
 
   // 1. Episode Watch Page (/watch/:slug/episode-:ep)
   if (params.path.startsWith('/watch/') && params.activeDrama) {
     const drama = params.activeDrama;
     const ep = params.episode || 1;
     const title = `Watch ${drama.title} Episode ${ep} Hindi Dubbed Online Free HD | HindiDrama`;
-    const description = `Stream ${drama.title} Episode ${ep} Hindi Dubbed online free in 1080p Full HD on HindiDrama.net. Fast StreamWish, Abyss, Byse & VidCloud servers with zero buffering.`.slice(0, 160);
+    const description = `Stream ${drama.title} Episode ${ep} Hindi Dubbed online free in 1080p Full HD on HindiDrama.net. Fast VidLink, CinemaOS, 2Embed, MultiEmbed & YouTube servers.`.slice(0, 160);
+    const castNames = (drama.cast || []).slice(0, 4).map(a => a.name);
+    const longTail = buildLongTailDramaKeywords({
+      title: drama.title,
+      country: drama.country,
+      year: drama.year,
+      genres: drama.genres || ['Drama'],
+      episode: ep,
+      castNames,
+    });
     const keywords = [
-      `watch ${drama.title.toLowerCase()} episode ${ep} hindi dubbed online free`,
-      `${drama.title.toLowerCase()} ep ${ep} in hindi hd`,
-      `${drama.country.toLowerCase()} drama ${drama.title.toLowerCase()} hindi dubbed`,
-      `download ${drama.title.toLowerCase()} episode ${ep} hindi 1080p`,
-      'hindidrama net'
+      ...longTail,
+      `${drama.title.toLowerCase()} episode ${ep} hindi dubbed hd`,
+      'watch kdrama hindi dubbed online free',
+      'hindidrama net',
     ].join(', ');
     const faqs = getDramaFaqs(drama, ep);
     const ratingCount = Math.max(120, Math.round(drama.rating * 340));
+    const uploadDate = drama.updatedAt || `${drama.year}-01-01T00:00:00Z`;
+    const durationMins = parseInt(String(drama.duration || '45'), 10) || 45;
 
     return {
       title,
@@ -89,8 +120,37 @@ export function buildSeoMetadata(params: {
       ogType: 'video.episode',
       ogImage: drama.backdrop || drama.poster,
       ogImageAlt: `Watch ${drama.title} Episode ${ep} Hindi Dubbed`,
-      robots: 'index, follow, max-image-preview:large',
+      robots: 'index, follow, max-image-preview:large, max-video-preview:-1, max-snippet:-1',
       jsonLd: [
+        {
+          '@context': 'https://schema.org',
+          '@type': 'VideoObject',
+          name: `${drama.title} Episode ${ep} Hindi Dubbed Online HD`,
+          alternativeHeadline: `${drama.title} Ep ${ep} | ${TOP_50_WORLD_LANGUAGES[1].phrase}`,
+          description,
+          thumbnailUrl: [drama.backdrop || drama.poster, drama.poster].filter(Boolean),
+          uploadDate,
+          duration: `PT${durationMins}M`,
+          embedUrl: canonicalUrl,
+          inLanguage: 'hi',
+          subtitleLanguage: availableLanguage,
+          keywords,
+          isFamilyFriendly: true,
+          audience: WORLDWIDE_AUDIENCE,
+          publisher: {
+            '@type': 'Organization',
+            name: 'HindiDrama.net',
+            url: `${cleanOrigin}/`,
+            logo: {
+              '@type': 'ImageObject',
+              url: `${cleanOrigin}/favicon.svg`
+            }
+          },
+          potentialAction: {
+            '@type': 'WatchAction',
+            target: canonicalUrl
+          }
+        },
         {
           '@context': 'https://schema.org',
           '@type': 'TVEpisode',
@@ -168,13 +228,17 @@ export function buildSeoMetadata(params: {
   if (params.path.startsWith('/drama/') && params.activeDrama) {
     const drama = params.activeDrama;
     const title = `${drama.title} (${drama.year}) Hindi Dubbed Full Episodes HD | HindiDrama`;
-    const description = `Watch all ${drama.totalEpisodes} episodes of ${drama.title} (${drama.country} Drama) in Hindi Dubbed HD on HindiDrama.net. ${drama.overview}`.slice(0, 160);
+    const description = `Watch all ${drama.totalEpisodes} episodes of ${drama.title} (${drama.country} Drama) in pure Hindi Dubbed 1080p HD on HindiDrama.net. ${drama.overview}`.slice(0, 160);
+    const castNames = (drama.cast || []).slice(0, 4).map(a => a.name);
     const keywords = [
-      `${drama.title.toLowerCase()} hindi dubbed all episodes`,
-      `watch ${drama.title.toLowerCase()} in hindi online free`,
-      `${drama.title.toLowerCase()} ${drama.year} ${drama.country.toLowerCase()} drama hindi`,
-      `${(drama.genres || []).join(' ').toLowerCase()} drama in hindi`,
-      'hindidrama.net'
+      ...buildLongTailDramaKeywords({
+        title: drama.title,
+        country: drama.country,
+        year: drama.year,
+        genres: drama.genres || ['Drama'],
+        castNames,
+      }),
+      'hindidrama.net',
     ].join(', ');
     const faqs = getDramaFaqs(drama);
     const ratingCount = Math.max(150, Math.round(drama.rating * 390));
@@ -187,20 +251,22 @@ export function buildSeoMetadata(params: {
       ogType: 'video.tv_show',
       ogImage: drama.poster || drama.backdrop,
       ogImageAlt: `${drama.title} (${drama.year}) Hindi Dubbed Poster`,
-      robots: 'index, follow, max-image-preview:large',
+      robots: 'index, follow, max-image-preview:large, max-video-preview:-1, max-snippet:-1',
       jsonLd: [
         {
           '@context': 'https://schema.org',
           '@type': 'TVSeries',
           name: drama.title,
-          alternateName: drama.hindiTitle,
+          alternateName: [drama.hindiTitle, ...TOP_50_LOCALIZED_PHRASES.slice(0, 12).map(p => `${drama.title} - ${p}`)],
           url: canonicalUrl,
           image: drama.poster,
           description: drama.overview,
           datePublished: String(drama.year),
           genre: drama.genres,
+          keywords,
           numberOfEpisodes: drama.totalEpisodes,
           inLanguage: 'hi',
+          audience: WORLDWIDE_AUDIENCE,
           countryOfOrigin: {
             '@type': 'Country',
             name: drama.country
@@ -243,27 +309,111 @@ export function buildSeoMetadata(params: {
     };
   }
 
-  // 3. Genre Hub Page (/genre/:genre)
-  if (params.path.startsWith('/genre/') && params.genre) {
-    const genreLabel = params.genre.charAt(0).toUpperCase() + params.genre.slice(1);
-    const title = `Best ${genreLabel} Asian & K-Dramas in Hindi Dubbed | HindiDrama`;
-    const description = `Stream top-rated ${genreLabel} Korean, Chinese, and Japanese dramas in Hindi dubbed online for free in 1080p HD on HindiDrama.net.`;
+  // 3. Dedicated Hindi Dubbed K-Drama Category (/category/hindi-dubbed)
+  if (params.path === '/category/hindi-dubbed' || params.category === 'hindi-dubbed') {
+    const hindiKdramas = params.dramas.filter(
+      d => d.country.toLowerCase() === 'korean' && (d.hindiOnly || (d.language || '').toLowerCase().includes('hindi'))
+    );
+    const title = 'Hindi Dubbed K-Drama (100% Pure Hindi Audio Only) Watch Free HD | HindiDrama';
+    const description = 'Watch 100% real Hindi dubbed Korean dramas online free in 1080p HD. Pure Hindi audio only playback with Squid Game, Vincenzo, Queen of Tears, Business Proposal & more.';
+    const keywords = [
+      ...ZERO_COMPETITION_CATEGORY_KEYWORDS,
+      ...TOP_50_LOCALIZED_PHRASES.slice(0, 20),
+    ].join(', ');
+
+    const hubFaqs: DramaFAQ[] = [
+      {
+        question: 'Which Korean dramas on HindiDrama.net play 100% in real Hindi Dubbed audio only?',
+        answer: 'All dramas listed in our Hindi Dubbed K-Drama category are verified Korean television series that lock playback strictly to Pure Hindi audio track without switching to other languages.'
+      },
+      {
+        question: 'Can I watch Hindi dubbed K-dramas worldwide for free in 1080p HD?',
+        answer: 'Yes, viewers across India, Pakistan, Nepal, Bangladesh, UAE, UK, USA, Singapore, Indonesia, and worldwide can stream Hindi dubbed K-dramas free with zero buffering.'
+      }
+    ];
+
     return {
       title,
       description,
-      keywords: `${genreLabel.toLowerCase()} kdrama in hindi dubbed, best ${genreLabel.toLowerCase()} asian dramas hindi, watch ${genreLabel.toLowerCase()} chinese drama hindi`,
+      keywords,
+      canonicalUrl: `${cleanOrigin}/category/hindi-dubbed`,
+      ogType: 'website',
+      ogImage: hindiKdramas[0]?.poster || params.dramas[0]?.poster || 'https://image.tmdb.org/t/p/w500/jyc9HDQDmJC4PthBUdw95XJJog9.jpg',
+      ogImageAlt: 'Hindi Dubbed K-Drama Pure Hindi Audio Streaming Archive',
+      robots: 'index, follow, max-image-preview:large, max-video-preview:-1, max-snippet:-1',
+      jsonLd: [
+        {
+          '@context': 'https://schema.org',
+          '@type': 'CollectionPage',
+          name: 'Hindi Dubbed K-Drama (Pure Hindi Audio Only)',
+          description,
+          url: `${cleanOrigin}/category/hindi-dubbed`,
+          inLanguage: 'hi',
+          availableLanguage,
+          keywords,
+          audience: WORLDWIDE_AUDIENCE,
+        },
+        {
+          '@context': 'https://schema.org',
+          '@type': 'ItemList',
+          name: 'Real Hindi Dubbed Korean Dramas Collection',
+          numberOfItems: hindiKdramas.length,
+          itemListElement: hindiKdramas.slice(0, 20).map((d, idx) => ({
+            '@type': 'ListItem',
+            position: idx + 1,
+            url: `${cleanOrigin}/drama/${d.slug}`,
+            name: `${d.title} (Hindi Dubbed)`
+          }))
+        },
+        {
+          '@context': 'https://schema.org',
+          '@type': 'BreadcrumbList',
+          itemListElement: [
+            { '@type': 'ListItem', position: 1, name: 'Home', item: `${cleanOrigin}/` },
+            { '@type': 'ListItem', position: 2, name: 'Hindi Dubbed K-Drama', item: `${cleanOrigin}/category/hindi-dubbed` }
+          ]
+        },
+        {
+          '@context': 'https://schema.org',
+          '@type': 'FAQPage',
+          mainEntity: hubFaqs.map(faq => ({
+            '@type': 'Question',
+            name: faq.question,
+            acceptedAnswer: { '@type': 'Answer', text: faq.answer }
+          }))
+        }
+      ]
+    };
+  }
+
+  // 4. Genre Hub Page (/genre/:genre)
+  if (params.path.startsWith('/genre/') && params.genre) {
+    const genreLabel = params.genre.charAt(0).toUpperCase() + params.genre.slice(1);
+    const title = `Best ${genreLabel} Asian & K-Dramas in Hindi Dubbed | HindiDrama`;
+    const description = `Stream top-rated ${genreLabel} Korean, Chinese, and Japanese dramas in Hindi dubbed online for free in 1080p HD worldwide on HindiDrama.net.`;
+    return {
+      title,
+      description,
+      keywords: [
+        `${genreLabel.toLowerCase()} kdrama in hindi dubbed full episodes free`,
+        `best ${genreLabel.toLowerCase()} korean drama in pure hindi audio 1080p`,
+        `watch ${genreLabel.toLowerCase()} asian dramas hindi online no signup`,
+        ...TOP_50_LOCALIZED_PHRASES.slice(0, 8),
+      ].join(', '),
       canonicalUrl,
       ogType: 'website',
       ogImage: params.dramas[0]?.poster || 'https://image.tmdb.org/t/p/w500/jyc9HDQDmJC4PthBUdw95XJJog9.jpg',
       ogImageAlt: `${genreLabel} Dramas in Hindi Dubbed`,
-      robots: 'index, follow, max-image-preview:large',
+      robots: 'index, follow, max-image-preview:large, max-video-preview:-1, max-snippet:-1',
       jsonLd: [
         {
           '@context': 'https://schema.org',
           '@type': 'CollectionPage',
           name: `${genreLabel} Hindi Dubbed Dramas`,
           description,
-          url: canonicalUrl
+          url: canonicalUrl,
+          availableLanguage,
+          audience: WORLDWIDE_AUDIENCE,
         },
         {
           '@context': 'https://schema.org',
@@ -277,7 +427,7 @@ export function buildSeoMetadata(params: {
     };
   }
 
-  // 4. Cast Profile Page (/cast/:slug)
+  // 5. Cast Profile Page (/cast/:slug)
   if (params.path.startsWith('/cast/')) {
     const castName = params.castProfile?.name || params.path.replace('/cast/', '').replace(/^\d+-/, '').replace(/-/g, ' ');
     const titleCaseName = castName.replace(/\b\w/g, c => c.toUpperCase());
@@ -289,12 +439,12 @@ export function buildSeoMetadata(params: {
     return {
       title,
       description,
-      keywords: `${titleCaseName.toLowerCase()} kdrama in hindi, ${titleCaseName.toLowerCase()} dramas hindi dubbed, ${titleCaseName.toLowerCase()} movies list`,
+      keywords: `${titleCaseName.toLowerCase()} kdrama in hindi dubbed full list, ${titleCaseName.toLowerCase()} korean dramas hindi audio online free, ${titleCaseName.toLowerCase()} movies 1080p`,
       canonicalUrl,
       ogType: 'profile',
       ogImage: params.castProfile?.profileImage || params.dramas[0]?.poster || 'https://image.tmdb.org/t/p/w500/jyc9HDQDmJC4PthBUdw95XJJog9.jpg',
       ogImageAlt: `${titleCaseName} Cast Profile`,
-      robots: 'index, follow, max-image-preview:large',
+      robots: 'index, follow, max-image-preview:large, max-video-preview:-1, max-snippet:-1',
       jsonLd: [
         {
           '@context': 'https://schema.org',
@@ -317,27 +467,34 @@ export function buildSeoMetadata(params: {
     };
   }
 
-  // 5. Category Page (/category/:cat)
+  // 6. Category Page (/category/:cat)
   if (params.path.startsWith('/category/') && params.category && params.category !== 'all') {
     const catCap = params.category.charAt(0).toUpperCase() + params.category.slice(1);
     const title = `${catCap} Dramas Hindi Dubbed Watch Online Free HD | HindiDrama`;
-    const description = `Watch latest ${catCap} dramas and web series dubbed in Hindi online for free in 1080p HD. Stream all episodes on HindiDrama.net.`;
+    const description = `Watch latest ${catCap} dramas and web series dubbed in Hindi online for free in 1080p HD worldwide. Stream all episodes on HindiDrama.net.`;
     return {
       title,
       description,
-      keywords: `${catCap.toLowerCase()} drama in hindi dubbed, watch ${catCap.toLowerCase()} series online free hd, hindidrama ${catCap.toLowerCase()}`,
+      keywords: [
+        `${catCap.toLowerCase()} drama in pure hindi dubbed online free`,
+        `watch ${catCap.toLowerCase()} series hindi audio 1080p zero buffering`,
+        `hindidrama ${catCap.toLowerCase()} full episodes download`,
+        ...TOP_50_LOCALIZED_PHRASES.slice(0, 10),
+      ].join(', '),
       canonicalUrl,
       ogType: 'website',
       ogImage: params.dramas[0]?.poster || 'https://image.tmdb.org/t/p/w500/jyc9HDQDmJC4PthBUdw95XJJog9.jpg',
       ogImageAlt: `${catCap} Dramas in Hindi Dubbed`,
-      robots: 'index, follow, max-image-preview:large',
+      robots: 'index, follow, max-image-preview:large, max-video-preview:-1, max-snippet:-1',
       jsonLd: [
         {
           '@context': 'https://schema.org',
           '@type': 'CollectionPage',
           name: `${catCap} Dramas in Hindi Dubbed`,
           description,
-          url: canonicalUrl
+          url: canonicalUrl,
+          availableLanguage,
+          audience: WORLDWIDE_AUDIENCE,
         },
         {
           '@context': 'https://schema.org',
@@ -351,7 +508,7 @@ export function buildSeoMetadata(params: {
     };
   }
 
-  // 6. Legal/Static Pages
+  // 7. Legal/Static Pages
   if (params.staticPage) {
     const titles: Record<string, string> = {
       dmca: 'DMCA Notice & Copyright Policy | HindiDrama.net',
@@ -383,26 +540,33 @@ export function buildSeoMetadata(params: {
     };
   }
 
-  // 7. Default Homepage
-  const homeTitle = 'HindiDrama – Watch Kdrama & Asian Drama Hindi Dubbed Online Free HD';
-  const homeDescription = 'Watch Korean, Chinese, Japanese, and Indian dramas in Hindi dubbed online for free in HD. Stream One and Only, Study Group, The Remarried Empress with fast servers.';
+  // 8. Default Homepage (Worldwide Multilingual SEO Anchor)
+  const homeTitle = 'HindiDrama – Watch Hindi Dubbed K-Drama & Asian Drama Free HD';
+  const homeDescription = 'Watch real Hindi dubbed Korean, Chinese, Japanese, and Indian dramas online free in 1080p HD worldwide. Dedicated pure Hindi K-Drama category with zero buffering.';
+  const homeKeywords = [
+    ...ZERO_COMPETITION_CATEGORY_KEYWORDS,
+    ...TOP_50_LOCALIZED_PHRASES,
+  ].join(', ');
+
   return {
     title: homeTitle,
     description: homeDescription,
-    keywords: 'watch one and only episode 24 hindi dubbed online free, study group kdrama hindi dubbed hd stream, latest korean drama in hindi dubbed 2026, chinese historical romance drama in hindi, hindi drama net',
+    keywords: homeKeywords,
     canonicalUrl: `${cleanOrigin}/`,
     ogType: 'website',
-    ogImage: 'https://image.tmdb.org/t/p/w500/jyc9HDQDmJC4PthBUdw95XJJog9.jpg',
-    ogImageAlt: 'HindiDrama – Watch Kdrama & Asian Drama Hindi Dubbed',
-    robots: params.searchQuery ? 'noindex, follow' : 'index, follow, max-image-preview:large',
+    ogImage: params.dramas[0]?.poster || 'https://image.tmdb.org/t/p/w500/jyc9HDQDmJC4PthBUdw95XJJog9.jpg',
+    ogImageAlt: 'HindiDrama – Watch Hindi Dubbed K-Drama & Asian Drama',
+    robots: params.searchQuery ? 'noindex, follow' : 'index, follow, max-image-preview:large, max-video-preview:-1, max-snippet:-1',
     jsonLd: [
       {
         '@context': 'https://schema.org',
         '@type': 'WebSite',
         name: 'HindiDrama.net',
-        alternateName: 'HindiDrama',
+        alternateName: ['HindiDrama', ...TOP_50_LOCALIZED_PHRASES.slice(0, 25)],
         url: `${cleanOrigin}/`,
         description: homeDescription,
+        inLanguage: TOP_50_WORLD_LANGUAGES.map(l => l.code),
+        keywords: homeKeywords,
         potentialAction: {
           '@type': 'SearchAction',
           target: `${cleanOrigin}/?q={search_term_string}`,
@@ -411,13 +575,23 @@ export function buildSeoMetadata(params: {
       },
       {
         '@context': 'https://schema.org',
+        '@type': 'Organization',
+        name: 'HindiDrama.net',
+        url: `${cleanOrigin}/`,
+        logo: `${cleanOrigin}/favicon.svg`,
+        description: homeDescription,
+        areaServed: 'Worldwide',
+        availableLanguage,
+      },
+      {
+        '@context': 'https://schema.org',
         '@type': 'ItemList',
-        name: 'Top 10 Asian Dramas in Hindi Dubbed This Week',
-        itemListElement: params.dramas.slice(0, 10).map((d, idx) => ({
+        name: 'Top Asian & Hindi Dubbed K-Dramas Worldwide',
+        itemListElement: params.dramas.slice(0, 12).map((d, idx) => ({
           '@type': 'ListItem',
           position: idx + 1,
           url: `${cleanOrigin}/drama/${d.slug}`,
-          name: d.title
+          name: `${d.title} (${d.language})`
         }))
       }
     ]
@@ -432,13 +606,34 @@ export function renderSeoHeadTags(meta: SeoMetadata): string {
     )
     .join('\n    ');
 
+  const hreflangTags = [
+    ...TOP_50_WORLD_LANGUAGES.map(
+      lang => `<link rel="alternate" hreflang="${lang.code}" href="${escapeHtmlAttr(meta.canonicalUrl)}" />`
+    ),
+    `<link rel="alternate" hreflang="x-default" href="${escapeHtmlAttr(meta.canonicalUrl)}" />`,
+  ].join('\n    ');
+
+  const ogLocaleAlternates = TOP_50_WORLD_LANGUAGES.slice(0, 20)
+    .map(lang => `<meta property="og:locale:alternate" content="${escapeHtmlAttr(lang.ogLocale)}" />`)
+    .join('\n    ');
+
   return `
     <title>${escapeHtmlAttr(meta.title)}</title>
     <meta name="description" content="${escapeHtmlAttr(meta.description)}" />
     <meta name="keywords" content="${escapeHtmlAttr(meta.keywords)}" />
+    <meta name="author" content="HindiDrama.net" />
     <meta name="robots" content="${escapeHtmlAttr(meta.robots)}" />
+    <meta name="googlebot" content="${escapeHtmlAttr(meta.robots)}" />
+    <meta name="bingbot" content="${escapeHtmlAttr(meta.robots)}" />
+    <meta name="distribution" content="global" />
+    <meta name="coverage" content="Worldwide" />
+    <meta name="rating" content="general" />
+    <meta name="revisit-after" content="1 days" />
     <link rel="canonical" href="${escapeHtmlAttr(meta.canonicalUrl)}" />
+    ${hreflangTags}
     <meta property="og:type" content="${escapeHtmlAttr(meta.ogType)}" />
+    <meta property="og:locale" content="en_IN" />
+    ${ogLocaleAlternates}
     <meta property="og:site_name" content="HindiDrama.net" />
     <meta property="og:title" content="${escapeHtmlAttr(meta.title)}" />
     <meta property="og:description" content="${escapeHtmlAttr(meta.description)}" />
@@ -470,6 +665,7 @@ export function applyClientSeo(meta: SeoMetadata): void {
   setMeta('meta[name="description"]', 'name', 'description', meta.description);
   setMeta('meta[name="keywords"]', 'name', 'keywords', meta.keywords);
   setMeta('meta[name="robots"]', 'name', 'robots', meta.robots);
+  setMeta('meta[name="googlebot"]', 'name', 'googlebot', meta.robots);
   setMeta('meta[property="og:type"]', 'property', 'og:type', meta.ogType);
   setMeta('meta[property="og:title"]', 'property', 'og:title', meta.title);
   setMeta('meta[property="og:description"]', 'property', 'og:description', meta.description);
@@ -487,6 +683,21 @@ export function applyClientSeo(meta: SeoMetadata): void {
     document.head.appendChild(canonical);
   }
   canonical.setAttribute('href', meta.canonicalUrl);
+
+  // Sync Top 50 hreflang alternates + x-default without duplicating nodes
+  document.head.querySelectorAll('link[rel="alternate"][hreflang]').forEach(node => node.remove());
+  TOP_50_WORLD_LANGUAGES.forEach(lang => {
+    const link = document.createElement('link');
+    link.setAttribute('rel', 'alternate');
+    link.setAttribute('hreflang', lang.code);
+    link.setAttribute('href', meta.canonicalUrl);
+    document.head.appendChild(link);
+  });
+  const xDef = document.createElement('link');
+  xDef.setAttribute('rel', 'alternate');
+  xDef.setAttribute('hreflang', 'x-default');
+  xDef.setAttribute('href', meta.canonicalUrl);
+  document.head.appendChild(xDef);
 
   // Replace dynamic JSON-LD structured data scripts cleanly
   document.head.querySelectorAll('script[type="application/ld+json"]').forEach(node => node.remove());

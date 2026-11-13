@@ -273,7 +273,9 @@ export async function fetchTmdbEpisodeSync(
 ): Promise<TmdbEpisodeMeta | null> {
   if (!tmdbId) return null;
   try {
-    const showReq = fetch(`${BASE_URL}/${type}/${tmdbId}?api_key=${TMDB_API_KEY}`);
+    const showReq = fetch(
+      `${BASE_URL}/${type}/${tmdbId}?api_key=${TMDB_API_KEY}&append_to_response=external_ids,videos`
+    );
     const epReq =
       type === 'tv'
         ? fetch(`${BASE_URL}/tv/${tmdbId}/season/${season}/episode/${episode}?api_key=${TMDB_API_KEY}`)
@@ -293,6 +295,9 @@ export async function fetchTmdbEpisodeSync(
       showData.overview ||
       `Stream ${title} Episode ${episode} in Hindi Dubbed HD on HindiDrama.net.`;
     const backdropPath = epData?.still_path || showData.backdrop_path || showData.poster_path;
+    const ytTrailer = (showData.videos?.results || []).find(
+      (v: any) => v.site === 'YouTube' && v.key
+    );
 
     return {
       title,
@@ -302,6 +307,8 @@ export async function fetchTmdbEpisodeSync(
         ? `${BACKDROP_BASE}${backdropPath}`
         : 'https://image.tmdb.org/t/p/original/2DxbreN5QiYYc5KT3zW7c7Sn8Zg.jpg',
       runtime: epData?.runtime || showData.episode_run_time?.[0] || 45,
+      imdbId: showData.external_ids?.imdb_id || showData.imdb_id || undefined,
+      youtubeKey: ytTrailer?.key || undefined,
       spokenLanguages: Array.isArray(showData.spoken_languages) ? showData.spoken_languages : [],
     };
   } catch (err) {

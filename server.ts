@@ -2,7 +2,10 @@ import fs from 'node:fs';
 import path from 'node:path';
 import express from 'express';
 import type { Request, Response } from 'express';
-import type { CastMember, CastProfile, Drama } from './src/types/drama.ts';
+import type { AudioLanguageCode, CastMember, CastProfile, Drama } from './src/types/drama.ts';
+import { resolveDynamicEmbed } from './src/services/embedResolver.ts';
+import { relayPlayerRequest } from './src/services/playerRelay.ts';
+import { buildHreflangSitemapLinks, INDEXNOW_KEY } from './src/services/worldwideSeo.ts';
 
 const PORT = Number(process.env.PORT) || 3000;
 const IS_PROD = process.env.NODE_ENV === 'production';
@@ -177,15 +180,25 @@ function generateSitemapXml(origin: string): string {
   const today = new Date().toISOString().split('T')[0];
   const urls: string[] = [];
 
-  const pushUrl = (loc: string, priority: string, changefreq: string, image?: { url: string; title: string }) => {
+  const pushUrl = (
+    loc: string,
+    priority: string,
+    changefreq: string,
+    image?: { url: string; title: string },
+    withWorldwideAlternates = false
+  ) => {
     const imgBlock = image
       ? `\n    <image:image>\n      <image:loc>${escapeXml(image.url)}</image:loc>\n      <image:title>${escapeXml(image.title)}</image:title>\n    </image:image>`
       : '';
-    urls.push(`  <url>\n    <loc>${escapeXml(loc)}</loc>\n    <lastmod>${today}</lastmod>\n    <changefreq>${changefreq}</changefreq>\n    <priority>${priority}</priority>${imgBlock}\n  </url>`);
+    const hreflangBlock = withWorldwideAlternates ? `\n${buildHreflangSitemapLinks(loc)}` : '';
+    urls.push(
+      `  <url>\n    <loc>${escapeXml(loc)}</loc>\n    <lastmod>${today}</lastmod>\n    <changefreq>${changefreq}</changefreq>\n    <priority>${priority}</priority>${hreflangBlock}${imgBlock}\n  </url>`
+    );
   };
 
   // Home & Category pages
-  pushUrl(`${origin}/`, '1.0', 'daily');
+  pushUrl(`${origin}/`, '1.0', 'daily', undefined, true);
+  pushUrl(`${origin}/category/hindi-dubbed`, '0.95', 'daily', undefined, true);
   ['trending', 'korean', 'chinese', 'japanese', 'indian'].forEach(cat => {
     pushUrl(`${origin}/category/${cat}`, '0.9', 'daily');
   });
@@ -224,13 +237,14 @@ function generateSitemapXml(origin: string): string {
     pushUrl(`${origin}${p}`, '0.4', 'monthly');
   });
 
-  const xml = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">\n${urls.join('\n')}\n</urlset>`;
+  const xml = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">\n${urls.join('\n')}\n</urlset>`;
   cachedSitemapXml = { xml, origin, timestamp: Date.now() };
   return xml;
 }
 
 async function startServer() {
   const app = express();
+  app.use('/api/player-relay', express.text({ type: '*/*', limit: '2mb' }));
   app.use(express.json({ limit: '1mb' }));
 
   let vite: any = null;
@@ -246,14 +260,79 @@ async function startServer() {
     app.use(express.static(distDir, { index: false, maxAge: '7d' }));
   }
 
-  // Automated robots.txt
+  // Automated global robots.txt
   app.get('/robots.txt', (req: Request, res: Response) => {
     const origin = getRequestOrigin(req);
     res.setHeader('Content-Type', 'text/plain; charset=utf-8');
     res.setHeader('Cache-Control', 'public, s-maxage=3600, stale-while-revalidate=86400');
     res.send(
-      `User-agent: *\nAllow: /\nDisallow: /api/\n\nUser-agent: Googlebot\nAllow: /\n\nUser-agent: Googlebot-Image\nAllow: /\n\nSitemap: ${origin}/sitemap.xml\n`
+      [
+        'User-agent: *',
+        'Allow: /',
+        'Disallow: /api/',
+        '',
+        'User-agent: Googlebot',
+        'Allow: /',
+        '',
+        'User-agent: Googlebot-Image',
+        'Allow: /',
+        '',
+        'User-agent: Googlebot-Video',
+        'Allow: /',
+        '',
+        'User-agent: Bingbot',
+        'Allow: /',
+        '',
+        'User-agent: DuckDuckBot',
+        'Allow: /',
+        '',
+        'User-agent: YandexBot',
+        'Allow: /',
+        '',
+        'User-agent: Baiduspider',
+        'Allow: /',
+        '',
+        'User-agent: Yeti',
+        'Allow: /',
+        '',
+        'User-agent: Applebot',
+        'Allow: /',
+        '',
+        `Sitemap: ${origin}/sitemap.xml`,
+        '',
+      ].join('\n')
     );
+  });
+
+  // IndexNow Ownership Verification Key File
+  app.get(`/${INDEXNOW_KEY}.txt`, (_req: Request, res: Response) => {
+    res.setHeader('Content-Type', 'text/plain; charset=utf-8');
+    res.send(INDEXNOW_KEY);
+  });
+
+  // Instant Search Engine Indexing Ping (IndexNow for Bing / Yandex / Naver / Seznam)
+  app.post('/api/seo/indexnow', async (req: Request, res: Response) => {
+    const origin = getRequestOrigin(req);
+    const urls: string[] = Array.isArray(req.body?.urls)
+      ? req.body.urls
+      : [`${origin}/`, `${origin}/category/hindi-dubbed`];
+    try {
+      const host = new URL(origin).hostname;
+      const r = await fetch('https://api.indexnow.org/indexnow', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json; charset=utf-8' },
+        body: JSON.stringify({
+          host,
+          key: INDEXNOW_KEY,
+          keyLocation: `${origin}/${INDEXNOW_KEY}.txt`,
+          urlList: urls.slice(0, 100),
+        }),
+        signal: AbortSignal.timeout(4000),
+      });
+      res.json({ ok: r.ok, status: r.status, submitted: urls.length });
+    } catch {
+      res.json({ ok: false, status: 503, submitted: 0 });
+    }
   });
 
   // Automated dynamic XML Sitemap
@@ -270,7 +349,7 @@ async function startServer() {
     res.json({ dramas: Array.from(liveDramasMap.values()) });
   });
 
-  // Dynamic sync endpoint so newly fetched TMDB dramas update SSR & Sitemap
+  // Dynamic sync endpoint so newly fetched TMDB dramas update SSR & Sitemap + trigger IndexNow
   app.post('/api/dramas/sync', (req: Request, res: Response) => {
     const drama = req.body as Drama;
     if (!drama || !drama.slug || !drama.title) {
@@ -282,6 +361,21 @@ async function startServer() {
       creditsCache.set(drama.tmdbId, drama.cast);
     }
     invalidateCaches();
+
+    const origin = getRequestOrigin(req);
+    if (!origin.includes('127.0.0.1') && !origin.includes('localhost')) {
+      fetch('https://api.indexnow.org/indexnow', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          host: new URL(origin).hostname,
+          key: INDEXNOW_KEY,
+          keyLocation: `${origin}/${INDEXNOW_KEY}.txt`,
+          urlList: [`${origin}/drama/${drama.slug}`, `${origin}/category/hindi-dubbed`],
+        }),
+      }).catch(() => {});
+    }
+
     res.json({ ok: true, totalDramas: liveDramasMap.size });
   });
 
@@ -294,18 +388,76 @@ async function startServer() {
     }
 
     const start = Date.now();
+    const headers = {
+      'User-Agent':
+        'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36',
+      Accept: 'text/html,application/xhtml+xml',
+    };
     try {
-      const response = await fetch(url, {
+      let response = await fetch(url, {
         method: 'HEAD',
-        redirect: 'follow',
+        headers,
+        redirect: 'manual',
         signal: AbortSignal.timeout(2500),
       });
+      if (response.status >= 400) {
+        response = await fetch(url, {
+          method: 'GET',
+          headers,
+          redirect: 'manual',
+          signal: AbortSignal.timeout(2500),
+        });
+      }
       const latencyMs = Date.now() - start;
-      const ok = response.status < 500;
-      res.json({ ok, status: response.status, latencyMs });
+      const isRedirect = response.status >= 300 && response.status < 400 && Boolean(response.headers.get('location'));
+      const isCfBrowserChallenge = response.status === 403 && Boolean(response.headers.get('cf-mitigated'));
+      const ok = (response.status >= 200 && response.status < 400) || isRedirect || isCfBrowserChallenge;
+      res.json({ ok, status: isRedirect || isCfBrowserChallenge ? 200 : response.status, latencyMs });
     } catch {
       res.json({ ok: false, status: 503, latencyMs: Date.now() - start });
     }
+  });
+
+  // Sandbox-Free HTML & Stream API Relay for Embed Players (2Embed / VidSrc.buzz / NontonGo / VidRock)
+  app.all('/api/player-relay', async (req: Request, res: Response) => {
+    const targetUrlRaw = typeof req.query.url === 'string' ? req.query.url : '';
+    const bodyText = typeof req.body === 'string' ? req.body : req.body ? JSON.stringify(req.body) : null;
+    const result = await relayPlayerRequest({
+      method: req.method.toUpperCase(),
+      targetUrlRaw,
+      bodyText,
+      contentType: req.headers['content-type'] || null,
+    });
+
+    Object.entries(result.headers).forEach(([k, v]) => {
+      res.setHeader(k, v);
+    });
+    if (typeof result.body === 'string') {
+      res.status(result.status).send(result.body);
+    } else {
+      res.status(result.status).send(Buffer.from(result.body));
+    }
+  });
+
+  // Dynamic Language-Aware Embed Resolver (Dailymotion & YouTube + TMDB Auto-Sync)
+  app.post('/api/embed-resolve', async (req: Request, res: Response) => {
+    const { provider, title, tmdbId, type, season, episode, lang } = req.body || {};
+    if ((provider !== 'dailymotion' && provider !== 'youtube') || typeof title !== 'string') {
+      res.status(400).json({ ok: false, error: 'Valid provider and title required' });
+      return;
+    }
+
+    const result = await resolveDynamicEmbed({
+      provider,
+      title,
+      tmdbId: Number(tmdbId) || 0,
+      type: type === 'movie' ? 'movie' : 'tv',
+      season: Number(season) || 1,
+      episode: Number(episode) || 1,
+      lang: (lang as AudioLanguageCode) || 'hi',
+      apiKey: TMDB_API_KEY,
+    });
+    res.json(result);
   });
 
   // Render helper (used for SSR & ISR background revalidation)
@@ -387,6 +539,12 @@ async function startServer() {
 
     res.setHeader('Content-Type', 'text/html; charset=utf-8');
     res.setHeader('Cache-Control', 'public, s-maxage=300, stale-while-revalidate=86400');
+    res.setHeader(
+      'X-Robots-Tag',
+      url.includes('?q=')
+        ? 'noindex, follow'
+        : 'index, follow, max-image-preview:large, max-video-preview:-1, max-snippet:-1'
+    );
     res.setHeader('X-SSR-Engine', 'HindiDrama-SSR-ISR');
 
     // ISR HIT or STALE-WHILE-REVALIDATE

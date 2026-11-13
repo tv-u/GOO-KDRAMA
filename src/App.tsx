@@ -30,6 +30,7 @@ interface ParsedRoute {
   searchQuery: string;
   dramaSlug: string;
   episode: number;
+  forceHindiOnly: boolean;
   genreSlug: string;
   castSlug: string;
   staticPage: 'dmca' | 'disclaimer' | 'privacy' | 'terms' | 'contact';
@@ -39,6 +40,7 @@ export function parseRouteUrl(rawUrl: string): ParsedRoute {
   const [rawPath, rawSearch = ''] = rawUrl.split('?');
   const path = rawPath || '/';
   const search = new URLSearchParams(rawSearch);
+  const forceHindiOnly = search.get('audio') === 'hindi' || search.get('hindiOnly') === '1';
 
   const base: ParsedRoute = {
     view: 'home',
@@ -46,6 +48,7 @@ export function parseRouteUrl(rawUrl: string): ParsedRoute {
     searchQuery: '',
     dramaSlug: '',
     episode: 1,
+    forceHindiOnly,
     genreSlug: '',
     castSlug: '',
     staticPage: 'dmca',
@@ -116,6 +119,7 @@ export default function App({
   const [currentView, setCurrentView] = useState<AppView>(initialParsed.view);
   const [activeDramaSlug, setActiveDramaSlug] = useState<string>(initialParsed.dramaSlug);
   const [activeEpisode, setActiveEpisode] = useState<number>(initialParsed.episode);
+  const [forceHindiOnly, setForceHindiOnly] = useState<boolean>(initialParsed.forceHindiOnly);
   const [activeGenreSlug, setActiveGenreSlug] = useState<string>(initialParsed.genreSlug);
   const [activeCastSlug, setActiveCastSlug] = useState<string>(initialParsed.castSlug);
   const [activeStaticPage, setActiveStaticPage] = useState<'dmca' | 'disclaimer' | 'privacy' | 'terms' | 'contact'>(
@@ -148,6 +152,7 @@ export default function App({
       setSearchQuery(parsed.searchQuery);
       setActiveDramaSlug(parsed.dramaSlug);
       setActiveEpisode(parsed.episode);
+      setForceHindiOnly(parsed.forceHindiOnly);
       setActiveGenreSlug(parsed.genreSlug);
       setActiveCastSlug(parsed.castSlug);
       setActiveStaticPage(parsed.staticPage);
@@ -196,6 +201,7 @@ export default function App({
     setCurrentView('home');
     setSearchQuery('');
     setCurrentCategory('all');
+    setForceHindiOnly(false);
     setCurrentPage(1);
     if (typeof window !== 'undefined') {
       window.history.pushState({}, '', '/');
@@ -206,6 +212,7 @@ export default function App({
   const handleSelectCategory = (cat: DramaCategory | string) => {
     const formatted = cat.toLowerCase() as DramaCategory;
     setCurrentCategory(formatted);
+    setForceHindiOnly(formatted === 'hindi-dubbed');
     setSearchQuery('');
     setCurrentView('home');
     setCurrentPage(1);
@@ -219,17 +226,21 @@ export default function App({
     setActiveDramaSlug(slug);
     setCurrentView('detail');
     if (typeof window !== 'undefined') {
-      window.history.pushState({}, '', `/drama/${slug}`);
+      const qs = currentCategory === 'hindi-dubbed' ? '?audio=hindi' : '';
+      window.history.pushState({}, '', `/drama/${slug}${qs}`);
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   };
 
   const handleWatchEpisode = (slug: string, ep: number) => {
+    const lockHindi = currentCategory === 'hindi-dubbed' || forceHindiOnly;
     setActiveDramaSlug(slug);
     setActiveEpisode(ep);
+    setForceHindiOnly(lockHindi);
     setCurrentView('watch');
     if (typeof window !== 'undefined') {
-      window.history.pushState({}, '', `/watch/${slug}/episode-${ep}`);
+      const qs = lockHindi ? '?audio=hindi' : '';
+      window.history.pushState({}, '', `/watch/${slug}/episode-${ep}${qs}`);
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   };
@@ -283,7 +294,13 @@ export default function App({
           String(d.year || '').includes(q)
       );
     } else {
-      if (currentCategory === 'korean') {
+      if (currentCategory === 'hindi-dubbed') {
+        result = result.filter(
+          d =>
+            d.country.toLowerCase() === 'korean' &&
+            (Boolean(d.hindiOnly) || (d.language || '').toLowerCase().includes('hindi'))
+        );
+      } else if (currentCategory === 'korean') {
         result = result.filter(d => d.country.toLowerCase() === 'korean');
       } else if (currentCategory === 'chinese') {
         result = result.filter(d => d.country.toLowerCase() === 'chinese' || d.country.toLowerCase() === 'taiwanese');
@@ -320,6 +337,7 @@ export default function App({
     if (searchQuery.trim()) {
       return `Search Results for "${searchQuery}"`;
     }
+    if (currentCategory === 'hindi-dubbed') return 'Hindi Dubbed K-Dramas (100% Pure Hindi Only)';
     if (currentCategory === 'korean') return 'Korean Dramas (Kdrama Hindi)';
     if (currentCategory === 'chinese') return 'Chinese Dramas (C-Drama Hindi)';
     if (currentCategory === 'japanese') return 'Japanese Dramas (J-Drama Hindi)';
@@ -375,6 +393,11 @@ export default function App({
               onOpenDrama={handleOpenDrama}
               onWatchEpisode={handleWatchEpisode}
               title={sectionTitle}
+              subtitle={
+                currentCategory === 'hindi-dubbed'
+                  ? `Showing ${filteredDramas.length} verified Korean dramas playing strictly in Hindi Dubbed Audio Only (No other audio languages)`
+                  : undefined
+              }
               sortBy={sortBy}
               onSortChange={setSortBy}
               currentPage={currentPage}
@@ -392,10 +415,12 @@ export default function App({
           <WatchPlayer
             drama={activeDrama}
             currentEpisode={activeEpisode}
+            hindiOnlyLocked={forceHindiOnly}
             onSelectEpisode={ep => {
               setActiveEpisode(ep);
               if (typeof window !== 'undefined') {
-                window.history.pushState({}, '', `/watch/${activeDrama.slug}/episode-${ep}`);
+                const qs = forceHindiOnly ? '?audio=hindi' : '';
+                window.history.pushState({}, '', `/watch/${activeDrama.slug}/episode-${ep}${qs}`);
                 window.scrollTo({ top: 120, behavior: 'smooth' });
               }
             }}

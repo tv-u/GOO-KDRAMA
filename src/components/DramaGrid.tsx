@@ -8,6 +8,7 @@ interface DramaGridProps {
   onOpenDrama: (slug: string) => void;
   onWatchEpisode: (slug: string, ep: number) => void;
   title?: string;
+  subtitle?: string;
   sortBy: SortOption;
   onSortChange: (sort: SortOption) => void;
   currentPage: number;
@@ -19,6 +20,7 @@ export const DramaGrid: React.FC<DramaGridProps> = ({
   onOpenDrama,
   onWatchEpisode,
   title = 'Latest Added',
+  subtitle,
   sortBy,
   onSortChange,
   currentPage,
@@ -36,7 +38,7 @@ export const DramaGrid: React.FC<DramaGridProps> = ({
             {title}
           </h2>
           <p className="text-xs text-slate-400 mt-0.5">
-            Showing {dramas.length} Asian dramas in full Hindi dubbed audio
+            {subtitle || `Showing ${dramas.length} Asian dramas in full Hindi dubbed audio`}
           </p>
         </div>
 

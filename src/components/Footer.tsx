@@ -61,6 +61,18 @@ export const Footer: React.FC<FooterProps> = ({
             <ul className="space-y-2 text-xs">
               <li>
                 <a
+                  href="/category/hindi-dubbed"
+                  onClick={e => {
+                    e.preventDefault();
+                    onSelectCategory('hindi-dubbed');
+                  }}
+                  className="hover:text-blue-400 text-blue-300 font-semibold transition-colors"
+                >
+                  Hindi Dubbed K-Drama (Hindi Only)
+                </a>
+              </li>
+              <li>
+                <a
                   href="/category/korean"
                   onClick={e => {
                     e.preventDefault();
@@ -210,13 +222,56 @@ export const Footer: React.FC<FooterProps> = ({
               Disclaimer
             </h4>
             <p className="leading-relaxed">
-              HindiDrama.net does not host any files on its servers. All videos and streams are embedded from third-party media hosting platforms (StreamWish, Abyss, Byse, VidCloud, SuperEmbed, etc.).
+              HindiDrama.net does not host any files on its servers. All videos and streams are embedded from third-party media hosting platforms (VidLink, CinemaOS, SmashyStream, VidFast, VidSrc, 2Embed, MultiEmbed, Streamtape, YouTube, Dailymotion, NontonGo, VidRock, etc.).
             </p>
             <p className="leading-relaxed">
               For copyright issues, please submit an official takedown request via our DMCA page.
             </p>
           </div>
 
+        </div>
+
+        {/* Crawlable Genre SEO Internal Link Strip */}
+        <div className="py-5 border-b border-slate-800/70 flex flex-wrap items-center gap-2 text-[11px]">
+          <span className="text-slate-400 font-semibold uppercase tracking-wider mr-1">Popular Genres:</span>
+          {[
+            { slug: 'romance', label: 'Romance K-Dramas' },
+            { slug: 'action', label: 'Action & Thriller' },
+            { slug: 'historical', label: 'Historical C-Dramas' },
+            { slug: 'fantasy', label: 'Fantasy Dramas' },
+            { slug: 'comedy', label: 'Rom-Com Hindi' },
+            { slug: 'mystery', label: 'Mystery & Crime' },
+            { slug: 'drama', label: 'Family & Melodrama' },
+            { slug: 'sci-fi-fantasy', label: 'Sci-Fi & Supernatural' },
+          ].map(g => (
+            <a
+              key={g.slug}
+              href={`/genre/${g.slug}`}
+              className="px-2.5 py-1 rounded bg-slate-900/90 hover:bg-slate-800 border border-slate-800 text-slate-300 hover:text-blue-400 transition-colors"
+            >
+              {g.label}
+            </a>
+          ))}
+        </div>
+
+        {/* Worldwide Top-50 Language & Long-Tail Hindi K-Drama Search Directory */}
+        <div className="py-4 border-b border-slate-800/70 text-[11px] text-slate-500 leading-relaxed">
+          <span className="text-slate-400 font-semibold uppercase tracking-wider mr-2">
+            Worldwide K-Drama Index (50+ Languages):
+          </span>
+          <a
+            href="/category/hindi-dubbed"
+            onClick={e => {
+              e.preventDefault();
+              onSelectCategory('hindi-dubbed');
+            }}
+            className="text-blue-400 hover:underline font-medium mr-2"
+          >
+            Watch Real Hindi Dubbed K-Drama Only
+          </a>
+          <span>
+            • हिंदी डब के-ड्रामा ऑनलाइन • 힌디어 더빙 한국 드라마 • Ver K-Dramas Doblados al Hindi • Regarder K-Drama en Hindi • مسلسل كوري مدبلج هندي • Nonton Drama Korea Hindi • ดูซีรีส์เกาหลีพากย์ฮินดี • Phim Hàn Lồng Tiếng Hindi • हिन्‍दी डब के-ड्रामा HD
+          </span>
         </div>
 
         {/* Bottom Copyright */}

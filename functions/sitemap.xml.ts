@@ -1,5 +1,6 @@
 import baseDramas from '../src/data/dramas.json';
 import { slugifyText } from '../src/services/seo.ts';
+import { buildHreflangSitemapLinks } from '../src/services/worldwideSeo.ts';
 import type { Drama } from '../src/types/drama.ts';
 import type { CFContext } from './types.ts';
 
@@ -23,17 +24,20 @@ export async function onRequestGet(context: CFContext): Promise<Response> {
     loc: string,
     priority: string,
     changefreq: string,
-    image?: { url: string; title: string }
+    image?: { url: string; title: string },
+    withWorldwideAlternates = false
   ) => {
     const imgBlock = image
       ? `\n    <image:image>\n      <image:loc>${escapeXml(image.url)}</image:loc>\n      <image:title>${escapeXml(image.title)}</image:title>\n    </image:image>`
       : '';
+    const hreflangBlock = withWorldwideAlternates ? `\n${buildHreflangSitemapLinks(loc)}` : '';
     urls.push(
-      `  <url>\n    <loc>${escapeXml(loc)}</loc>\n    <lastmod>${today}</lastmod>\n    <changefreq>${changefreq}</changefreq>\n    <priority>${priority}</priority>${imgBlock}\n  </url>`
+      `  <url>\n    <loc>${escapeXml(loc)}</loc>\n    <lastmod>${today}</lastmod>\n    <changefreq>${changefreq}</changefreq>\n    <priority>${priority}</priority>${hreflangBlock}${imgBlock}\n  </url>`
     );
   };
 
-  pushUrl(`${origin}/`, '1.0', 'daily');
+  pushUrl(`${origin}/`, '1.0', 'daily', undefined, true);
+  pushUrl(`${origin}/category/hindi-dubbed`, '0.95', 'daily', undefined, true);
   ['trending', 'korean', 'chinese', 'japanese', 'indian'].forEach(cat => {
     pushUrl(`${origin}/category/${cat}`, '0.9', 'daily');
   });
@@ -67,7 +71,7 @@ export async function onRequestGet(context: CFContext): Promise<Response> {
     pushUrl(`${origin}${p}`, '0.4', 'monthly');
   });
 
-  const xml = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">\n${urls.join('\n')}\n</urlset>`;
+  const xml = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">\n${urls.join('\n')}\n</urlset>`;
 
   return new Response(xml, {
     status: 200,
