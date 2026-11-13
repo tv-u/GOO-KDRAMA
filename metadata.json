@@ -1,0 +1,6 @@
+{
+  "name": "HindiDrama – Watch Kdrama & Asian Drama Hindi Dubbed",
+  "description": "Watch Korean, Chinese, Japanese, and Indian dramas in Hindi dubbed online for free in HD. High speed servers, auto-sync with TMDB, and daily episode updates.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
