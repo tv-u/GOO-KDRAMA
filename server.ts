@@ -6,7 +6,7 @@ import type { CastMember, CastProfile, Drama } from './src/types/drama.ts';
 
 const PORT = Number(process.env.PORT) || 3000;
 const IS_PROD = process.env.NODE_ENV === 'production';
-const TMDB_API_KEY = '174d0214bf933dd59b3d5ec68a0c967f';
+const TMDB_API_KEY = process.env.TMDB_API_KEY || '174d0214bf933dd59b3d5ec68a0c967f';
 const ISR_REVALIDATE_MS = 300_000; // 5 minutes
 
 function slugifyText(value: string): string {
@@ -252,7 +252,7 @@ async function startServer() {
     res.setHeader('Content-Type', 'text/plain; charset=utf-8');
     res.setHeader('Cache-Control', 'public, s-maxage=3600, stale-while-revalidate=86400');
     res.send(
-      `User-agent: *\nAllow: /\nDisallow: /api/\n\nSitemap: ${origin}/sitemap.xml\n`
+      `User-agent: *\nAllow: /\nDisallow: /api/\n\nUser-agent: Googlebot\nAllow: /\n\nUser-agent: Googlebot-Image\nAllow: /\n\nSitemap: ${origin}/sitemap.xml\n`
     );
   });
 
@@ -349,7 +349,7 @@ async function startServer() {
       renderFn = serverModule.renderPage;
     } else {
       templateHtml = fs.readFileSync(path.resolve(process.cwd(), 'dist/index.html'), 'utf-8');
-      const prodServerEntry = path.resolve(process.cwd(), 'dist/server/entry-server.js');
+      const prodServerEntry = path.resolve(process.cwd(), 'dist-server/entry-server.js');
       const serverModule = await import(prodServerEntry);
       renderFn = serverModule.renderPage;
     }

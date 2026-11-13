@@ -1,0 +1,84 @@
+name: HindiDrama CI & TMDB Auto-Sync
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+    branches: [main, master]
+  schedule:
+    # Automatically sync latest Asian dramas & refresh XML sitemap daily at 04:00 UTC
+    - cron: '0 4 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  ci-build-and-typecheck:
+    name: Typecheck & Production Build (Cloudflare Pages Ready)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run TypeScript checks
+        run: npm run lint
+
+      - name: Build production bundle & static SEO assets
+        env:
+          SITE_URL: ${{ vars.SITE_URL || 'https://hindidrama.net' }}
+          TMDB_API_KEY: ${{ secrets.TMDB_API_KEY || '174d0214bf933dd59b3d5ec68a0c967f' }}
+        run: npm run build
+
+  auto-sync-tmdb-catalog:
+    name: Daily TMDB Catalog & Sitemap Auto-Sync
+    runs-on: ubuntu-latest
+    if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Sync latest dramas from TMDB API
+        env:
+          TMDB_API_KEY: ${{ secrets.TMDB_API_KEY || '174d0214bf933dd59b3d5ec68a0c967f' }}
+        run: npm run sync:tmdb
+
+      - name: Regenerate static sitemap.xml & robots.txt
+        env:
+          SITE_URL: ${{ vars.SITE_URL || 'https://hindidrama.net' }}
+        run: npm run seo:generate
+
+      - name: Verify TypeScript & Vite build after sync
+        run: npm run lint && npm run build
+
+      - name: Commit & Push updated catalog (triggers Cloudflare Pages deploy)
+        run: |
+          git config user.name "HindiDrama AutoSync Bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add src/data/dramas.json public/sitemap.xml public/robots.txt
+          if ! git diff --cached --quiet; then
+            git commit -m "chore(auto-sync): update TMDB drama catalog & XML sitemap"
+            git push
+          else
+            echo "Catalog is already up to date."
+          fi

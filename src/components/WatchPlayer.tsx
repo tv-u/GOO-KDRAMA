@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
-import Hls from 'hls.js';
+import type Hls from 'hls.js';
 import {
   Play, Download, Star, Eye, Clock, ChevronLeft, ChevronRight,
   MessageSquare, ThumbsUp, Send, Share2, Moon, Sun,
@@ -154,6 +154,8 @@ export const WatchPlayer: React.FC<WatchPlayerProps> = ({
     const video = videoRef.current;
     if (!video) return;
 
+    let cancelled = false;
+
     if (hlsRef.current) {
       hlsRef.current.destroy();
       hlsRef.current = null;
@@ -171,70 +173,77 @@ export const WatchPlayer: React.FC<WatchPlayerProps> = ({
       if (idx !== -1) {
         hlsInstance.audioTrack = idx;
       } else {
-        // Prefer Hindi ('hi') if requested language track missing, else track 0
         const hindiIdx = tracks.findIndex(t => (t.lang || '').toLowerCase().includes('hi'));
         if (hindiIdx !== -1) hlsInstance.audioTrack = hindiIdx;
       }
     };
 
-    if (Hls.isSupported()) {
-      const hls = new Hls({
-        enableWorker: true,
-        lowLatencyMode: true,
-        backBufferLength: 60,
-      });
-      hlsRef.current = hls;
-      hls.loadSource(activeHlsSource);
-      hls.attachMedia(video);
+    import('hls.js')
+      .then(({ default: HlsEngine }) => {
+        if (cancelled) return;
+        if (HlsEngine.isSupported()) {
+          const hls = new HlsEngine({
+            enableWorker: true,
+            lowLatencyMode: true,
+            backBufferLength: 60,
+          });
+          hlsRef.current = hls;
+          hls.loadSource(activeHlsSource);
+          hls.attachMedia(video);
 
-      hls.on(Hls.Events.MANIFEST_PARSED, () => {
-        const mapped = (hls.audioTracks || []).map((t, i) => ({
-          id: i,
-          name: t.name || t.lang || `Audio ${i + 1}`,
-          lang: t.lang,
-        }));
-        setHlsAudioTracks(mapped);
-        selectTrackByLang(hls, selectedLang);
-        video.play().catch(() => {});
-      });
+          hls.on(HlsEngine.Events.MANIFEST_PARSED, () => {
+            const mapped = (hls.audioTracks || []).map((t, i) => ({
+              id: i,
+              name: t.name || t.lang || `Audio ${i + 1}`,
+              lang: t.lang,
+            }));
+            setHlsAudioTracks(mapped);
+            selectTrackByLang(hls, selectedLang);
+            video.play().catch(() => {});
+          });
 
-      hls.on(Hls.Events.AUDIO_TRACKS_UPDATED, (_evt, data) => {
-        const mapped = (data.audioTracks || []).map((t, i) => ({
-          id: i,
-          name: t.name || t.lang || `Audio ${i + 1}`,
-          lang: t.lang,
-        }));
-        setHlsAudioTracks(mapped);
-        selectTrackByLang(hls, selectedLang);
-      });
+          hls.on(HlsEngine.Events.AUDIO_TRACKS_UPDATED, (_evt, data) => {
+            const mapped = (data.audioTracks || []).map((t, i) => ({
+              id: i,
+              name: t.name || t.lang || `Audio ${i + 1}`,
+              lang: t.lang,
+            }));
+            setHlsAudioTracks(mapped);
+            selectTrackByLang(hls, selectedLang);
+          });
 
-      hls.on(Hls.Events.ERROR, (_evt, data) => {
-        if (data.fatal) {
-          if (data.type === Hls.ErrorTypes.NETWORK_ERROR) {
-            hls.startLoad();
-          } else if (data.type === Hls.ErrorTypes.MEDIA_ERROR) {
-            hls.recoverMediaError();
-          } else {
-            hls.destroy();
-            setHlsFailed(true);
-            setFallbackMessage('HLS stream unavailable • Auto-switched to Multi-Server Embed Fallback');
-            setTimeout(() => setFallbackMessage(null), 4000);
-          }
+          hls.on(HlsEngine.Events.ERROR, (_evt, data) => {
+            if (data.fatal) {
+              if (data.type === HlsEngine.ErrorTypes.NETWORK_ERROR) {
+                hls.startLoad();
+              } else if (data.type === HlsEngine.ErrorTypes.MEDIA_ERROR) {
+                hls.recoverMediaError();
+              } else {
+                hls.destroy();
+                setHlsFailed(true);
+                setFallbackMessage('HLS stream unavailable • Auto-switched to Multi-Server Embed Fallback');
+                setTimeout(() => setFallbackMessage(null), 4000);
+              }
+            }
+          });
+        } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+          video.src = activeHlsSource;
+          video.play().catch(() => {});
+        } else {
+          setHlsFailed(true);
         }
+      })
+      .catch(() => {
+        if (!cancelled) setHlsFailed(true);
       });
 
-      return () => {
-        hls.destroy();
+    return () => {
+      cancelled = true;
+      if (hlsRef.current) {
+        hlsRef.current.destroy();
         hlsRef.current = null;
-      };
-    }
-
-    if (video.canPlayType('application/vnd.apple.mpegurl')) {
-      video.src = activeHlsSource;
-      video.play().catch(() => {});
-    } else {
-      setHlsFailed(true);
-    }
+      }
+    };
   }, [useHlsMode, activeHlsSource]);
 
   // Zero-Reload Mid-Playback Audio Language Switcher + localStorage Persistence

@@ -5,10 +5,12 @@
   "type": "module",
   "scripts": {
     "dev": "tsx server.ts",
-    "build": "vite build && vite build --ssr src/entry-server.tsx --outDir dist/server",
+    "seo:generate": "node scripts/generate-static-seo.mjs",
+    "sync:tmdb": "node scripts/sync-tmdb-catalog.mjs",
+    "build": "node scripts/generate-static-seo.mjs && vite build && vite build --ssr src/entry-server.tsx --outDir dist-server",
     "start": "NODE_ENV=production node server.ts",
     "preview": "vite preview",
-    "clean": "rm -rf dist server.js",
+    "clean": "rm -rf dist dist-server server.js",
     "lint": "tsc --noEmit"
   },
   "dependencies": {

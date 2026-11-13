@@ -2,7 +2,9 @@ import type { CastMember, CastProfile, Drama, TmdbEpisodeMeta } from '../types/d
 import baseDramas from '../data/dramas.json';
 import { slugifyText } from './seo.ts';
 
-export const TMDB_API_KEY = '174d0214bf933dd59b3d5ec68a0c967f';
+export const TMDB_API_KEY =
+  (typeof import.meta !== 'undefined' && (import.meta as any).env?.VITE_TMDB_API_KEY) ||
+  '174d0214bf933dd59b3d5ec68a0c967f';
 const BASE_URL = 'https://api.themoviedb.org/3';
 const IMAGE_BASE = 'https://image.tmdb.org/t/p/w500';
 const BACKDROP_BASE = 'https://image.tmdb.org/t/p/original';
