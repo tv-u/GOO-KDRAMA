@@ -1,11 +1,20 @@
 import React, { useEffect, useState } from 'react';
-import { Play, Download, Star, Eye, Clock, Calendar, ArrowLeft, Tv, Users, HelpCircle } from 'lucide-react';
-import type { CastMember, Drama } from '../types/drama.ts';
+import { Play, Download, Star, Eye, Clock, Calendar, ArrowLeft, Tv, Users, HelpCircle, Bookmark, Heart, Check } from 'lucide-react';
+import type { CastMember, Drama, EpisodeDetail, SeasonSummary } from '../types/drama.ts';
 import { AdsterraBanner } from './AdsterraBanner.tsx';
 import { triggerSmartlink } from '../services/adsterra.ts';
-import { fetchDramaCredits } from '../services/tmdb.ts';
+import { fetchDramaCredits, fetchTmdbSeasonEpisodes, fetchTmdbShowSeasons } from '../services/tmdb.ts';
+import {
+  addRecentlyViewed,
+  getWatchedEpisodesForDrama,
+  isFavorite,
+  isInWatchlist,
+  toggleFavorite,
+  toggleWatchlist,
+} from '../services/storage.ts';
 import { getDramaFaqs, slugifyText } from '../services/seo.ts';
 import { OptimizedImage } from './OptimizedImage.tsx';
+import { DynamicMoviePlayer } from './DynamicMoviePlayer.tsx';
 
 interface DramaDetailProps {
   drama: Drama;
@@ -29,17 +38,45 @@ export const DramaDetail: React.FC<DramaDetailProps> = ({
   onBack,
 }) => {
   const [castList, setCastList] = useState<CastMember[]>(drama.cast || []);
+  const [seasons, setSeasons] = useState<SeasonSummary[]>(drama.seasons || []);
+  const [selectedSeason, setSelectedSeason] = useState<number>(drama.season || 1);
+  const [seasonEpisodes, setSeasonEpisodes] = useState<EpisodeDetail[]>([]);
+  const [loadingEpisodes, setLoadingEpisodes] = useState<boolean>(false);
+  const [watchedEpisodes, setWatchedEpisodes] = useState<number[]>([]);
+  const [inWatchlist, setInWatchlist] = useState<boolean>(false);
+  const [favorited, setFavorited] = useState<boolean>(false);
+
+  useEffect(() => {
+    setWatchedEpisodes(getWatchedEpisodesForDrama(drama.slug));
+    setInWatchlist(isInWatchlist(drama.slug));
+    setFavorited(isFavorite(drama.slug));
+    addRecentlyViewed({
+      slug: drama.slug,
+      title: drama.title,
+      poster: drama.poster,
+      country: drama.country,
+      year: drama.year,
+      rating: drama.rating,
+      totalEpisodes: drama.totalEpisodes,
+      type: drama.type,
+      genres: drama.genres,
+    });
+  }, [drama]);
 
   useEffect(() => {
     let active = true;
     if (drama.cast && drama.cast.length > 0) {
       setCastList(drama.cast);
-      return;
-    }
-    if (drama.tmdbId) {
+    } else if (drama.tmdbId) {
       fetchDramaCredits(drama.tmdbId, drama.type || 'tv').then(list => {
+        if (active && list.length > 0) setCastList(list);
+      });
+    }
+
+    if (drama.type !== 'movie' && drama.tmdbId) {
+      fetchTmdbShowSeasons(drama.tmdbId).then(list => {
         if (active && list.length > 0) {
-          setCastList(list);
+          setSeasons(list);
         }
       });
     }
@@ -47,6 +84,27 @@ export const DramaDetail: React.FC<DramaDetailProps> = ({
       active = false;
     };
   }, [drama.slug, drama.tmdbId, drama.type, drama.cast]);
+
+  useEffect(() => {
+    if (drama.type === 'movie' || !drama.tmdbId) return;
+    let active = true;
+    setLoadingEpisodes(true);
+    fetchTmdbSeasonEpisodes(drama.tmdbId, selectedSeason)
+      .then(list => {
+        if (active) setSeasonEpisodes(list);
+      })
+      .finally(() => {
+        if (active) setLoadingEpisodes(false);
+      });
+    return () => {
+      active = false;
+    };
+  }, [drama.tmdbId, drama.type, selectedSeason]);
+
+  const nextRecommendedEp =
+    watchedEpisodes.length > 0
+      ? Math.min(drama.totalEpisodes, Math.max(...watchedEpisodes) + 1)
+      : 1;
 
   const faqs = getDramaFaqs(drama);
 
@@ -123,16 +181,76 @@ export const DramaDetail: React.FC<DramaDetailProps> = ({
 
             <div className="mt-4 space-y-2.5">
               <a
-                href={`/watch/${drama.slug}/episode-1`}
+                href={`/watch/${drama.slug}/episode-${nextRecommendedEp}`}
                 onClick={e => {
                   e.preventDefault();
-                  onWatchEpisode(drama.slug, 1);
+                  onWatchEpisode(drama.slug, nextRecommendedEp);
                 }}
                 className="w-full py-3 px-4 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-sm sm:text-base flex items-center justify-center gap-2 shadow-lg shadow-blue-600/30 transition-all hover:scale-[1.02]"
               >
                 <Play className="w-5 h-5 fill-current" />
-                <span>Watch Episode 1</span>
+                <span>
+                  {watchedEpisodes.length > 0
+                    ? `Continue Episode ${nextRecommendedEp}`
+                    : drama.type === 'movie'
+                      ? 'Watch Movie'
+                      : 'Watch Episode 1'}
+                </span>
               </a>
+
+              <div className="grid grid-cols-2 gap-2">
+                <button
+                  type="button"
+                  onClick={() => {
+                    const res = toggleWatchlist({
+                      slug: drama.slug,
+                      title: drama.title,
+                      poster: drama.poster,
+                      country: drama.country,
+                      year: drama.year,
+                      rating: drama.rating,
+                      totalEpisodes: drama.totalEpisodes,
+                      type: drama.type,
+                      genres: drama.genres,
+                    });
+                    setInWatchlist(res.added);
+                  }}
+                  className={`py-2 px-3 rounded-xl text-xs font-semibold flex items-center justify-center gap-1.5 border transition-colors cursor-pointer ${
+                    inWatchlist
+                      ? 'bg-blue-600/20 border-blue-500/40 text-blue-300'
+                      : 'bg-slate-800 hover:bg-slate-700 border-slate-700 text-slate-200'
+                  }`}
+                >
+                  <Bookmark className={`w-3.5 h-3.5 ${inWatchlist ? 'fill-current' : ''}`} />
+                  <span>{inWatchlist ? 'In Watchlist' : 'Watchlist'}</span>
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => {
+                    const res = toggleFavorite({
+                      slug: drama.slug,
+                      title: drama.title,
+                      poster: drama.poster,
+                      country: drama.country,
+                      year: drama.year,
+                      rating: drama.rating,
+                      totalEpisodes: drama.totalEpisodes,
+                      type: drama.type,
+                      genres: drama.genres,
+                    });
+                    setFavorited(res.added);
+                  }}
+                  className={`py-2 px-3 rounded-xl text-xs font-semibold flex items-center justify-center gap-1.5 border transition-colors cursor-pointer ${
+                    favorited
+                      ? 'bg-rose-600/20 border-rose-500/40 text-rose-300'
+                      : 'bg-slate-800 hover:bg-slate-700 border-slate-700 text-slate-200'
+                  }`}
+                >
+                  <Heart className={`w-3.5 h-3.5 ${favorited ? 'fill-current' : ''}`} />
+                  <span>{favorited ? 'Favorited' : 'Favorite'}</span>
+                </button>
+              </div>
 
               <button
                 onClick={() => triggerSmartlink()}
@@ -300,34 +418,130 @@ export const DramaDetail: React.FC<DramaDetailProps> = ({
           </div>
         )}
 
-        {/* All Episodes Selection Grid */}
+        {/* Season & Episode Management Section */}
         <div className="bg-slate-900/40 border border-slate-800 rounded-2xl p-6 mb-8">
-          <div className="flex items-center justify-between pb-4 mb-4 border-b border-slate-800">
+          <div className="flex flex-wrap items-center justify-between gap-3 pb-4 mb-4 border-b border-slate-800">
             <h2 className="text-lg sm:text-xl font-bold text-white flex items-center gap-2">
               <Tv className="w-5 h-5 text-blue-500" />
-              <span>All Episodes ({drama.totalEpisodes})</span>
+              <span>
+                {drama.type === 'movie' ? 'HLX Dynamic Movie Player' : `All Episodes (${drama.totalEpisodes})`}
+              </span>
             </h2>
-            <span className="text-xs text-blue-400 font-semibold">
-              All Hindi Dubbed episodes unlocked
-            </span>
+
+            {seasons.length > 1 && (
+              <div className="flex items-center gap-1.5 overflow-x-auto">
+                {seasons.map(s => (
+                  <button
+                    key={s.seasonNumber}
+                    type="button"
+                    onClick={() => setSelectedSeason(s.seasonNumber)}
+                    className={`px-3 py-1.5 rounded-lg text-xs font-semibold cursor-pointer whitespace-nowrap transition-colors ${
+                      selectedSeason === s.seasonNumber
+                        ? 'bg-blue-600 text-white'
+                        : 'bg-slate-800 text-slate-300 hover:bg-slate-700'
+                    }`}
+                  >
+                    Season {s.seasonNumber} ({s.episodeCount})
+                  </button>
+                ))}
+              </div>
+            )}
           </div>
 
-          <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-3">
-            {Array.from({ length: drama.totalEpisodes }, (_, i) => i + 1).map(ep => (
-              <a
-                key={ep}
-                href={`/watch/${drama.slug}/episode-${ep}`}
-                onClick={e => {
-                  e.preventDefault();
-                  onWatchEpisode(drama.slug, ep);
-                }}
-                className="flex items-center justify-center gap-1.5 py-3 px-2 rounded-xl bg-slate-800/90 hover:bg-blue-600 text-slate-200 hover:text-white font-semibold text-xs border border-slate-700/60 hover:border-blue-500 transition-all hover:scale-105 cursor-pointer shadow-sm group"
-              >
-                <Play className="w-3 h-3 fill-current group-hover:scale-110 transition-transform" />
-                <span>Ep {ep}</span>
-              </a>
-            ))}
-          </div>
+          {drama.type === 'movie' ? (
+            <div className="my-2">
+              <DynamicMoviePlayer
+                tmdbId={drama.tmdbId || 129117}
+                title={drama.title}
+                mediaType="movie"
+                initialLang="hi"
+              />
+            </div>
+          ) : loadingEpisodes ? (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3.5">
+              {Array.from({ length: 6 }).map((_, idx) => (
+                <div key={idx} className="h-24 rounded-xl bg-slate-800/70 animate-pulse border border-slate-800" />
+              ))}
+            </div>
+          ) : seasonEpisodes.length > 0 ? (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3.5">
+              {seasonEpisodes.map(ep => {
+                const isWatched = watchedEpisodes.includes(ep.episodeNumber);
+                return (
+                  <a
+                    key={`s${ep.seasonNumber}-e${ep.episodeNumber}`}
+                    href={`/watch/${drama.slug}/episode-${ep.episodeNumber}`}
+                    onClick={e => {
+                      e.preventDefault();
+                      onWatchEpisode(drama.slug, ep.episodeNumber);
+                    }}
+                    className="group flex gap-3 p-2.5 rounded-xl bg-slate-900/70 hover:bg-slate-800/80 border border-slate-800 hover:border-blue-500/60 transition-colors cursor-pointer"
+                  >
+                    <div className="relative w-28 aspect-video rounded-lg overflow-hidden bg-slate-800 shrink-0">
+                      <OptimizedImage
+                        src={ep.stillUrl || drama.backdrop || drama.poster}
+                        alt={`${drama.title} Ep ${ep.episodeNumber}`}
+                        width={320}
+                        height={180}
+                        className="w-full h-full object-cover"
+                      />
+                      <span className="absolute bottom-1 left-1 bg-black/80 text-white text-[10px] font-mono tabular-nums px-1.5 py-0.5 rounded">
+                        Ep {ep.episodeNumber}
+                      </span>
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center justify-between gap-2">
+                        <p className="text-xs sm:text-sm font-semibold text-slate-100 group-hover:text-blue-400 truncate">
+                          {ep.name}
+                        </p>
+                        {isWatched && (
+                          <span className="text-[10px] text-emerald-400 font-semibold shrink-0 flex items-center gap-0.5">
+                            <Check className="w-3 h-3" /> Watched
+                          </span>
+                        )}
+                      </div>
+                      <p className="text-[11px] text-slate-400 line-clamp-2 mt-0.5 leading-snug">
+                        {ep.overview}
+                      </p>
+                      <div className="flex items-center gap-2 text-[10px] text-slate-500 mt-1 tabular-nums">
+                        {ep.airDate && <span>{ep.airDate}</span>}
+                        {ep.runtime && (
+                          <>
+                            <span aria-hidden="true">·</span>
+                            <span>{ep.runtime} min</span>
+                          </>
+                        )}
+                      </div>
+                    </div>
+                  </a>
+                );
+              })}
+            </div>
+          ) : (
+            <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-3">
+              {Array.from({ length: drama.totalEpisodes }, (_, i) => i + 1).map(ep => {
+                const isWatched = watchedEpisodes.includes(ep);
+                return (
+                  <a
+                    key={ep}
+                    href={`/watch/${drama.slug}/episode-${ep}`}
+                    onClick={e => {
+                      e.preventDefault();
+                      onWatchEpisode(drama.slug, ep);
+                    }}
+                    className={`flex items-center justify-center gap-1.5 py-3 px-2 rounded-xl font-semibold text-xs border transition-all cursor-pointer shadow-sm group ${
+                      isWatched
+                        ? 'bg-emerald-950/50 border-emerald-600/40 text-emerald-300 hover:bg-blue-600 hover:text-white'
+                        : 'bg-slate-800/90 hover:bg-blue-600 text-slate-200 hover:text-white border-slate-700/60 hover:border-blue-500'
+                    }`}
+                  >
+                    {isWatched ? <Check className="w-3 h-3" /> : <Play className="w-3 h-3 fill-current" />}
+                    <span>Ep {ep}</span>
+                  </a>
+                );
+              })}
+            </div>
+          )}
         </div>
 
         {/* SEO FAQ Section (Matches FAQPage JSON-LD) */}

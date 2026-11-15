@@ -198,7 +198,7 @@ export const CastPage: React.FC<CastPageProps> = ({
             return (
               <a
                 key={`${credit.tmdbId}-${credit.slug}`}
-                href={`/drama/${credit.slug}`}
+                href={`/${credit.mediaType === 'movie' ? 'movie' : 'drama'}/${credit.slug}`}
                 onClick={e => {
                   e.preventDefault();
                   handleOpenCredit(credit);

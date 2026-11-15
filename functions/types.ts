@@ -3,6 +3,7 @@ export interface CFEnv {
     fetch: (input: RequestInfo | URL, init?: RequestInit) => Promise<Response>;
   };
   TMDB_API_KEY?: string;
+  DAILYMOTION_API_KEY?: string;
   SITE_URL?: string;
   CF_PAGES_URL?: string;
 }

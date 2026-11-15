@@ -23,7 +23,10 @@
     "status": "Completed",
     "type": "tv",
     "language": "Hindi Dubbed",
-    "latestEpisode": 24
+    "latestEpisode": 24,
+    "imdbId": "tt16924358",
+    "tvdbId": 403285,
+    "youtubeKey": "b8PJUDtzNGQ"
   },
   {
     "id": "study-group",
@@ -50,7 +53,10 @@
     "type": "tv",
     "language": "Hindi Dubbed",
     "latestEpisode": 11,
-    "hindiOnly": true
+    "hindiOnly": true,
+    "imdbId": "tt35304338",
+    "tvdbId": 435181,
+    "youtubeKey": "Bx0piV_Uf4E"
   },
   {
     "id": "the-remarried-empress",
@@ -76,7 +82,10 @@
     "type": "tv",
     "language": "Hindi Dubbed",
     "latestEpisode": 10,
-    "hindiOnly": true
+    "hindiOnly": true,
+    "imdbId": "tt39325975",
+    "tvdbId": 455351,
+    "youtubeKey": "MOoQ9TcXbis"
   },
   {
     "id": "love-in-disguise",
@@ -101,7 +110,10 @@
     "status": "Completed",
     "type": "tv",
     "language": "Hindi Dubbed",
-    "latestEpisode": 12
+    "latestEpisode": 12,
+    "imdbId": "tt45246384",
+    "tvdbId": 469591,
+    "youtubeKey": "Q7Xj7sASXSU"
   },
   {
     "id": "final-table",
@@ -127,7 +139,10 @@
     "type": "tv",
     "language": "Hindi Dubbed",
     "latestEpisode": 12,
-    "hindiOnly": true
+    "hindiOnly": true,
+    "imdbId": "tt49692512",
+    "tvdbId": 467673,
+    "youtubeKey": "eojaHI20G5g"
   },
   {
     "id": "dead-end-job",
@@ -153,7 +168,10 @@
     "type": "tv",
     "language": "Hindi Dubbed",
     "latestEpisode": 8,
-    "hindiOnly": true
+    "hindiOnly": true,
+    "imdbId": "tt36458668",
+    "tvdbId": 462838,
+    "youtubeKey": "Sn2ZCxOxsN0"
   },
   {
     "id": "make-me-tingle",
@@ -179,7 +197,9 @@
     "type": "tv",
     "language": "Hindi Dubbed",
     "latestEpisode": 10,
-    "hindiOnly": true
+    "hindiOnly": true,
+    "imdbId": "tt47661704",
+    "tvdbId": 472908
   },
   {
     "id": "love-between-lines",
@@ -204,7 +224,10 @@
     "status": "Completed",
     "type": "tv",
     "language": "Hindi Dubbed",
-    "latestEpisode": 24
+    "latestEpisode": 24,
+    "imdbId": "tt35890969",
+    "tvdbId": 460660,
+    "youtubeKey": "fhkPe20q800"
   },
   {
     "id": "doctor-x-mafia-in-white",
@@ -229,7 +252,10 @@
     "status": "Completed",
     "type": "tv",
     "language": "Hindi Dubbed",
-    "latestEpisode": 24
+    "latestEpisode": 24,
+    "imdbId": "tt2349912",
+    "tvdbId": 263747,
+    "youtubeKey": "AS5y5Z2dmJI"
   },
   {
     "id": "my-dearest-nemesis",
@@ -254,7 +280,9 @@
     "status": "Completed",
     "type": "tv",
     "language": "Hindi Dubbed",
-    "latestEpisode": 12
+    "latestEpisode": 12,
+    "imdbId": "tt33320428",
+    "tvdbId": 448435
   },
   {
     "id": "my-demon",
@@ -280,7 +308,10 @@
     "type": "tv",
     "language": "Hindi Dubbed",
     "latestEpisode": 16,
-    "hindiOnly": true
+    "hindiOnly": true,
+    "imdbId": "tt29569035",
+    "tvdbId": 429870,
+    "youtubeKey": "MYpDGehWCLI"
   },
   {
     "id": "the-devils-plan-3",
@@ -306,7 +337,10 @@
     "type": "tv",
     "language": "Hindi Dubbed",
     "latestEpisode": 24,
-    "hindiOnly": true
+    "hindiOnly": true,
+    "imdbId": "tt27995115",
+    "tvdbId": 433304,
+    "youtubeKey": "Oa0MRU-Ba48"
   },
   {
     "id": "the-brightest-star-in-the-sky",
@@ -331,7 +365,9 @@
     "status": "Completed",
     "type": "tv",
     "language": "Hindi Dubbed",
-    "latestEpisode": 24
+    "latestEpisode": 24,
+    "imdbId": "tt11428118",
+    "tvdbId": 360527
   },
   {
     "id": "a-love-other-than-yours",
@@ -356,7 +392,10 @@
     "type": "tv",
     "language": "Hindi Dubbed",
     "latestEpisode": 14,
-    "hindiOnly": true
+    "hindiOnly": true,
+    "imdbId": "tt43736405",
+    "tvdbId": 470950,
+    "youtubeKey": "zp62ID0bbQM"
   },
   {
     "id": "wedding-impossible",
@@ -382,7 +421,10 @@
     "type": "tv",
     "language": "Hindi Dubbed",
     "latestEpisode": 12,
-    "hindiOnly": true
+    "hindiOnly": true,
+    "imdbId": "tt30301176",
+    "tvdbId": 428076,
+    "youtubeKey": "wgJBSTiVENg"
   },
   {
     "id": "sweet-teeth",
@@ -407,7 +449,9 @@
     "status": "Completed",
     "type": "tv",
     "language": "Hindi Dubbed",
-    "latestEpisode": 22
+    "latestEpisode": 22,
+    "tvdbId": 400498,
+    "youtubeKey": "L2NY2v6QP4w"
   },
   {
     "id": "100-days-my-prince",
@@ -433,7 +477,10 @@
     "type": "tv",
     "language": "Hindi Dubbed",
     "latestEpisode": 16,
-    "hindiOnly": true
+    "hindiOnly": true,
+    "imdbId": "tt8199972",
+    "tvdbId": 344815,
+    "youtubeKey": "iBr2LKzW414"
   },
   {
     "id": "take-charge-of-my-heart",
@@ -458,7 +505,10 @@
     "type": "tv",
     "language": "Hindi Dubbed",
     "latestEpisode": 10,
-    "hindiOnly": true
+    "hindiOnly": true,
+    "imdbId": "tt37737331",
+    "tvdbId": 462912,
+    "youtubeKey": "Ad4DY2nYxg8"
   },
   {
     "id": "a-korean-odyssey",
@@ -485,7 +535,10 @@
     "type": "tv",
     "language": "Hindi Dubbed",
     "latestEpisode": 20,
-    "hindiOnly": true
+    "hindiOnly": true,
+    "imdbId": "tt7099334",
+    "tvdbId": 336912,
+    "youtubeKey": "vf0HtEMlQCU"
   },
   {
     "id": "angel-eyes",
@@ -510,7 +563,9 @@
     "type": "tv",
     "language": "Hindi Dubbed",
     "latestEpisode": 20,
-    "hindiOnly": true
+    "hindiOnly": true,
+    "imdbId": "tt3681890",
+    "tvdbId": 280406
   },
   {
     "id": "chip-in",
@@ -536,7 +591,10 @@
     "type": "tv",
     "language": "Hindi Dubbed",
     "latestEpisode": 16,
-    "hindiOnly": true
+    "hindiOnly": true,
+    "imdbId": "tt12516638",
+    "tvdbId": 380381,
+    "youtubeKey": "PVm4sWbwUBM"
   },
   {
     "id": "agent-from-above",
@@ -562,7 +620,9 @@
     "status": "Completed",
     "type": "tv",
     "language": "Hindi Dubbed",
-    "latestEpisode": 8
+    "latestEpisode": 8,
+    "imdbId": "tt23220752",
+    "tvdbId": 474637
   },
   {
     "id": "are-you-safe",
@@ -587,7 +647,9 @@
     "status": "Completed",
     "type": "tv",
     "language": "Hindi Dubbed",
-    "latestEpisode": 24
+    "latestEpisode": 24,
+    "imdbId": "tt23333232",
+    "tvdbId": 421591
   },
   {
     "id": "begin-again",
@@ -612,7 +674,9 @@
     "status": "Completed",
     "type": "tv",
     "language": "Hindi Dubbed",
-    "latestEpisode": 24
+    "latestEpisode": 24,
+    "imdbId": "tt12256822",
+    "tvdbId": 387942
   },
   {
     "id": "humint",
@@ -639,7 +703,9 @@
     "type": "movie",
     "language": "Hindi Dubbed",
     "latestEpisode": 1,
-    "hindiOnly": true
+    "hindiOnly": true,
+    "imdbId": "tt32606470",
+    "youtubeKey": "n6scQ_ds0x8"
   },
   {
     "id": "my-eyes-are-full-of-you",
@@ -663,7 +729,10 @@
     "status": "Completed",
     "type": "tv",
     "language": "Hindi Dubbed",
-    "latestEpisode": 24
+    "latestEpisode": 24,
+    "imdbId": "tt18306798",
+    "tvdbId": 414612,
+    "youtubeKey": "egiTe6c5Ybs"
   },
   {
     "id": "my-marvellous-fable",
@@ -689,12 +758,14 @@
     "status": "Completed",
     "type": "tv",
     "language": "Hindi Dubbed",
-    "latestEpisode": 24
+    "latestEpisode": 24,
+    "imdbId": "tt18263306",
+    "tvdbId": 435862
   },
   {
     "id": "my-sister-season-2",
     "slug": "my-sister-season-2",
-    "tmdbId": 808381,
+    "tmdbId": 241384,
     "title": "My Sister Season 2",
     "hindiTitle": "My Sister Season 2 (Hindi Dubbed)",
     "country": "Korean",
@@ -707,14 +778,16 @@
       "Youth",
       "Family"
     ],
-    "overview": "Watch My Sister Season 2 Hindi Dubbed full drama episodes online in High Definition. Enjoy this top-rated Korean drama with crystal-clear Hindi dubbing, fast servers, and multiple quality streaming on HindiDrama.net.",
-    "poster": "https://image.tmdb.org/t/p/w500/jyc9HDQDmJC4PthBUdw95XJJog9.jpg",
-    "backdrop": "https://image.tmdb.org/t/p/original/2DxbreN5QiYYc5KT3zW7c7Sn8Zg.jpg",
+    "overview": "A tragic story about young sisters who part ways after their parent's divorce but reunite once again as mother and daughter-in-law in the whirlwind of fate, ending up in catastrophe after desire and conflict.",
+    "poster": "https://image.tmdb.org/t/p/w500/1StP2NmPGjzhIvMIQyTvZfweUu2.jpg",
+    "backdrop": "https://image.tmdb.org/t/p/original/cf7oJph5G9TP2RsZdb2YIZczq0a.jpg",
     "status": "Completed",
-    "type": "movie",
+    "type": "tv",
     "language": "Hindi Dubbed",
     "latestEpisode": 12,
-    "hindiOnly": true
+    "hindiOnly": true,
+    "imdbId": "tt30422474",
+    "tvdbId": 443281
   },
   {
     "id": "project-y",
@@ -741,7 +814,9 @@
     "type": "movie",
     "language": "Hindi Dubbed",
     "latestEpisode": 1,
-    "hindiOnly": true
+    "hindiOnly": true,
+    "imdbId": "tt37658798",
+    "youtubeKey": "aA8qX8c60nc"
   },
   {
     "id": "rising-with-the-wind",
@@ -765,32 +840,9 @@
     "status": "Completed",
     "type": "tv",
     "language": "Hindi Dubbed",
-    "latestEpisode": 24
-  },
-  {
-    "id": "the-legend-of-heroes-hot-blooded-2",
-    "slug": "the-legend-of-heroes-hot-blooded-2",
-    "tmdbId": 235351,
-    "title": "The Legend of Heroes: Hot Blooded Season 2",
-    "hindiTitle": "The Legend of Heroes: Hot Blooded Season 2 (Hindi Dubbed)",
-    "country": "Chinese",
-    "year": 2024,
-    "rating": 7.5,
-    "views": "142",
-    "duration": "45 min",
-    "totalEpisodes": 60,
-    "genres": [
-      "Wuxia",
-      "Action",
-      "Martial Arts"
-    ],
-    "overview": "In the late Southern Song Dynasty, as the Jin forces invaded, the Guo and Yang families faced tragedy. Taoist Qiu Chuji and the Seven Freaks of Jiangnan bet to train their descendants in martial arts. Guo Jing and Yang Kang, growing up under different circumstances, face various challenges. Guo Jing and Huang Rong develop a relationship amid turmoil, while Yang Kang's actions affect those around him.",
-    "poster": "https://image.tmdb.org/t/p/w500/fVOEMyOJx6pQ3ngacvkxiMZbnMD.jpg",
-    "backdrop": "https://image.tmdb.org/t/p/original/sbCiZJJEsXEZ7kcZ7oVgQySuRJa.jpg",
-    "status": "Completed",
-    "type": "tv",
-    "language": "Hindi Dubbed",
-    "latestEpisode": 24
+    "latestEpisode": 24,
+    "imdbId": "tt17069404",
+    "tvdbId": 430317
   },
   {
     "id": "the-legend-of-heroes-hot-blooded-1",
@@ -815,12 +867,15 @@
     "status": "Completed",
     "type": "tv",
     "language": "Hindi Dubbed",
-    "latestEpisode": 24
+    "latestEpisode": 24,
+    "imdbId": "tt28116044",
+    "tvdbId": 439838,
+    "youtubeKey": "21uG8LqZB-s"
   },
   {
     "id": "kauriburi-the-cursed-temple",
     "slug": "kauriburi-the-cursed-temple",
-    "tmdbId": 0,
+    "tmdbId": 341165,
     "title": "Kauriburi: The Cursed Temple Season 1",
     "hindiTitle": "Kauriburi: The Cursed Temple Season 1 (Hindi Dubbed)",
     "country": "Indian",
@@ -828,19 +883,21 @@
     "rating": 4.9,
     "views": "213",
     "duration": "45 min",
-    "totalEpisodes": 8,
+    "totalEpisodes": 6,
     "genres": [
       "Drama",
       "Mystery",
       "Supernatural"
     ],
-    "overview": "Watch Kauriburi: The Cursed Temple Season 1 Hindi Dubbed full drama episodes online in High Definition. Enjoy this top-rated Indian drama with crystal-clear Hindi dubbing, fast servers, and multiple quality streaming on HindiDrama.net.",
-    "poster": "https://image.tmdb.org/t/p/w500/jyc9HDQDmJC4PthBUdw95XJJog9.jpg",
-    "backdrop": "https://image.tmdb.org/t/p/original/2DxbreN5QiYYc5KT3zW7c7Sn8Zg.jpg",
+    "overview": "When a mysterious curse threatens the woman he once loved, astrologer Bhabataran enters a haunted wilderness where an ancient cult worships a bloodthirsty deity. As a forbidden ritual draws near, he must confront a terrifying legacy buried for centuries.",
+    "poster": "https://image.tmdb.org/t/p/w500/7KTHqELZMK3Vl1uD607UFBdSEV4.jpg",
+    "backdrop": "https://image.tmdb.org/t/p/original/aNssC8DYVDAta9o6n5OtowepKTe.jpg",
     "status": "Completed",
     "type": "tv",
     "language": "Hindi Dubbed",
-    "latestEpisode": 8
+    "latestEpisode": 6,
+    "imdbId": "tt49791829",
+    "tvdbId": 484957
   },
   {
     "id": "the-silent-sea",
@@ -867,7 +924,10 @@
     "type": "tv",
     "language": "Hindi Dubbed",
     "latestEpisode": 8,
-    "hindiOnly": true
+    "hindiOnly": true,
+    "imdbId": "tt11570202",
+    "tvdbId": 383137,
+    "youtubeKey": "w-fcoSiojbY"
   },
   {
     "id": "the-price-of-confession",
@@ -894,7 +954,10 @@
     "type": "tv",
     "language": "Hindi Dubbed",
     "latestEpisode": 12,
-    "hindiOnly": true
+    "hindiOnly": true,
+    "imdbId": "tt37218592",
+    "tvdbId": 424328,
+    "youtubeKey": "Iz8ZW-H2FUg"
   },
   {
     "id": "parasyte-the-grey",
@@ -921,7 +984,10 @@
     "type": "tv",
     "language": "Hindi Dubbed",
     "latestEpisode": 6,
-    "hindiOnly": true
+    "hindiOnly": true,
+    "imdbId": "tt21874396",
+    "tvdbId": 424566,
+    "youtubeKey": "maIGHqJB6aQ"
   },
   {
     "id": "money-heist-korea",
@@ -948,7 +1014,10 @@
     "type": "tv",
     "language": "Hindi Dubbed",
     "latestEpisode": 12,
-    "hindiOnly": true
+    "hindiOnly": true,
+    "imdbId": "tt13696452",
+    "tvdbId": 401314,
+    "youtubeKey": "OIsGsjsAE1I"
   },
   {
     "id": "mask-girl",
@@ -975,7 +1044,10 @@
     "type": "tv",
     "language": "Hindi Dubbed",
     "latestEpisode": 7,
-    "hindiOnly": true
+    "hindiOnly": true,
+    "imdbId": "tt26258200",
+    "tvdbId": 419370,
+    "youtubeKey": "Gebl7um3jUg"
   },
   {
     "id": "love-to-hate-you",
@@ -1000,7 +1072,10 @@
     "type": "tv",
     "language": "Hindi Dubbed",
     "latestEpisode": 10,
-    "hindiOnly": true
+    "hindiOnly": true,
+    "imdbId": "tt26229508",
+    "tvdbId": 414037,
+    "youtubeKey": "8COnpYAPoR0"
   },
   {
     "id": "juvenile-justice",
@@ -1025,7 +1100,10 @@
     "type": "tv",
     "language": "Hindi Dubbed",
     "latestEpisode": 10,
-    "hindiOnly": true
+    "hindiOnly": true,
+    "imdbId": "tt15553922",
+    "tvdbId": 403495,
+    "youtubeKey": "yGcmgNGDAAk"
   },
   {
     "id": "i-am-not-a-robot",
@@ -1051,7 +1129,10 @@
     "type": "tv",
     "language": "Hindi Dubbed",
     "latestEpisode": 24,
-    "hindiOnly": true
+    "hindiOnly": true,
+    "imdbId": "tt7521778",
+    "tvdbId": 335877,
+    "youtubeKey": "gGumnmOarco"
   },
   {
     "id": "doona",
@@ -1077,7 +1158,10 @@
     "type": "tv",
     "language": "Hindi Dubbed",
     "latestEpisode": 9,
-    "hindiOnly": true
+    "hindiOnly": true,
+    "imdbId": "tt24245988",
+    "tvdbId": 423987,
+    "youtubeKey": "v4rtx48siJI"
   },
   {
     "id": "squid-game",
@@ -1103,7 +1187,10 @@
     "type": "tv",
     "language": "Hindi Dubbed",
     "hindiOnly": true,
-    "latestEpisode": 22
+    "latestEpisode": 22,
+    "imdbId": "tt10919420",
+    "tvdbId": 383275,
+    "youtubeKey": "oqxAJKy0ii4"
   },
   {
     "id": "crash-landing-on-you",
@@ -1128,7 +1215,10 @@
     "type": "tv",
     "language": "Hindi Dubbed",
     "hindiOnly": true,
-    "latestEpisode": 16
+    "latestEpisode": 16,
+    "imdbId": "tt10850932",
+    "tvdbId": 368385,
+    "youtubeKey": "T4JSM4OP504"
   },
   {
     "id": "vincenzo",
@@ -1155,7 +1245,10 @@
     "type": "tv",
     "language": "Hindi Dubbed",
     "hindiOnly": true,
-    "latestEpisode": 20
+    "latestEpisode": 20,
+    "imdbId": "tt13433812",
+    "tvdbId": 391784,
+    "youtubeKey": "S12-4mXCNj4"
   },
   {
     "id": "business-proposal",
@@ -1180,7 +1273,10 @@
     "type": "tv",
     "language": "Hindi Dubbed",
     "hindiOnly": true,
-    "latestEpisode": 12
+    "latestEpisode": 12,
+    "imdbId": "tt14819828",
+    "tvdbId": 404645,
+    "youtubeKey": "M-PHcxPyasA"
   },
   {
     "id": "all-of-us-are-dead",
@@ -1206,7 +1302,10 @@
     "type": "tv",
     "language": "Hindi Dubbed",
     "hindiOnly": true,
-    "latestEpisode": 12
+    "latestEpisode": 12,
+    "imdbId": "tt14169960",
+    "tvdbId": 382142,
+    "youtubeKey": "sIlqUjvStYE"
   },
   {
     "id": "guardian-the-lonely-and-great-god",
@@ -1232,7 +1331,10 @@
     "type": "tv",
     "language": "Hindi Dubbed",
     "hindiOnly": true,
-    "latestEpisode": 16
+    "latestEpisode": 16,
+    "imdbId": "tt5994364",
+    "tvdbId": 317220,
+    "youtubeKey": "y1ClsA-zt-I"
   },
   {
     "id": "descendants-of-the-sun",
@@ -1257,7 +1359,10 @@
     "type": "tv",
     "language": "Hindi Dubbed",
     "hindiOnly": true,
-    "latestEpisode": 16
+    "latestEpisode": 16,
+    "imdbId": "tt4925000",
+    "tvdbId": 305327,
+    "youtubeKey": "wTGwjDqtfzQ"
   },
   {
     "id": "it-s-okay-to-not-be-okay",
@@ -1282,7 +1387,10 @@
     "type": "tv",
     "language": "Hindi Dubbed",
     "hindiOnly": true,
-    "latestEpisode": 16
+    "latestEpisode": 16,
+    "imdbId": "tt12451520",
+    "tvdbId": 377955,
+    "youtubeKey": "P2h_gSoHVDM"
   },
   {
     "id": "true-beauty",
@@ -1307,7 +1415,10 @@
     "type": "tv",
     "language": "Hindi Dubbed",
     "hindiOnly": true,
-    "latestEpisode": 16
+    "latestEpisode": 16,
+    "imdbId": "tt13274038",
+    "tvdbId": 388231,
+    "youtubeKey": "Rq3Afp1XGm0"
   },
   {
     "id": "queen-of-tears",
@@ -1332,7 +1443,10 @@
     "type": "tv",
     "language": "Hindi Dubbed",
     "hindiOnly": true,
-    "latestEpisode": 16
+    "latestEpisode": 16,
+    "imdbId": "tt27668559",
+    "tvdbId": 426814,
+    "youtubeKey": "Gg2D8zrzlOA"
   },
   {
     "id": "alchemy-of-souls",
@@ -1359,7 +1473,10 @@
     "type": "tv",
     "language": "Hindi Dubbed",
     "hindiOnly": true,
-    "latestEpisode": 30
+    "latestEpisode": 30,
+    "imdbId": "tt20859920",
+    "tvdbId": 401475,
+    "youtubeKey": "50kLmhGpt1s"
   },
   {
     "id": "sweet-home",
@@ -1384,7 +1501,10 @@
     "type": "tv",
     "language": "Hindi Dubbed",
     "hindiOnly": true,
-    "latestEpisode": 26
+    "latestEpisode": 26,
+    "imdbId": "tt11612120",
+    "tvdbId": 374389,
+    "youtubeKey": "7rI56NmD33Y"
   },
   {
     "id": "extraordinary-attorney-woo",
@@ -1408,7 +1528,10 @@
     "type": "tv",
     "language": "Hindi Dubbed",
     "hindiOnly": true,
-    "latestEpisode": 16
+    "latestEpisode": 16,
+    "imdbId": "tt20869502",
+    "tvdbId": 419950,
+    "youtubeKey": "MxeXECe2t-c"
   },
   {
     "id": "my-name",
@@ -1434,7 +1557,10 @@
     "type": "tv",
     "language": "Hindi Dubbed",
     "hindiOnly": true,
-    "latestEpisode": 8
+    "latestEpisode": 8,
+    "imdbId": "tt12940504",
+    "tvdbId": 397441,
+    "youtubeKey": "KFMYo3xax2A"
   },
   {
     "id": "the-glory",
@@ -1459,7 +1585,10 @@
     "type": "tv",
     "language": "Hindi Dubbed",
     "hindiOnly": true,
-    "latestEpisode": 16
+    "latestEpisode": 16,
+    "imdbId": "tt21344706",
+    "tvdbId": 411469,
+    "youtubeKey": "tqVVrTvrI8U"
   },
   {
     "id": "hometown-cha-cha-cha",
@@ -1484,7 +1613,10 @@
     "type": "tv",
     "language": "Hindi Dubbed",
     "hindiOnly": true,
-    "latestEpisode": 16
+    "latestEpisode": 16,
+    "imdbId": "tt14518756",
+    "tvdbId": 400319,
+    "youtubeKey": "mqSzIuNEmG0"
   },
   {
     "id": "king-the-land",
@@ -1509,7 +1641,10 @@
     "type": "tv",
     "language": "Hindi Dubbed",
     "hindiOnly": true,
-    "latestEpisode": 16
+    "latestEpisode": 16,
+    "imdbId": "tt26693803",
+    "tvdbId": 419620,
+    "youtubeKey": "AGF16szMOmo"
   },
   {
     "id": "flower-of-evil",
@@ -1535,7 +1670,10 @@
     "type": "tv",
     "language": "Hindi Dubbed",
     "hindiOnly": true,
-    "latestEpisode": 16
+    "latestEpisode": 16,
+    "imdbId": "tt11691684",
+    "tvdbId": 377960,
+    "youtubeKey": "tsqXC_0tXvU"
   },
   {
     "id": "boys-over-flowers",
@@ -1560,7 +1698,10 @@
     "type": "tv",
     "language": "Hindi Dubbed",
     "hindiOnly": true,
-    "latestEpisode": 25
+    "latestEpisode": 25,
+    "imdbId": "tt1370334",
+    "tvdbId": 95371,
+    "youtubeKey": "TH82NEJEWAk"
   },
   {
     "id": "healer",
@@ -1587,7 +1728,10 @@
     "type": "tv",
     "language": "Hindi Dubbed",
     "hindiOnly": true,
-    "latestEpisode": 20
+    "latestEpisode": 20,
+    "imdbId": "tt4284216",
+    "tvdbId": 288365,
+    "youtubeKey": "AnjmzZFssmg"
   },
   {
     "id": "weak-hero",
@@ -1612,6 +1756,9 @@
     "type": "tv",
     "language": "Hindi Dubbed",
     "hindiOnly": true,
-    "latestEpisode": 16
+    "latestEpisode": 16,
+    "imdbId": "tt20234568",
+    "tvdbId": 423418,
+    "youtubeKey": "GDTz8sLK3_Q"
   }
 ]

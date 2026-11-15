@@ -1,11 +1,45 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react';
+import React, { useState, useEffect, useRef, useCallback, useMemo } from 'react';
 import type Hls from 'hls.js';
 import {
-  Play, Download, Star, Eye, Clock, ChevronLeft, ChevronRight,
-  MessageSquare, ThumbsUp, Send, Share2, Moon, Sun,
-  RefreshCw, Tv, Shield, ExternalLink, Sparkles, HelpCircle, Activity, Volume2, Radio
+  Play,
+  Star,
+  Eye,
+  Clock,
+  ChevronLeft,
+  ChevronRight,
+  MessageSquare,
+  ThumbsUp,
+  Send,
+  Share2,
+  Moon,
+  Sun,
+  RefreshCw,
+  Tv,
+  Shield,
+  ExternalLink,
+  Sparkles,
+  HelpCircle,
+  Activity,
+  Volume2,
+  Maximize2,
+  X,
+  Gauge,
+  Subtitles,
+  PictureInPicture2,
+  SkipForward,
+  AlertTriangle,
+  Layers,
+  Check,
 } from 'lucide-react';
-import type { AudioLanguageCode, Drama, DramaComment, TmdbEpisodeMeta } from '../types/drama.ts';
+import type {
+  AudioLanguageCode,
+  CustomStreamSource,
+  Drama,
+  DramaComment,
+  TmdbEpisodeMeta,
+  EpisodeDetail,
+  SeasonSummary,
+} from '../types/drama.ts';
 import {
   getCommentsForDrama,
   addComment,
@@ -13,253 +47,261 @@ import {
   saveWatchHistory,
   getPreferredAudioLang,
   savePreferredAudioLang,
+  getEpisodePlaybackProgress,
+  saveEpisodePlaybackProgress,
+  markEpisodeWatched,
+  getLastWorkingServer,
+  saveLastWorkingServer,
+  trackPlatformEvent,
 } from '../services/storage.ts';
-import { fetchTmdbEpisodeSync } from '../services/tmdb.ts';
-import { triggerSmartlink, getNextAdsterraLink } from '../services/adsterra.ts';
-import { getDramaFaqs, slugifyText } from '../services/seo.ts';
+import {
+  fetchTmdbEpisodeSync,
+  fetchTmdbShowSeasons,
+  fetchTmdbSeasonEpisodes,
+  searchTMDB,
+} from '../services/tmdb.ts';
+import {
+  HLX_SERVERS,
+  HLX_AUDIO_LANGUAGES,
+  buildHlxDirectUrl,
+  buildHlxSyncedIframeSrc,
+  getAudioLanguageMeta,
+  type HlxServerNode,
+} from '../services/hlxPlayerEngine.ts';
+import { getDramaFaqs, getContentPath, getMp4StreamPath, slugifyText } from '../services/seo.ts';
+import { triggerSmartlinkWithCooldown } from '../services/adsterra.ts';
 import { AdsterraBanner } from './AdsterraBanner.tsx';
 import { OptimizedImage } from './OptimizedImage.tsx';
+import { VideoJsPlayer } from './VideoJsPlayer.tsx';
 
 interface WatchPlayerProps {
   drama: Drama;
   currentEpisode: number;
+  currentSeason?: number;
   masterHlsUrl?: string;
   hindiOnlyLocked?: boolean;
-  onSelectEpisode: (ep: number) => void;
+  customWindowMode?: boolean;
+  initialServerId?: number;
+  initialLang?: AudioLanguageCode;
+  onSelectEpisode: (ep: number, season?: number) => void;
   onNavigateHome: () => void;
   onSelectCategory: (country: string) => void;
   onOpenDramaDetail: (slug: string) => void;
   onOpenGenre: (genreSlug: string) => void;
 }
 
-interface ServerTemplate {
-  id: number;
-  name: string;
-  tier: 'Primary' | 'Backup';
-  tvTemplate: string;
-  movieTemplate: string;
-  dynamicProvider?: 'dailymotion' | 'youtube';
-  supportsRelay?: boolean;
-}
-
-const AUDIO_LANGUAGES: {
-  code: AudioLanguageCode;
-  label: string;
-  audioName: string;
-  flag: string;
-  aliases: string[];
-}[] = [
-  { code: 'hi', label: 'Hindi', audioName: 'hindi', flag: '🇮🇳', aliases: ['hi', 'hin', 'hindi'] },
-  { code: 'ko', label: 'Korean', audioName: 'korean', flag: '🇰🇷', aliases: ['ko', 'kor', 'korean'] },
-  { code: 'ta', label: 'Tamil', audioName: 'tamil', flag: '🇮🇳', aliases: ['ta', 'tam', 'tamil'] },
-  { code: 'te', label: 'Telugu', audioName: 'telugu', flag: '🇮🇳', aliases: ['te', 'tel', 'telugu'] },
-  { code: 'en', label: 'English', audioName: 'english', flag: '🇬🇧', aliases: ['en', 'eng', 'english'] },
-];
-
-const SERVER_TEMPLATES: ServerTemplate[] = [
-  {
-    id: 1,
-    name: 'VidLink',
-    tier: 'Primary',
-    tvTemplate: 'https://vidlink.pro/tv/{tmdbId}/{season}/{episode}?primaryColor=2563eb&autoplay=true&lang={lang}',
-    movieTemplate: 'https://vidlink.pro/movie/{tmdbId}?primaryColor=2563eb&autoplay=true&lang={lang}',
-  },
-  {
-    id: 2,
-    name: 'CinemaOS',
-    tier: 'Primary',
-    tvTemplate: 'https://cinemaos.tech/player/{tmdbId}/{season}/{episode}?lang={lang}',
-    movieTemplate: 'https://cinemaos.tech/player/{tmdbId}?lang={lang}',
-  },
-  {
-    id: 3,
-    name: 'SmashyStream',
-    tier: 'Primary',
-    tvTemplate: 'https://embed.smashystream.com/playere.php?tmdb={tmdbId}&season={season}&episode={episode}&lang={lang}&audio={audioName}',
-    movieTemplate: 'https://embed.smashystream.com/playere.php?tmdb={tmdbId}&lang={lang}&audio={audioName}',
-  },
-  {
-    id: 4,
-    name: 'VidFast',
-    tier: 'Primary',
-    tvTemplate: 'https://vidfast.pro/tv/{tmdbId}/{season}/{episode}?autoPlay=true&lang={lang}',
-    movieTemplate: 'https://vidfast.pro/movie/{tmdbId}?autoPlay=true&lang={lang}',
-  },
-  {
-    id: 5,
-    name: 'VidSrc.to',
-    tier: 'Primary',
-    tvTemplate: 'https://vidsrc.to/embed/tv/{tmdbId}/{season}/{episode}?ds_lang={lang}',
-    movieTemplate: 'https://vidsrc.to/embed/movie/{tmdbId}?ds_lang={lang}',
-  },
-  {
-    id: 6,
-    name: 'VidSrc.me',
-    tier: 'Primary',
-    tvTemplate: 'https://vidsrc.me/embed/tv?tmdb={tmdbId}&season={season}&episode={episode}&ds_lang={lang}',
-    movieTemplate: 'https://vidsrc.me/embed/movie?tmdb={tmdbId}&ds_lang={lang}',
-  },
-  {
-    id: 7,
-    name: '2Embed',
-    tier: 'Primary',
-    supportsRelay: true,
-    tvTemplate: 'https://www.2embed.cc/embedtv/{tmdbId}&s={season}&e={episode}',
-    movieTemplate: 'https://www.2embed.cc/embed/{tmdbId}',
-  },
-  {
-    id: 8,
-    name: 'MultiEmbed',
-    tier: 'Primary',
-    tvTemplate: 'https://multiembed.mov/?video_id={tmdbId}&tmdb=1&s={season}&e={episode}&lang={lang}',
-    movieTemplate: 'https://multiembed.mov/?video_id={tmdbId}&tmdb=1&lang={lang}',
-  },
-  {
-    id: 9,
-    name: 'Streamtape',
-    tier: 'Primary',
-    tvTemplate: 'https://multiembed.mov/?video_id={tmdbId}&tmdb=1&s={season}&e={episode}&host=streamtape&lang={lang}',
-    movieTemplate: 'https://multiembed.mov/?video_id={tmdbId}&tmdb=1&host=streamtape&lang={lang}',
-  },
-  {
-    id: 10,
-    name: 'YouTube',
-    tier: 'Primary',
-    dynamicProvider: 'youtube',
-    tvTemplate: 'https://www.youtube.com/embed/{videoId}?autoplay=1&rel=0&hl={lang}&cc_lang_pref={lang}',
-    movieTemplate: 'https://www.youtube.com/embed/{videoId}?autoplay=1&rel=0&hl={lang}&cc_lang_pref={lang}',
-  },
-  {
-    id: 11,
-    name: 'Dailymotion',
-    tier: 'Primary',
-    dynamicProvider: 'dailymotion',
-    tvTemplate: 'https://www.dailymotion.com/embed/video/{videoId}?autoplay=1',
-    movieTemplate: 'https://www.dailymotion.com/embed/video/{videoId}?autoplay=1',
-  },
-  {
-    id: 12,
-    name: 'NontonGo',
-    tier: 'Backup',
-    supportsRelay: true,
-    tvTemplate: 'https://www.nontongo.win/embed/tv/{tmdbId}/{season}/{episode}?lang={lang}',
-    movieTemplate: 'https://www.nontongo.win/embed/movie/{tmdbId}?lang={lang}',
-  },
-  {
-    id: 13,
-    name: 'VidRock',
-    tier: 'Backup',
-    supportsRelay: true,
-    tvTemplate: 'https://vidrock.net/tv/{tmdbId}/{season}/{episode}?lang={lang}',
-    movieTemplate: 'https://vidrock.net/movie/{tmdbId}?lang={lang}',
-  },
-];
-
-function buildServerUrl(
-  provider: ServerTemplate,
-  opts: {
-    tmdbId: number;
-    imdbId?: string;
-    season: number;
-    episode: number;
-    lang: AudioLanguageCode;
-    mediaType: 'tv' | 'movie';
-  }
-): string {
-  const langMeta = AUDIO_LANGUAGES.find(l => l.code === opts.lang) || AUDIO_LANGUAGES[0];
-  const rawTemplate = opts.mediaType === 'movie' ? provider.movieTemplate : provider.tvTemplate;
-  return rawTemplate
-    .replace('{tmdbId}', String(opts.tmdbId))
-    .replace('{imdbId}', String(opts.imdbId || opts.tmdbId))
-    .replace('{season}', String(opts.season))
-    .replace('{episode}', String(opts.episode))
-    .replace('{lang}', opts.lang)
-    .replace('{audioName}', langMeta.audioName);
-}
-
 export const WatchPlayer: React.FC<WatchPlayerProps> = ({
   drama,
   currentEpisode,
+  currentSeason,
   masterHlsUrl,
   hindiOnlyLocked = false,
+  customWindowMode = false,
+  initialServerId,
+  initialLang,
   onSelectEpisode,
   onNavigateHome,
   onSelectCategory,
   onOpenDramaDetail,
   onOpenGenre,
 }) => {
-  const season = drama.season || 1;
-  const tmdbId = drama.tmdbId || 129117;
-  const activeHlsSource = masterHlsUrl || drama.masterHlsUrl || '';
+  const [resolvedTmdbId, setResolvedTmdbId] = useState<number>(drama.tmdbId || 0);
+  const tmdbId = drama.tmdbId || resolvedTmdbId;
+  const mediaType: 'tv' | 'movie' = drama.type === 'movie' ? 'movie' : 'tv';
+  const providedHlsSource = masterHlsUrl || drama.masterHlsUrl || '';
 
-  // Audio track state (persisted in localStorage, strictly locked to Hindi 'hi' when hindiOnlyLocked is active)
-  const [selectedLang, setSelectedLang] = useState<AudioLanguageCode>(() => getPreferredAudioLang());
+  // Dynamically resolve TMDB ID if catalog entry lacks one (never fall back to wrong show)
+  useEffect(() => {
+    if (drama.tmdbId) {
+      setResolvedTmdbId(drama.tmdbId);
+      return;
+    }
+    let active = true;
+    searchTMDB(drama.title)
+      .then(results => {
+        if (!active || !results.length) return;
+        const matched =
+          results.find((r: any) =>
+            mediaType === 'movie' ? r.media_type === 'movie' : r.media_type === 'tv'
+          ) || results[0];
+        if (matched?.id) setResolvedTmdbId(Number(matched.id));
+      })
+      .catch(() => {});
+    return () => {
+      active = false;
+    };
+  }, [drama.tmdbId, drama.title, drama.slug, mediaType]);
+
+  // Unified Season + Audio + Server State
+  const [selectedSeasonNumber, setSelectedSeasonNumber] = useState<number>(
+    currentSeason || drama.season || 1
+  );
+  const [selectedLang, setSelectedLang] = useState<AudioLanguageCode>(initialLang || 'ko');
   const effectiveLang: AudioLanguageCode = hindiOnlyLocked ? 'hi' : selectedLang;
-  const [hlsAudioTracks, setHlsAudioTracks] = useState<{ id: number; name: string; lang?: string }[]>([]);
+  const [selectedServerId, setSelectedServerId] = useState<number>(
+    initialServerId !== undefined && HLX_SERVERS.some(s => s.id === initialServerId)
+      ? initialServerId
+      : 1
+  );
+
+  // Sync season prop changes dynamically
+  useEffect(() => {
+    setSelectedSeasonNumber(currentSeason || drama.season || 1);
+  }, [currentSeason, drama.season, drama.slug]);
+
+  // Unified HLX server node & language meta
+  const currentServer: HlxServerNode = useMemo(
+    () => HLX_SERVERS.find(s => s.id === selectedServerId) || HLX_SERVERS[0],
+    [selectedServerId]
+  );
+  const activeLangMeta = useMemo(() => getAudioLanguageMeta(effectiveLang), [effectiveLang]);
+
+  // Resolved direct / API / custom stream states
+  const [customSources, setCustomSources] = useState<CustomStreamSource[]>([]);
+  const [selectedCustomSource, setSelectedCustomSource] = useState<CustomStreamSource | null>(null);
+  const [resolvedHlsUrl, setResolvedHlsUrl] = useState<string>('');
+  const [resolvedHlsSubs, setResolvedHlsSubs] = useState<{ label: string; lang: string; url: string }[]>([]);
   const [hlsFailed, setHlsFailed] = useState<boolean>(false);
+  const [hlsAudioTracks, setHlsAudioTracks] = useState<{ id: number; name: string; lang?: string }[]>([]);
+  const [activeHlsAudioTrackIdx, setActiveHlsAudioTrackIdx] = useState<number>(0);
+  const [preferOriginalHls, setPreferOriginalHls] = useState<boolean>(false);
+  const [hlsAudioStatus, setHlsAudioStatus] = useState<{
+    matched: boolean;
+    actualLabel: string;
+    viaDubbed?: boolean;
+    dubbedEmbedUrl?: string | null;
+    dubbedTitle?: string | null;
+  } | null>(null);
 
-  // Playback mode: Mode A (HLS) when masterHlsUrl provided & not failed; otherwise Mode B (Multi-Server Embed)
-  const useHlsMode = Boolean(activeHlsSource && !hlsFailed);
+  const [resolvedApiEmbedUrl, setResolvedApiEmbedUrl] = useState<string | null>(null);
+  const [resolvingStream, setResolvingStream] = useState<boolean>(false);
 
-  // Server & Player UI State
-  const [selectedServer, setSelectedServer] = useState<number>(1); // Pkembed Primary server default with automatic failover
+  // TMDB Seasons & Episodes Live Auto-Sync
+  const [syncedSeasons, setSyncedSeasons] = useState<SeasonSummary[]>(drama.seasons || []);
+  const [syncedEpisodes, setSyncedEpisodes] = useState<EpisodeDetail[]>([]);
+  const [loadingSyncedEpisodes, setLoadingSyncedEpisodes] = useState<boolean>(false);
+  const [tmdbMeta, setTmdbMeta] = useState<TmdbEpisodeMeta | null>(null);
+  const [syncingMeta, setSyncingMeta] = useState<boolean>(false);
+
+  // Player UI controls
   const [cinemaMode, setCinemaMode] = useState<boolean>(false);
-  const [comments, setComments] = useState<DramaComment[]>([]);
-  const [commentName, setCommentName] = useState<string>('');
-  const [commentText, setCommentText] = useState<string>('');
-  const [commentSubmitting, setCommentSubmitting] = useState<boolean>(false);
-  const [showDownloadModal, setShowDownloadModal] = useState<boolean>(false);
-  const [copiedLink, setCopiedLink] = useState<boolean>(false);
+  const [sandboxShieldEnabled, setSandboxShieldEnabled] = useState<boolean>(true);
+  const [cleanPopupOpen, setCleanPopupOpen] = useState<boolean>(false);
   const [serverReloadKey, setServerReloadKey] = useState<number>(0);
   const [fallbackMessage, setFallbackMessage] = useState<string | null>(null);
   const [serverStatus, setServerStatus] = useState<'checking' | 'online' | 'switched'>('online');
   const [serverLatency, setServerLatency] = useState<number | null>(null);
+  const [iframeLoaded, setIframeLoaded] = useState<boolean>(false);
+  const [allSourcesFailed, setAllSourcesFailed] = useState<boolean>(false);
+  const [copiedLink, setCopiedLink] = useState<boolean>(false);
+  const [copiedMp4, setCopiedMp4] = useState<boolean>(false);
+  const [isStaticHost, setIsStaticHost] = useState<boolean>(false);
 
-  // TMDB Live Episode Metadata Sync
-  const [tmdbMeta, setTmdbMeta] = useState<TmdbEpisodeMeta | null>(null);
-  const [syncingMeta, setSyncingMeta] = useState<boolean>(false);
+  // Video.js controls
+  const [playbackRate, setPlaybackRate] = useState<number>(1);
+  const [hlsQualities, setHlsQualities] = useState<{ index: number; height: number; bitrate: number }[]>([]);
+  const [selectedQuality, setSelectedQuality] = useState<number>(-1);
+  const [hlsSubtitles, setHlsSubtitles] = useState<{ id: number; name: string; lang?: string }[]>([]);
+  const [selectedSubtitle, setSelectedSubtitle] = useState<number>(-1);
+  const [pipSupported, setPipSupported] = useState<boolean>(false);
+  const [autoNextEnabled, setAutoNextEnabled] = useState<boolean>(true);
+  const [autoNextCountdown, setAutoNextCountdown] = useState<number | null>(null);
+  const [resumeToast, setResumeToast] = useState<string | null>(null);
 
-  // Dynamic Language-Aware Resolved Embed URL (for Dailymotion / YouTube)
-  const [resolvedDynamicUrl, setResolvedDynamicUrl] = useState<string | null>(null);
-  const [resolvingDynamic, setResolvingDynamic] = useState<boolean>(false);
+  // Comments
+  const [comments, setComments] = useState<DramaComment[]>([]);
+  const [commentName, setCommentName] = useState<string>('');
+  const [commentText, setCommentText] = useState<string>('');
+  const [commentSubmitting, setCommentSubmitting] = useState<boolean>(false);
 
-  // Automatic Sandbox-Free Shield (routes sandbox-checking embeds like 2Embed/NontonGo/VidRock through same-origin /api/player-relay)
-  const [sandboxShieldEnabled, setSandboxShieldEnabled] = useState<boolean>(true);
-
+  const playerContainerRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
+  const lightboxVideoRef = useRef<HTMLVideoElement>(null);
   const hlsRef = useRef<Hls | null>(null);
   const triedServersRef = useRef<Set<number>>(new Set());
+  const lastProgressSaveRef = useRef<number>(0);
+  const hasSeekedSavedRef = useRef<boolean>(false);
 
-  const mediaType: 'tv' | 'movie' = drama.type === 'movie' ? 'movie' : 'tv';
-  const currentProvider = SERVER_TEMPLATES.find(s => s.id === selectedServer) || SERVER_TEMPLATES[0];
-  const staticEmbedUrl = buildServerUrl(currentProvider, {
-    tmdbId,
-    imdbId: tmdbMeta?.imdbId,
-    season,
-    episode: currentEpisode,
-    lang: effectiveLang,
-    mediaType,
-  });
-  const embedUrl = currentProvider.dynamicProvider
-    ? resolvedDynamicUrl ||
-      (currentProvider.dynamicProvider === 'youtube' && tmdbMeta?.youtubeKey
-        ? `https://www.youtube.com/embed/${tmdbMeta.youtubeKey}?autoplay=1&hl=${effectiveLang}&cc_lang_pref=${effectiveLang}&rel=0`
-        : staticEmbedUrl)
-    : staticEmbedUrl;
+  // Initialize environment preferences post-mount (hydration safe)
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      setIsStaticHost(window.location.hostname.endsWith('.github.io'));
+      setPipSupported(Boolean(document.pictureInPictureEnabled));
+    }
+    if (!initialLang) {
+      const savedLang = getPreferredAudioLang();
+      if (savedLang) setSelectedLang(savedLang);
+    }
+    if (initialServerId === undefined) {
+      const lastSrv = getLastWorkingServer();
+      if (lastSrv && HLX_SERVERS.some(s => s.id === lastSrv)) {
+        setSelectedServerId(lastSrv);
+      }
+    }
+  }, [initialLang, initialServerId]);
 
-  // Use same-origin sandbox-free HTML relay for 2Embed / NontonGo / VidRock so "Sandbox not allowed" never appears
-  const activeIframeSrc =
-    !currentProvider.dynamicProvider && sandboxShieldEnabled && currentProvider.supportsRelay
-      ? `/api/player-relay?url=${encodeURIComponent(embedUrl)}`
-      : embedUrl;
+  // Dynamic URL query parameter sync (server & lang without page reload)
+  useEffect(() => {
+    if (typeof window === 'undefined' || customWindowMode) return;
+    const url = new URL(window.location.href);
+    url.searchParams.set('server', String(selectedServerId));
+    url.searchParams.set('lang', effectiveLang);
+    if (selectedSeasonNumber > 1) {
+      url.searchParams.set('season', String(selectedSeasonNumber));
+    } else {
+      url.searchParams.delete('season');
+    }
+    window.history.replaceState({}, '', url.pathname + url.search);
+  }, [selectedServerId, effectiveLang, selectedSeasonNumber, customWindowMode]);
 
-  const activeLangMeta = AUDIO_LANGUAGES.find(l => l.code === effectiveLang) || AUDIO_LANGUAGES[0];
+  // Lock body scroll on lightbox modal
+  useEffect(() => {
+    if (!cleanPopupOpen || typeof window === 'undefined') return;
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setCleanPopupOpen(false);
+    };
+    window.addEventListener('keydown', onKeyDown);
+    return () => {
+      document.body.style.overflow = prevOverflow;
+      window.removeEventListener('keydown', onKeyDown);
+    };
+  }, [cleanPopupOpen]);
 
-  // 1. Live TMDB Metadata Auto-Sync per Drama / Season / Episode
+  // 1. Live TMDB Seasons & Episodes Auto-Sync
+  useEffect(() => {
+    if (mediaType === 'movie' || !tmdbId) return;
+    let active = true;
+    setLoadingSyncedEpisodes(true);
+    Promise.all([
+      fetchTmdbShowSeasons(tmdbId),
+      fetchTmdbSeasonEpisodes(tmdbId, selectedSeasonNumber),
+    ])
+      .then(([seasonsData, epsData]) => {
+        if (!active) return;
+        if (seasonsData.length > 0) setSyncedSeasons(seasonsData);
+        if (epsData.length > 0) setSyncedEpisodes(epsData);
+      })
+      .catch(() => {})
+      .finally(() => {
+        if (active) setLoadingSyncedEpisodes(false);
+      });
+    return () => {
+      active = false;
+    };
+  }, [tmdbId, mediaType, selectedSeasonNumber]);
+
+  const activeSeasonEpisodeCount = useMemo(() => {
+    const matchedSeason = syncedSeasons.find(s => s.seasonNumber === selectedSeasonNumber);
+    return syncedEpisodes.length || matchedSeason?.episodeCount || drama.totalEpisodes || 1;
+  }, [syncedSeasons, syncedEpisodes.length, selectedSeasonNumber, drama.totalEpisodes]);
+
+  // 2. Live TMDB Episode Detail Sync
   useEffect(() => {
     let active = true;
     setSyncingMeta(true);
-    fetchTmdbEpisodeSync(tmdbId, season, currentEpisode, drama.type || 'tv')
+    fetchTmdbEpisodeSync(tmdbId, selectedSeasonNumber, currentEpisode, mediaType)
       .then(meta => {
         if (active) {
           setTmdbMeta(meta);
@@ -272,313 +314,654 @@ export const WatchPlayer: React.FC<WatchPlayerProps> = ({
     return () => {
       active = false;
     };
-  }, [tmdbId, season, currentEpisode, drama.type]);
+  }, [tmdbId, selectedSeasonNumber, currentEpisode, mediaType]);
 
-  // 1b. Live Language-Aware Auto-Sync Resolver for Dailymotion & YouTube
+  // 3. Unified HLS.proxy + Real Multi-Audio Resolver
   useEffect(() => {
-    if (!currentProvider.dynamicProvider) {
-      setResolvedDynamicUrl(null);
-      setResolvingDynamic(false);
+    if (selectedCustomSource) return;
+
+    let active = true;
+    setResolvedApiEmbedUrl(null);
+    setResolvedHlsUrl('');
+    setResolvedHlsSubs([]);
+    setHlsAudioStatus(null);
+    setHlsFailed(false);
+    hasSeekedSavedRef.current = false;
+
+    if (currentServer.mode !== 'hlx-direct' || isStaticHost) {
+      setResolvingStream(false);
       return;
     }
 
-    let active = true;
-    const providerType = currentProvider.dynamicProvider;
-    setResolvingDynamic(true);
-    setResolvedDynamicUrl(null);
+    setResolvingStream(true);
 
-    fetch('/api/embed-resolve', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        provider: providerType,
-        title: tmdbMeta?.title || drama.title,
-        tmdbId,
-        type: mediaType,
-        season,
-        episode: currentEpisode,
-        lang: effectiveLang,
-        strictHindiOnly: Boolean(hindiOnlyLocked),
-      }),
-    })
-      .then(res => (res.ok ? res.json() : null))
-      .then(data => {
-        if (!active) return;
-        if (data?.ok && data?.embedUrl) {
-          setResolvedDynamicUrl(data.embedUrl);
-          setServerStatus('online');
-        } else if (providerType === 'youtube' && tmdbMeta?.youtubeKey) {
-          setResolvedDynamicUrl(
-            `https://www.youtube.com/embed/${tmdbMeta.youtubeKey}?autoplay=1&hl=${effectiveLang}&cc_lang_pref=${effectiveLang}&rel=0`
-          );
-        } else {
-          // Seamless failover to next available provider if dynamic search yields no playable video
-          const fallbackSrv = SERVER_TEMPLATES.find(s => !s.dynamicProvider && s.id !== currentProvider.id);
-          if (fallbackSrv) {
-            setSelectedServer(fallbackSrv.id);
-            setFallbackMessage(
-              `${currentProvider.name} (${activeLangMeta.label}) unavailable • Auto-switched to ${fallbackSrv.name}`
-            );
-            setTimeout(() => setFallbackMessage(null), 4000);
+    const resolveStream = async () => {
+      try {
+        const hlsRes = await fetch('/api/hls-resolve', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            tmdbId,
+            type: mediaType,
+            season: selectedSeasonNumber,
+            episode: currentEpisode,
+            lang: effectiveLang,
+            title: tmdbMeta?.title || drama.title,
+          }),
+        });
+        if (hlsRes.ok) {
+          const data = await hlsRes.json();
+          if (!active) return;
+          if (data?.ok && data?.streamUrl) {
+            // If user requested dubbed language (e.g. Hindi) and HLS lacks that track, play verified dubbed stream when available
+            if (data.dubbedEmbedUrl && !data.matchedRequestedAudio && !preferOriginalHls) {
+              setResolvedApiEmbedUrl(data.dubbedEmbedUrl);
+              setHlsAudioStatus({
+                matched: true,
+                actualLabel: `${activeLangMeta.label} (Verified Dub)`,
+                viaDubbed: true,
+                dubbedEmbedUrl: data.dubbedEmbedUrl,
+                dubbedTitle: data.dubbedTitle || null,
+              });
+              setServerStatus('online');
+              setServerLatency(32);
+              setResolvingStream(false);
+              return;
+            }
+            setResolvedHlsUrl(data.streamUrl);
+            setResolvedHlsSubs(Array.isArray(data.subs) ? data.subs : []);
+            setHlsAudioStatus({
+              matched: Boolean(data.matchedRequestedAudio),
+              actualLabel: data.actualAudioLabel || activeLangMeta.label,
+              dubbedEmbedUrl: data.dubbedEmbedUrl || null,
+              dubbedTitle: data.dubbedTitle || null,
+            });
+            setServerStatus('online');
+            setServerLatency(32);
+            setResolvingStream(false);
+            return;
           }
         }
-        setResolvingDynamic(false);
-      })
-      .catch(() => {
-        if (active) setResolvingDynamic(false);
-      });
+        if (active) {
+          setHlsFailed(true);
+          setResolvingStream(false);
+        }
+      } catch {
+        if (active) setHlsFailed(true);
+      } finally {
+        if (active) setResolvingStream(false);
+      }
+    };
 
+    resolveStream();
     return () => {
       active = false;
     };
   }, [
-    currentProvider.id,
-    currentProvider.dynamicProvider,
-    currentProvider.name,
-    drama.title,
-    tmdbMeta?.title,
-    tmdbMeta?.youtubeKey,
+    selectedCustomSource,
+    currentServer.id,
+    currentServer.mode,
     tmdbId,
     mediaType,
-    season,
+    selectedSeasonNumber,
     currentEpisode,
     effectiveLang,
-    hindiOnlyLocked,
+    preferOriginalHls,
+    tmdbMeta?.title,
+    drama.title,
     activeLangMeta.label,
     serverReloadKey,
+    isStaticHost,
   ]);
 
-  // 2. Mode A: Hotstar-Style Single-Video Multi-Audio HLS Engine (`hls.js`)
+  // Background instant-play prefetch for next episode (populates server resolve cache silently)
   useEffect(() => {
-    setHlsFailed(false);
-  }, [activeHlsSource, currentEpisode, drama.slug]);
-
-  useEffect(() => {
-    if (!useHlsMode || !activeHlsSource) return;
-    const video = videoRef.current;
-    if (!video) return;
-
-    let cancelled = false;
-
-    if (hlsRef.current) {
-      hlsRef.current.destroy();
-      hlsRef.current = null;
-    }
-
-    const selectTrackByLang = (hlsInstance: Hls, langCode: AudioLanguageCode) => {
-      const tracks = hlsInstance.audioTracks || [];
-      const targetMeta = AUDIO_LANGUAGES.find(l => l.code === langCode);
-      const aliases = targetMeta?.aliases || [langCode];
-      const idx = tracks.findIndex(t => {
-        const trackLang = (t.lang || '').toLowerCase();
-        const trackName = (t.name || '').toLowerCase();
-        return aliases.some(a => trackLang.includes(a) || trackName.includes(a));
-      });
-      if (idx !== -1) {
-        hlsInstance.audioTrack = idx;
-      } else {
-        const hindiIdx = tracks.findIndex(t => (t.lang || '').toLowerCase().includes('hi'));
-        if (hindiIdx !== -1) hlsInstance.audioTrack = hindiIdx;
-      }
-    };
-
-    import('hls.js')
-      .then(({ default: HlsEngine }) => {
-        if (cancelled) return;
-        if (HlsEngine.isSupported()) {
-          const hls = new HlsEngine({
-            enableWorker: true,
-            lowLatencyMode: true,
-            backBufferLength: 60,
-          });
-          hlsRef.current = hls;
-          hls.loadSource(activeHlsSource);
-          hls.attachMedia(video);
-
-          hls.on(HlsEngine.Events.MANIFEST_PARSED, () => {
-            const mapped = (hls.audioTracks || []).map((t, i) => ({
-              id: i,
-              name: t.name || t.lang || `Audio ${i + 1}`,
-              lang: t.lang,
-            }));
-            setHlsAudioTracks(mapped);
-            selectTrackByLang(hls, effectiveLang);
-            video.play().catch(() => {});
-          });
-
-          hls.on(HlsEngine.Events.AUDIO_TRACKS_UPDATED, (_evt, data) => {
-            const mapped = (data.audioTracks || []).map((t, i) => ({
-              id: i,
-              name: t.name || t.lang || `Audio ${i + 1}`,
-              lang: t.lang,
-            }));
-            setHlsAudioTracks(mapped);
-            selectTrackByLang(hls, effectiveLang);
-          });
-
-          hls.on(HlsEngine.Events.ERROR, (_evt, data) => {
-            if (data.fatal) {
-              if (data.type === HlsEngine.ErrorTypes.NETWORK_ERROR) {
-                hls.startLoad();
-              } else if (data.type === HlsEngine.ErrorTypes.MEDIA_ERROR) {
-                hls.recoverMediaError();
-              } else {
-                hls.destroy();
-                setHlsFailed(true);
-                setFallbackMessage('HLS stream unavailable • Auto-switched to Multi-Server Embed Fallback');
-                setTimeout(() => setFallbackMessage(null), 4000);
-              }
-            }
-          });
-        } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
-          video.src = activeHlsSource;
-          video.play().catch(() => {});
-        } else {
-          setHlsFailed(true);
-        }
-      })
-      .catch(() => {
-        if (!cancelled) setHlsFailed(true);
-      });
-
-    return () => {
-      cancelled = true;
-      if (hlsRef.current) {
-        hlsRef.current.destroy();
-        hlsRef.current = null;
-      }
-    };
-  }, [useHlsMode, activeHlsSource]);
-
-  // Zero-Reload Mid-Playback Audio Language Switcher + localStorage Persistence
-  const handleSelectAudioLanguage = (lang: AudioLanguageCode) => {
-    if (hindiOnlyLocked) return;
-    setSelectedLang(lang);
-    savePreferredAudioLang(lang);
-    const targetMeta = AUDIO_LANGUAGES.find(l => l.code === lang) || AUDIO_LANGUAGES[0];
-
-    if (useHlsMode && hlsRef.current) {
-      const tracks = hlsRef.current.audioTracks || [];
-      const aliases = targetMeta.aliases || [lang];
-      const matchIndex = tracks.findIndex(t => {
-        const tLang = (t.lang || '').toLowerCase();
-        const tName = (t.name || '').toLowerCase();
-        return aliases.some(a => tLang.includes(a) || tName.includes(a));
-      });
-      if (matchIndex !== -1) {
-        hlsRef.current.audioTrack = matchIndex;
-        setFallbackMessage(`Audio Track Locked: ${targetMeta.flag} ${targetMeta.label} (Zero Reload)`);
-        setTimeout(() => setFallbackMessage(null), 2800);
-      } else {
-        setFallbackMessage(`${targetMeta.label} track requested • Keeping active stream`);
-        setTimeout(() => setFallbackMessage(null), 2500);
-      }
-    } else {
-      setResolvedDynamicUrl(null);
-      setServerReloadKey(prev => prev + 1);
-      setFallbackMessage(
-        `${targetMeta.flag} ${targetMeta.label} Audio Active • Auto-syncing ${currentProvider.name} stream`
-      );
-      setTimeout(() => setFallbackMessage(null), 2800);
-    }
-  };
-
-  // 3. Mode B: Server Availability Ping & Automatic Primary/Fallback Failover
-  const pingAndSelectServer = useCallback(async (serverId: number, autoFailoverOnFail = true) => {
-    const provider = SERVER_TEMPLATES.find(s => s.id === serverId) || SERVER_TEMPLATES[0];
-    setSelectedServer(provider.id);
-    setServerReloadKey(prev => prev + 1);
-
-    // Dynamic resolvers (Dailymotion / YouTube) validate via /api/embed-resolve directly
-    if (provider.dynamicProvider) {
-      setServerStatus('online');
-      setServerLatency(38);
-      return;
-    }
-
-    setServerStatus('checking');
-
-    try {
-      const targetUrl = buildServerUrl(provider, {
-        tmdbId,
-        imdbId: tmdbMeta?.imdbId,
-        season,
-        episode: currentEpisode,
-        lang: effectiveLang,
-        mediaType,
-      });
-      const res = await fetch('/api/server-ping', {
+    if (isStaticHost || mediaType === 'movie' || !tmdbId) return;
+    const nextEp = currentEpisode + 1;
+    if (nextEp > activeSeasonEpisodeCount) return;
+    const timer = setTimeout(() => {
+      fetch('/api/hls-resolve', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ url: targetUrl }),
-      });
+        body: JSON.stringify({
+          tmdbId,
+          type: mediaType,
+          season: selectedSeasonNumber,
+          episode: nextEp,
+          lang: effectiveLang,
+          title: tmdbMeta?.title || drama.title,
+        }),
+      }).catch(() => {});
+    }, 1500);
+    return () => clearTimeout(timer);
+  }, [
+    isStaticHost,
+    mediaType,
+    tmdbId,
+    currentEpisode,
+    activeSeasonEpisodeCount,
+    selectedSeasonNumber,
+    effectiveLang,
+    tmdbMeta?.title,
+    drama.title,
+  ]);
 
-      if (res.ok) {
-        const data = await res.json();
-        if (data.ok) {
+  // Compute direct video source vs synced iframe source cleanly
+  const activeDirectVideo: { url: string; type: 'hls' | 'mp4' | 'webm' | 'ogg' } | null = useMemo(() => {
+    if (selectedCustomSource && (selectedCustomSource.format === 'hls' || selectedCustomSource.format === 'mp4')) {
+      return { url: selectedCustomSource.url, type: selectedCustomSource.format };
+    }
+    if (resolvedApiEmbedUrl) {
+      return null;
+    }
+    if (currentServer.mode === 'hlx-direct' && resolvedHlsUrl && !hlsFailed) {
+      return { url: resolvedHlsUrl, type: 'hls' };
+    }
+    if (currentServer.mode === 'hlx-direct' && providedHlsSource && !hlsFailed) {
+      return { url: providedHlsSource, type: 'hls' };
+    }
+    return null;
+  }, [
+    selectedCustomSource,
+    resolvedApiEmbedUrl,
+    currentServer.mode,
+    resolvedHlsUrl,
+    providedHlsSource,
+    hlsFailed,
+  ]);
+
+  const activeDirectDashUrl =
+    selectedCustomSource && selectedCustomSource.format === 'dash' ? selectedCustomSource.url : '';
+  const useHlsMode = Boolean(activeDirectVideo?.type === 'hls');
+  const isDirectVideoMode = Boolean(activeDirectVideo);
+
+  // Unified Dynamic Direct URL, Clean New Window URL & Synced Iframe Src
+  const directServerUrl = useMemo(() => {
+    if (selectedCustomSource && selectedCustomSource.format === 'iframe') {
+      return selectedCustomSource.url;
+    }
+    if (resolvedApiEmbedUrl) {
+      return resolvedApiEmbedUrl;
+    }
+    return buildHlxDirectUrl(currentServer, {
+      tmdbId,
+      imdbId: tmdbMeta?.imdbId,
+      season: selectedSeasonNumber,
+      episode: currentEpisode,
+      lang: effectiveLang,
+      mediaType,
+      title: tmdbMeta?.title || drama.title,
+    });
+  }, [
+    selectedCustomSource,
+    resolvedApiEmbedUrl,
+    currentServer,
+    tmdbId,
+    tmdbMeta?.imdbId,
+    tmdbMeta?.title,
+    drama.title,
+    selectedSeasonNumber,
+    currentEpisode,
+    effectiveLang,
+    mediaType,
+  ]);
+
+  const cleanNewWindowUrl = useMemo(() => {
+    if (customWindowMode) {
+      return directServerUrl || '#';
+    }
+    const base =
+      mediaType === 'movie'
+        ? `/watch/${drama.slug}`
+        : `/watch/${drama.slug}/episode-${currentEpisode}`;
+    const params = new URLSearchParams({
+      window: '1',
+      server: String(selectedServerId),
+      lang: effectiveLang,
+    });
+    if (mediaType !== 'movie' && selectedSeasonNumber > 1) {
+      params.set('season', String(selectedSeasonNumber));
+    }
+    if (hindiOnlyLocked) {
+      params.set('audio', 'hindi');
+    }
+    return `${base}?${params.toString()}`;
+  }, [
+    customWindowMode,
+    directServerUrl,
+    mediaType,
+    drama.slug,
+    currentEpisode,
+    selectedServerId,
+    effectiveLang,
+    selectedSeasonNumber,
+    hindiOnlyLocked,
+  ]);
+
+  const mp4StreamPath = useMemo(
+    () => getMp4StreamPath(drama, currentEpisode, selectedSeasonNumber),
+    [drama, currentEpisode, selectedSeasonNumber]
+  );
+
+  const activeIframeSrc = useMemo(() => {
+    if (selectedCustomSource && selectedCustomSource.format === 'iframe') {
+      return selectedCustomSource.url;
+    }
+    if (resolvedApiEmbedUrl) {
+      return resolvedApiEmbedUrl;
+    }
+    return buildHlxSyncedIframeSrc(directServerUrl, currentServer, sandboxShieldEnabled, isStaticHost);
+  }, [
+    selectedCustomSource,
+    resolvedApiEmbedUrl,
+    currentServer,
+    directServerUrl,
+    sandboxShieldEnabled,
+    isStaticHost,
+  ]);
+
+  // Server Selection + Background Ping Health Check
+  const selectAndSyncServer = useCallback(
+    async (serverId: number, autoFailover = false) => {
+      const targetSrv = HLX_SERVERS.find(s => s.id === serverId) || HLX_SERVERS[0];
+      setSelectedCustomSource(null);
+      setSelectedServerId(targetSrv.id);
+      setHlsFailed(false);
+      setIframeLoaded(false);
+      setAllSourcesFailed(false);
+      setServerReloadKey(prev => prev + 1);
+      saveLastWorkingServer(targetSrv.id);
+
+      if (targetSrv.mode !== 'hlx-relay' || isStaticHost) {
+        setServerStatus('online');
+        setServerLatency(32);
+        return;
+      }
+
+      setServerStatus('checking');
+      try {
+        const probeUrl = buildHlxDirectUrl(targetSrv, {
+          tmdbId,
+          imdbId: tmdbMeta?.imdbId,
+          season: selectedSeasonNumber,
+          episode: currentEpisode,
+          lang: effectiveLang,
+          mediaType,
+          title: tmdbMeta?.title || drama.title,
+        });
+        const res = await fetch('/api/server-ping', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ url: probeUrl }),
+        });
+        if (res.ok) {
+          const data = await res.json();
           setServerStatus('online');
-          setServerLatency(data.latencyMs || 42);
+          setServerLatency(data.latencyMs || 40);
+          trackPlatformEvent({
+            type: 'source_health',
+            dramaSlug: drama.slug,
+            episode: currentEpisode,
+            serverId: targetSrv.id,
+            serverName: targetSrv.name,
+            ok: Boolean(data.ok),
+            latencyMs: data.latencyMs || 40,
+          });
+          if (data.ok || !autoFailover) return;
+        }
+      } catch {
+        // Keep relay attempt active
+      }
+
+      if (autoFailover && triedServersRef.current.size < 4) {
+        triedServersRef.current.add(targetSrv.id);
+        const nextSrv = HLX_SERVERS.find(
+          s => !triedServersRef.current.has(s.id) && s.id !== targetSrv.id
+        );
+        if (nextSrv) {
+          setSelectedServerId(nextSrv.id);
+          setServerStatus('switched');
+          setFallbackMessage(`HLX Auto-Failover: Switched to ${nextSrv.name}`);
+          setTimeout(() => setFallbackMessage(null), 3500);
           return;
         }
       }
-    } catch {
-      // Fallback gracefully
+      setServerStatus('online');
+    },
+    [
+      isStaticHost,
+      tmdbId,
+      tmdbMeta?.imdbId,
+      tmdbMeta?.title,
+      drama.title,
+      drama.slug,
+      selectedSeasonNumber,
+      currentEpisode,
+      effectiveLang,
+      mediaType,
+    ]
+  );
+
+  const handleAutoFallback = useCallback(() => {
+    setSelectedCustomSource(null);
+    setIframeLoaded(false);
+    triedServersRef.current.add(selectedServerId);
+
+    const nextUntried = HLX_SERVERS.find(
+      s => !triedServersRef.current.has(s.id) && s.id !== selectedServerId
+    );
+    if (nextUntried) {
+      setServerStatus('switched');
+      setFallbackMessage(`HLX Auto-Failover: Switched to ${nextUntried.name}`);
+      selectAndSyncServer(nextUntried.id, false);
+      setTimeout(() => setFallbackMessage(null), 3500);
+      return;
     }
 
-    if (autoFailoverOnFail && triedServersRef.current.size < 4) {
-      triedServersRef.current.add(provider.id);
-      const next = SERVER_TEMPLATES.find(s => !triedServersRef.current.has(s.id) && s.id !== provider.id);
-      if (next) {
-        setSelectedServer(next.id);
-        setServerReloadKey(prev => prev + 1);
-        setServerStatus('switched');
-        setFallbackMessage(`Auto-Failover: ${provider.name} unavailable • Switched to ${next.name}`);
-        setTimeout(() => setFallbackMessage(null), 4000);
+    // If all relay mirrors timed out while HLX Shield is ON, switch seamlessly to direct embed mode
+    if (sandboxShieldEnabled && !isStaticHost) {
+      triedServersRef.current.clear();
+      setSandboxShieldEnabled(false);
+      setServerStatus('switched');
+      setFallbackMessage('HLX Auto-Sync: Switched to Direct Mirror Mode');
+      selectAndSyncServer(HLX_SERVERS[0].id, false);
+      setTimeout(() => setFallbackMessage(null), 3500);
+      return;
+    }
+
+    setAllSourcesFailed(true);
+    trackPlatformEvent({
+      type: 'playback_error',
+      dramaSlug: drama.slug,
+      dramaTitle: drama.title,
+      episode: currentEpisode,
+      serverId: currentServer.id,
+      serverName: currentServer.name,
+      ok: false,
+      reason: 'All HLX mirrors unavailable',
+    });
+  }, [
+    selectedServerId,
+    sandboxShieldEnabled,
+    isStaticHost,
+    drama.slug,
+    drama.title,
+    currentEpisode,
+    currentServer.id,
+    currentServer.name,
+    selectAndSyncServer,
+  ]);
+
+  // Unified Real Multi-Audio Switcher (Zero-reload for embedded HLS tracks + real upstream audio re-resolution)
+  const handleSelectAudioLanguage = (lang: AudioLanguageCode) => {
+    if (hindiOnlyLocked) return;
+    triggerSmartlinkWithCooldown(45000);
+    setPreferOriginalHls(false);
+    setSelectedLang(lang);
+    savePreferredAudioLang(lang);
+    const targetMeta = getAudioLanguageMeta(lang);
+
+    if (useHlsMode && hlsRef.current) {
+      const tracks = hlsRef.current.audioTracks || [];
+      const matchIndex = tracks.findIndex(t => {
+        const tLang = (t.lang || '').toLowerCase();
+        const tName = (t.name || '').toLowerCase();
+        return targetMeta.aliases.some(a => tLang.includes(a) || tName.includes(a));
+      });
+      if (matchIndex !== -1) {
+        hlsRef.current.audioTrack = matchIndex;
+        setActiveHlsAudioTrackIdx(matchIndex);
+        setHlsAudioStatus({
+          matched: true,
+          actualLabel: targetMeta.label,
+        });
+        setFallbackMessage(`Real Audio Track Switched: ${targetMeta.flag} ${targetMeta.label}`);
+        setTimeout(() => setFallbackMessage(null), 2800);
         return;
       }
     }
 
-    setServerStatus('online');
-  }, [tmdbId, tmdbMeta?.imdbId, season, currentEpisode, effectiveLang, mediaType]);
-
-  const handleAutoFallback = () => {
-    const nextServer = (selectedServer % SERVER_TEMPLATES.length) + 1;
-    const nextProvider = SERVER_TEMPLATES.find(s => s.id === nextServer) || SERVER_TEMPLATES[0];
-    setServerStatus('switched');
-    setFallbackMessage(`Auto-switched to Server ${nextProvider.id} (${nextProvider.name})`);
-    pingAndSelectServer(nextProvider.id, false);
-    setTimeout(() => setFallbackMessage(null), 3500);
+    setIframeLoaded(false);
+    setServerReloadKey(prev => prev + 1);
+    setFallbackMessage(
+      `Resolving ${targetMeta.flag} ${targetMeta.label} Audio on ${currentServer.name}...`
+    );
+    setTimeout(() => setFallbackMessage(null), 2800);
   };
 
+  // Instant postMessage listener for /api/player-relay upstream HTTP errors (skip failing nodes immediately)
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const onRelayMessage = (ev: MessageEvent) => {
+      if (ev?.data?.type === 'HLX_RELAY_ERROR') {
+        handleAutoFallback();
+      }
+    };
+    window.addEventListener('message', onRelayMessage);
+    return () => window.removeEventListener('message', onRelayMessage);
+  }, [handleAutoFallback]);
+
+  // Watchdog for stuck iframe loads (9s)
+  useEffect(() => {
+    if (isDirectVideoMode || isStaticHost || iframeLoaded || resolvingStream || allSourcesFailed) {
+      return;
+    }
+    const timer = setTimeout(() => {
+      if (!iframeLoaded) {
+        handleAutoFallback();
+      }
+    }, 9000);
+    return () => clearTimeout(timer);
+  }, [
+    isDirectVideoMode,
+    isStaticHost,
+    iframeLoaded,
+    resolvingStream,
+    allSourcesFailed,
+    handleAutoFallback,
+  ]);
+
+  // Fetch admin manual episode sources
+  useEffect(() => {
+    if (isStaticHost) return;
+    let active = true;
+    fetch(
+      `/api/sources/${encodeURIComponent(drama.slug)}/${currentEpisode}?season=${selectedSeasonNumber}`
+    )
+      .then(res => (res.ok ? res.json() : null))
+      .then(data => {
+        if (!active || !Array.isArray(data?.sources)) return;
+        setCustomSources(data.sources);
+      })
+      .catch(() => {});
+    return () => {
+      active = false;
+    };
+  }, [drama.slug, currentEpisode, selectedSeasonNumber, isStaticHost]);
+
+  // Reset per-episode playback telemetry & watch history
   useEffect(() => {
     triedServersRef.current.clear();
-  }, [drama.slug, currentEpisode]);
+    setAllSourcesFailed(false);
+    setIframeLoaded(false);
+    setAutoNextCountdown(null);
+    setResumeToast(null);
+    hasSeekedSavedRef.current = false;
 
-  useEffect(() => {
-    setComments(getCommentsForDrama(drama.slug));
-  }, [drama.slug]);
-
-  useEffect(() => {
     saveWatchHistory({
       dramaSlug: drama.slug,
       dramaTitle: drama.title,
       episode: currentEpisode,
       poster: drama.poster,
+      totalEpisodes: activeSeasonEpisodeCount,
+      type: drama.type,
+      country: drama.country,
+      year: drama.year,
     });
-  }, [drama.slug, drama.title, drama.poster, currentEpisode]);
+    markEpisodeWatched(drama.slug, currentEpisode);
+    trackPlatformEvent({
+      type: 'episode_play',
+      dramaSlug: drama.slug,
+      dramaTitle: drama.title,
+      episode: currentEpisode,
+      serverName: selectedCustomSource ? selectedCustomSource.label : currentServer.name,
+    });
+  }, [
+    drama.slug,
+    drama.title,
+    drama.poster,
+    drama.type,
+    drama.country,
+    drama.year,
+    currentEpisode,
+    activeSeasonEpisodeCount,
+  ]);
+
+  useEffect(() => {
+    setComments(getCommentsForDrama(drama.slug));
+  }, [drama.slug]);
+
+  // Auto-Next Episode countdown ticker
+  useEffect(() => {
+    if (autoNextCountdown === null) return;
+    if (autoNextCountdown <= 0) {
+      setAutoNextCountdown(null);
+      if (currentEpisode < activeSeasonEpisodeCount) {
+        onSelectEpisode(currentEpisode + 1, selectedSeasonNumber);
+      }
+      return;
+    }
+    const id = setTimeout(() => {
+      setAutoNextCountdown(prev => (prev !== null ? prev - 1 : null));
+    }, 1000);
+    return () => clearTimeout(id);
+  }, [autoNextCountdown, currentEpisode, activeSeasonEpisodeCount, selectedSeasonNumber, onSelectEpisode]);
+
+  // Keyboard shortcuts
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const onKeyDown = (e: KeyboardEvent) => {
+      const target = e.target as HTMLElement | null;
+      if (
+        target &&
+        (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA' || target.tagName === 'SELECT')
+      ) {
+        return;
+      }
+      const vid = cleanPopupOpen ? lightboxVideoRef.current : videoRef.current;
+      const key = e.key.toLowerCase();
+
+      if (key === 'n' && currentEpisode < activeSeasonEpisodeCount) {
+        e.preventDefault();
+        onSelectEpisode(currentEpisode + 1, selectedSeasonNumber);
+        return;
+      }
+      if (key === 'p' && currentEpisode > 1) {
+        e.preventDefault();
+        onSelectEpisode(currentEpisode - 1, selectedSeasonNumber);
+        return;
+      }
+      if (key === 'f') {
+        e.preventDefault();
+        const el = vid || playerContainerRef.current;
+        if (el && el.requestFullscreen) {
+          if (document.fullscreenElement) document.exitFullscreen().catch(() => {});
+          else el.requestFullscreen().catch(() => {});
+        }
+        return;
+      }
+
+      if (!vid) return;
+      if (e.code === 'Space' || key === 'k') {
+        e.preventDefault();
+        if (vid.paused) vid.play().catch(() => {});
+        else vid.pause();
+      } else if (key === 'm') {
+        e.preventDefault();
+        vid.muted = !vid.muted;
+      } else if (e.key === 'ArrowRight' || key === 'l') {
+        e.preventDefault();
+        vid.currentTime = Math.min(vid.duration || vid.currentTime + 10, vid.currentTime + 10);
+      } else if (e.key === 'ArrowLeft' || key === 'j') {
+        e.preventDefault();
+        vid.currentTime = Math.max(0, vid.currentTime - 10);
+      }
+    };
+    window.addEventListener('keydown', onKeyDown);
+    return () => window.removeEventListener('keydown', onKeyDown);
+  }, [cleanPopupOpen, currentEpisode, activeSeasonEpisodeCount, selectedSeasonNumber, onSelectEpisode]);
+
+  const handleVideoLoadedMetadata = (vid: HTMLVideoElement | null) => {
+    if (!vid || hasSeekedSavedRef.current) return;
+    hasSeekedSavedRef.current = true;
+    vid.playbackRate = playbackRate;
+    const { progressSeconds: saved } = getEpisodePlaybackProgress(drama.slug, currentEpisode);
+    const dur = Number.isFinite(vid.duration) ? vid.duration : 0;
+    if (saved > 5 && (!dur || saved < dur - 15)) {
+      vid.currentTime = saved;
+      const mins = Math.floor(saved / 60);
+      const secs = Math.floor(saved % 60).toString().padStart(2, '0');
+      setResumeToast(`Resumed from ${mins}:${secs}`);
+      setTimeout(() => setResumeToast(null), 4000);
+    }
+  };
+
+  const handleVideoTimeUpdate = (vid: HTMLVideoElement | null) => {
+    if (!vid || !Number.isFinite(vid.currentTime)) return;
+    const now = Date.now();
+    if (now - lastProgressSaveRef.current < 5000) return;
+    lastProgressSaveRef.current = now;
+    saveEpisodePlaybackProgress(
+      drama.slug,
+      currentEpisode,
+      vid.currentTime,
+      Number.isFinite(vid.duration) ? vid.duration : 0
+    );
+  };
+
+  const handleVideoEnded = () => {
+    if (autoNextEnabled && currentEpisode < activeSeasonEpisodeCount) {
+      setAutoNextCountdown(5);
+    }
+  };
+
+  const handleTogglePiP = async () => {
+    const vid = cleanPopupOpen ? lightboxVideoRef.current : videoRef.current;
+    if (!vid || typeof document === 'undefined') return;
+    try {
+      if (document.pictureInPictureElement) await document.exitPictureInPicture();
+      else if (vid.requestPictureInPicture) await vid.requestPictureInPicture();
+    } catch {
+      // Blocked
+    }
+  };
+
+  const handleChangeQuality = (levelIndex: number) => {
+    setSelectedQuality(levelIndex);
+    if (hlsRef.current) hlsRef.current.currentLevel = levelIndex;
+  };
+
+  const handleChangeSubtitle = (subIndex: number) => {
+    setSelectedSubtitle(subIndex);
+    if (hlsRef.current) hlsRef.current.subtitleTrack = subIndex;
+    const vid = cleanPopupOpen ? lightboxVideoRef.current : videoRef.current;
+    if (vid?.textTracks) {
+      for (let i = 0; i < vid.textTracks.length; i++) {
+        vid.textTracks[i].mode = i === subIndex ? 'showing' : 'disabled';
+      }
+    }
+  };
 
   const handlePostComment = (e: React.FormEvent) => {
     e.preventDefault();
     if (!commentText.trim()) return;
-
     setCommentSubmitting(true);
     const newComment = addComment({
       dramaSlug: drama.slug,
       episodeNumber: currentEpisode,
-      userName: commentName.trim() || 'DramaFan' + Math.floor(100 + Math.random() * 900),
+      userName: commentName.trim() || `DramaFan${Math.floor(100 + Math.random() * 900)}`,
       content: commentText.trim(),
     });
-
     setComments(prev => [newComment, ...prev]);
     setCommentText('');
     setCommentSubmitting(false);
@@ -586,9 +969,7 @@ export const WatchPlayer: React.FC<WatchPlayerProps> = ({
 
   const handleLikeComment = (id: string) => {
     const newCount = likeComment(id);
-    setComments(prev =>
-      prev.map(c => (c.id === id ? { ...c, likes: newCount } : c))
-    );
+    setComments(prev => prev.map(c => (c.id === id ? { ...c, likes: newCount } : c)));
   };
 
   const handleShare = () => {
@@ -608,23 +989,25 @@ export const WatchPlayer: React.FC<WatchPlayerProps> = ({
           onClick={() => setCinemaMode(false)}
           className="fixed inset-0 bg-black/90 z-40 cursor-pointer flex items-start justify-center pt-6"
         >
-          <span className="bg-slate-800 text-slate-300 text-xs px-3 py-1 rounded-full border border-slate-700 pointer-events-none">
-            Cinema Mode Active • Click anywhere to exit
+          <span className="bg-[#111622] text-slate-300 text-xs px-3 py-1 rounded-full border border-[#1e2638] pointer-events-none">
+            Cinema Mode Active · Click anywhere to exit
           </span>
         </div>
       )}
 
       <div className="max-w-6xl mx-auto px-4 sm:px-6 py-4">
-        
         {/* Crawlable Breadcrumb Navigation */}
-        <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-xs sm:text-sm text-slate-400 mb-4 overflow-x-auto whitespace-nowrap">
+        <nav
+          aria-label="Breadcrumb"
+          className="flex items-center gap-2 text-xs sm:text-sm text-slate-400 mb-4 overflow-x-auto whitespace-nowrap"
+        >
           <a
             href="/"
             onClick={e => {
               e.preventDefault();
               onNavigateHome();
             }}
-            className="hover:text-blue-400 text-blue-500 font-medium transition-colors"
+            className="hover:text-[#00c896] text-[#00c896] font-medium transition-colors"
           >
             Home
           </a>
@@ -635,50 +1018,56 @@ export const WatchPlayer: React.FC<WatchPlayerProps> = ({
               e.preventDefault();
               onSelectCategory(drama.country.toLowerCase());
             }}
-            className="hover:text-blue-400 text-blue-500 font-medium transition-colors"
+            className="hover:text-[#00c896] text-slate-300 font-medium transition-colors"
           >
             {drama.country} Drama
           </a>
           <span>/</span>
           <a
-            href={`/drama/${drama.slug}`}
+            href={getContentPath(drama)}
             onClick={e => {
               e.preventDefault();
               onOpenDramaDetail(drama.slug);
             }}
-            className="hover:text-blue-400 text-blue-500 font-medium transition-colors"
+            className="hover:text-[#00c896] text-slate-300 font-medium transition-colors"
           >
             {drama.title}
           </a>
           <span>/</span>
-          <span className="text-slate-200 font-semibold">
-            Episode {currentEpisode}
+          <span className="text-white font-semibold tabular-nums">
+            {mediaType === 'movie'
+              ? 'Full Movie'
+              : `S${selectedSeasonNumber} · Episode ${currentEpisode}`}
           </span>
         </nav>
 
-        {/* OTT Video Player Shell (Hotstar / Netflix Style) */}
-        <div className={`relative z-40 mb-6 bg-black rounded-2xl overflow-hidden border border-slate-800 shadow-2xl shadow-black/80 ${cinemaMode ? 'ring-2 ring-blue-500 scale-[1.02] transition-transform' : ''}`}>
-          
-          {/* 1. OTT Header Bar with Live TMDB Sync + Active Audio Language Badge */}
-          <div className="bg-gradient-to-r from-slate-950 via-slate-900 to-slate-950 border-b border-slate-800 px-4 py-3 flex flex-wrap items-center justify-between gap-3">
+        {/* Unified FlixHQ / HLX Video Player Shell */}
+        <div
+          className={`relative z-40 mb-6 bg-[#0a0d14] rounded-2xl overflow-hidden border border-[#1e2638] shadow-2xl shadow-black/80 ${
+            cinemaMode ? 'ring-2 ring-[#00c896] scale-[1.01] transition-transform' : ''
+          }`}
+        >
+          {/* 1. Header Bar */}
+          <div className="bg-[#111622] border-b border-[#1e2638] px-4 py-3 flex flex-wrap items-center justify-between gap-3">
             <div className="min-w-0 flex-1">
               <div className="flex flex-wrap items-center gap-2">
                 <span className="text-sm sm:text-base font-bold text-white truncate">
                   {tmdbMeta?.title || drama.title}
                 </span>
-                <span className="px-2 py-0.5 rounded bg-blue-600/20 text-blue-400 border border-blue-500/30 text-[11px] font-bold">
-                  S{season} · E{currentEpisode}
+                <span className="text-xs font-bold text-[#00c896] tabular-nums">
+                  {mediaType === 'movie'
+                    ? 'HD Movie'
+                    : `S${selectedSeasonNumber} · EP ${currentEpisode}`}
                 </span>
-                <span className="px-2 py-0.5 rounded bg-emerald-500/15 text-emerald-300 border border-emerald-500/30 text-[11px] font-semibold flex items-center gap-1">
-                  <Radio className="w-3 h-3 animate-pulse" />
-                  <span>{activeLangMeta.flag} Audio: {activeLangMeta.label}</span>
+                <span className="text-xs text-slate-300 font-medium">
+                  · {activeLangMeta.flag} {activeLangMeta.label}
                 </span>
-                <span className="px-2 py-0.5 rounded bg-slate-800 text-slate-300 text-[10px] font-semibold uppercase tracking-wider">
-                  {useHlsMode ? 'HLS Multi-Audio' : `Server: ${currentProvider.name}`}
+                <span className="text-[11px] text-slate-400 font-mono hidden sm:inline">
+                  · {activeDirectVideo ? `HLX HLS (${currentServer.name})` : currentServer.name}
                 </span>
               </div>
               {syncingMeta ? (
-                <div className="h-3.5 w-64 bg-slate-800 animate-pulse rounded mt-1.5" />
+                <div className="h-3.5 w-64 bg-[#1a2234] animate-pulse rounded mt-1.5" />
               ) : (
                 <p className="text-xs text-slate-400 truncate mt-1">
                   {tmdbMeta?.episodeName ? `${tmdbMeta.episodeName} — ` : ''}
@@ -687,285 +1076,578 @@ export const WatchPlayer: React.FC<WatchPlayerProps> = ({
               )}
             </div>
 
-            {/* Utility Controls */}
-            <div className="flex items-center gap-2 shrink-0 text-xs">
+            <div className="flex items-center gap-1.5 shrink-0 text-xs">
               <button
+                type="button"
                 onClick={() => setCinemaMode(!cinemaMode)}
-                className={`p-1.5 rounded text-xs flex items-center gap-1 transition-colors cursor-pointer ${
-                  cinemaMode ? 'bg-amber-500/20 text-amber-300' : 'text-slate-400 hover:text-white bg-slate-800'
+                className={`p-1.5 rounded-lg text-xs flex items-center gap-1 transition-colors cursor-pointer border ${
+                  cinemaMode
+                    ? 'bg-amber-500/20 text-amber-300 border-amber-500/40'
+                    : 'text-slate-300 hover:text-white bg-[#0a0d14] border-[#1e2638]'
                 }`}
-                title="Toggle Lights (Cinema Mode)"
+                title="Cinema Mode"
               >
                 {cinemaMode ? <Sun className="w-3.5 h-3.5" /> : <Moon className="w-3.5 h-3.5" />}
-                <span className="hidden sm:inline">{cinemaMode ? 'Light On' : 'Light Off'}</span>
+                <span className="hidden md:inline">{cinemaMode ? 'Lights On' : 'Cinema'}</span>
               </button>
 
               <button
+                type="button"
                 onClick={handleAutoFallback}
-                className="px-2.5 py-1.5 rounded text-xs font-semibold bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white shadow-md flex items-center gap-1 transition-all cursor-pointer"
-                title="Automatically switch to next high-speed server if buffering"
+                className="px-2.5 py-1.5 rounded-lg text-xs font-bold bg-[#00c896] hover:bg-[#00b084] text-slate-950 flex items-center gap-1 transition-colors cursor-pointer"
+                title="Auto-switch to next healthy HLX server"
               >
-                <Sparkles className="w-3.5 h-3.5 text-amber-300" />
-                <span>Auto-Fallback</span>
+                <Sparkles className="w-3.5 h-3.5" />
+                <span>Next Server</span>
               </button>
 
               <button
+                type="button"
                 onClick={() => setServerReloadKey(prev => prev + 1)}
-                className="p-1.5 text-slate-400 hover:text-white rounded bg-slate-800 flex items-center gap-1 cursor-pointer"
-                title="Reload Player Stream"
+                className="p-1.5 text-slate-300 hover:text-white rounded-lg bg-[#0a0d14] border border-[#1e2638] cursor-pointer"
+                title="Reload Stream"
               >
                 <RefreshCw className="w-3.5 h-3.5" />
-                <span className="hidden sm:inline">Reload</span>
               </button>
 
-              {!useHlsMode && currentProvider.supportsRelay && (
+              {!useHlsMode && currentServer.supportsRelay && !isStaticHost && (
                 <button
+                  type="button"
                   onClick={() => {
                     setSandboxShieldEnabled(prev => !prev);
                     setServerReloadKey(prev => prev + 1);
                   }}
-                  className={`px-2 py-1.5 rounded text-xs font-semibold flex items-center gap-1 cursor-pointer border transition-colors ${
+                  className={`px-2 py-1.5 rounded-lg text-xs font-semibold flex items-center gap-1 cursor-pointer border transition-colors ${
                     sandboxShieldEnabled
-                      ? 'bg-emerald-600/20 text-emerald-300 border-emerald-500/40'
-                      : 'bg-slate-800 text-slate-400 border-slate-700'
+                      ? 'bg-[#00c896]/15 text-[#00c896] border-[#00c896]/40'
+                      : 'bg-[#0a0d14] text-slate-400 border-[#1e2638]'
                   }`}
-                  title="Same-Origin Sandbox-Free Shield prevents iframe sandbox blocking"
+                  title="HLX Sandbox-Free Shield Relay"
                 >
                   <Shield className="w-3.5 h-3.5" />
-                  <span className="hidden md:inline">
-                    {sandboxShieldEnabled ? 'Sandbox-Free ON' : 'Sandbox-Free OFF'}
+                  <span className="hidden lg:inline">
+                    {sandboxShieldEnabled ? 'HLX Shield ON' : 'Direct'}
                   </span>
                 </button>
               )}
 
-              {!useHlsMode && embedUrl && (
-                <a
-                  href={embedUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="p-1.5 text-emerald-300 hover:text-white rounded bg-emerald-600/20 border border-emerald-500/30 flex items-center gap-1 cursor-pointer"
-                  title="Open Direct Sandbox-Free Stream"
-                >
-                  <ExternalLink className="w-3.5 h-3.5" />
-                  <span className="hidden sm:inline">Direct Play</span>
-                </a>
-              )}
+              <button
+                type="button"
+                onClick={() => setCleanPopupOpen(true)}
+                className="px-2.5 py-1.5 text-slate-200 hover:text-white rounded-lg bg-[#0a0d14] hover:bg-[#1a2234] border border-[#1e2638] flex items-center gap-1 font-semibold cursor-pointer transition-colors"
+                title="Open Lightbox Player"
+              >
+                <Maximize2 className="w-3.5 h-3.5 text-[#00c896]" />
+                <span className="hidden sm:inline">Lightbox</span>
+              </button>
+
+              <a
+                href={cleanNewWindowUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="px-3 py-1.5 bg-[#00c896] hover:bg-[#00b084] text-slate-950 rounded-lg flex items-center gap-1.5 font-extrabold cursor-pointer transition-colors shadow-sm shadow-emerald-500/20"
+                title="PLAY NOW"
+              >
+                <ExternalLink className="w-3.5 h-3.5" />
+                <span>PLAY NOW</span>
+              </a>
 
               <button
+                type="button"
                 onClick={handleShare}
-                className="p-1.5 text-slate-400 hover:text-white rounded bg-slate-800 flex items-center gap-1 cursor-pointer"
-                title="Share Episode"
+                className="p-1.5 text-slate-300 hover:text-white rounded-lg bg-[#0a0d14] border border-[#1e2638] flex items-center gap-1 cursor-pointer"
+                title="Copy Episode Link"
               >
                 <Share2 className="w-3.5 h-3.5" />
-                <span className="hidden sm:inline">{copiedLink ? 'Copied!' : 'Share'}</span>
+                <span className="hidden md:inline">{copiedLink ? 'Copied!' : 'Share'}</span>
               </button>
             </div>
           </div>
 
-          {/* Fallback / Audio Switch Notification Banner */}
           {fallbackMessage && (
-            <div className="bg-blue-600 text-white text-xs px-4 py-2 font-medium flex items-center justify-between">
+            <div className="bg-[#00c896] text-slate-950 text-xs px-4 py-2 font-bold flex items-center justify-between">
               <span>{fallbackMessage}</span>
-              <span className="text-[10px] bg-black/30 px-2 py-0.5 rounded">Live OTT Sync</span>
+              <span className="text-[10px] bg-black/15 px-2 py-0.5 rounded uppercase">
+                Auto-Sync
+              </span>
             </div>
           )}
 
-          {/* 2. Hybrid Dual-Mode Viewport (Mode A: HLS.js Video OR Mode B: Sandbox-Free Multi-Server Iframe) */}
-          <div className="relative aspect-video w-full bg-slate-950 flex items-center justify-center">
-            {useHlsMode ? (
-              <video
-                ref={videoRef}
-                controls
-                playsInline
-                poster={tmdbMeta?.backdrop || drama.backdrop || drama.poster}
-                className="w-full h-full bg-black object-contain"
-              />
-            ) : currentProvider.dynamicProvider && (resolvingDynamic || !resolvedDynamicUrl) ? (
-              <div className="w-full h-full bg-slate-950 flex flex-col items-center justify-center gap-2.5">
-                <div className="w-9 h-9 border-2 border-blue-500 border-t-transparent rounded-full animate-spin" />
-                <span className="text-xs font-medium text-blue-200">
-                  Auto-syncing {currentProvider.name} ({activeLangMeta.label} Audio) via TMDB...
+          {/* 2. Unified Dual Switcher Bar Above Player */}
+          <div className="bg-[#0e131e] border-b border-[#1e2638] px-3 sm:px-5 py-3 space-y-2.5">
+            {/* Row 1: Screenshot 2 Servers + HLS.proxy, 2Embed, MultiEmbed */}
+            <div className="flex flex-wrap items-center justify-between gap-2">
+              <div className="flex items-center gap-1.5 shrink-0 text-xs font-bold text-slate-300">
+                <Tv className="w-3.5 h-3.5 text-[#00c896]" />
+                <span>Servers:</span>
+              </div>
+
+              <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar flex-1 max-w-full">
+                {customSources.map(src => {
+                  const isSelected = selectedCustomSource?.id === src.id;
+                  return (
+                    <button
+                      key={src.id}
+                      type="button"
+                      onClick={() => {
+                        setSelectedCustomSource(src);
+                        setHlsFailed(src.format !== 'hls');
+                        setAllSourcesFailed(false);
+                        setIframeLoaded(false);
+                        setServerReloadKey(prev => prev + 1);
+                      }}
+                      className={`px-2.5 py-1.5 rounded-lg text-xs font-semibold whitespace-nowrap shrink-0 cursor-pointer border transition-colors ${
+                        isSelected
+                          ? 'bg-[#00c896] text-slate-950 border-[#00c896]'
+                          : 'bg-[#111622] text-emerald-300 border-[#1e2638] hover:bg-[#1a2234]'
+                      }`}
+                    >
+                      {src.label} ({src.format.toUpperCase()})
+                    </button>
+                  );
+                })}
+
+                {HLX_SERVERS.map(srv => {
+                  const isActive = !selectedCustomSource && selectedServerId === srv.id;
+                  return (
+                    <button
+                      key={srv.id}
+                      type="button"
+                      onClick={() => {
+                        triggerSmartlinkWithCooldown(45000);
+                        selectAndSyncServer(srv.id, true);
+                      }}
+                      className={`px-3 py-1.5 rounded-lg text-xs font-semibold whitespace-nowrap shrink-0 transition-all cursor-pointer border flex items-center gap-1.5 ${
+                        isActive
+                          ? 'bg-[#00c896] text-slate-950 border-[#00c896] font-bold shadow-sm shadow-emerald-500/20'
+                          : 'bg-[#111622] hover:bg-[#1a2234] text-slate-300 hover:text-white border-[#1e2638]'
+                      }`}
+                    >
+                      <span>{srv.name}</span>
+                      <span
+                        className={`text-[10px] px-1.5 py-0.5 rounded font-mono ${
+                          isActive ? 'bg-black/20 text-slate-950' : 'bg-[#1e2638] text-[#00c896]'
+                        }`}
+                      >
+                        {srv.qualityTag}
+                      </span>
+                    </button>
+                  );
+                })}
+              </div>
+
+              <div className="flex items-center gap-2 shrink-0">
+                <span className="hidden lg:inline-flex items-center gap-1 text-[11px] text-[#00c896] font-medium tabular-nums">
+                  <Activity className="w-3.5 h-3.5" />
+                  <span>
+                    {serverStatus === 'checking'
+                      ? 'Syncing...'
+                      : serverLatency
+                        ? `Ready (${serverLatency}ms)`
+                        : 'Auto-Sync'}
+                  </span>
                 </span>
               </div>
-            ) : (
+            </div>
+
+            {/* Row 2: Real Multi-Audio Language Switcher & Honest Verification Status */}
+            <div className="flex flex-wrap items-center justify-between gap-2 pt-2 border-t border-[#1e2638]/80">
+              <div className="flex items-center gap-1.5 shrink-0 text-xs font-bold text-slate-300">
+                <Volume2 className="w-3.5 h-3.5 text-[#00c896]" />
+                <span>Audio Language:</span>
+              </div>
+
+              <div className="flex flex-wrap items-center gap-1.5 flex-1">
+                {hindiOnlyLocked ? (
+                  <span className="px-3 py-1 rounded-lg text-xs font-bold bg-[#00c896] text-slate-950 flex items-center gap-1.5">
+                    <span>🇮🇳</span>
+                    <span>Hindi Dubbed Only (Locked)</span>
+                  </span>
+                ) : (
+                  HLX_AUDIO_LANGUAGES.map(lang => {
+                    const isActive = effectiveLang === lang.code;
+                    return (
+                      <button
+                        key={lang.code}
+                        type="button"
+                        onClick={() => handleSelectAudioLanguage(lang.code)}
+                        className={`px-3 py-1 rounded-lg text-xs font-semibold transition-all flex items-center gap-1.5 cursor-pointer border whitespace-nowrap shrink-0 ${
+                          isActive
+                            ? 'bg-[#00c896] text-slate-950 border-[#00c896] font-bold'
+                            : 'bg-[#111622] hover:bg-[#1a2234] text-slate-300 hover:text-white border-[#1e2638]'
+                        }`}
+                        title={`Switch real audio language to ${lang.label}`}
+                      >
+                        <span>{lang.flag}</span>
+                        <span>{lang.label}</span>
+                        {isActive && <Check className="w-3 h-3" />}
+                      </button>
+                    );
+                  })
+                )}
+
+                {hlsAudioStatus && (
+                  <span
+                    className={`text-[11px] font-semibold px-2 py-0.5 rounded border ${
+                      hlsAudioStatus.matched
+                        ? 'text-emerald-300 bg-emerald-500/10 border-emerald-500/30'
+                        : 'text-amber-300 bg-amber-500/10 border-amber-500/30'
+                    }`}
+                  >
+                    {hlsAudioStatus.matched
+                      ? `✓ Real ${hlsAudioStatus.actualLabel} Audio`
+                      : `Playing ${hlsAudioStatus.actualLabel} · ${activeLangMeta.shortLabel} Subs ON`}
+                  </span>
+                )}
+
+                {hlsAudioStatus?.dubbedEmbedUrl && (
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setPreferOriginalHls(prev => !prev);
+                      setServerReloadKey(prev => prev + 1);
+                    }}
+                    className="text-[11px] font-semibold px-2.5 py-0.5 rounded bg-[#111622] hover:bg-[#1a2234] text-[#00c896] border border-[#00c896]/40 cursor-pointer"
+                  >
+                    {preferOriginalHls
+                      ? `Switch to ${activeLangMeta.shortLabel} Dub`
+                      : 'Switch to HD Original + Subs'}
+                  </button>
+                )}
+              </div>
+            </div>
+          </div>
+
+          {/* 3. Player Viewport */}
+          <div
+            ref={playerContainerRef}
+            className="relative aspect-video w-full bg-black flex items-center justify-center"
+          >
+            {cleanPopupOpen ? (
+              <div className="w-full h-full bg-[#0a0d14] flex flex-col items-center justify-center p-6 text-center gap-3">
+                <Maximize2 className="w-8 h-8 text-[#00c896]" />
+                <p className="text-sm font-semibold text-white">Playing in Lightbox Video Player</p>
+                <button
+                  type="button"
+                  onClick={() => setCleanPopupOpen(false)}
+                  className="px-4 py-2 rounded-lg bg-[#111622] hover:bg-[#1a2234] text-slate-200 text-xs font-semibold border border-[#1e2638] cursor-pointer"
+                >
+                  Return to Inline Player
+                </button>
+              </div>
+            ) : allSourcesFailed ? (
+              <div className="w-full h-full bg-[#0a0d14] flex flex-col items-center justify-center p-6 text-center gap-4">
+                <div className="w-12 h-12 rounded-2xl bg-rose-500/15 border border-rose-500/30 flex items-center justify-center text-rose-400">
+                  <AlertTriangle className="w-6 h-6" />
+                </div>
+                <div className="max-w-md space-y-1.5">
+                  <h3 className="text-base sm:text-lg font-bold text-white">
+                    Stream temporarily unreachable
+                  </h3>
+                  <p className="text-xs text-slate-400 leading-relaxed">
+                    All auto-failover mirrors timed out for {drama.title} Episode {currentEpisode}. Retry the active HLX node or open directly in a clean tab.
+                  </p>
+                </div>
+                <div className="flex flex-wrap items-center justify-center gap-2.5">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      triedServersRef.current.clear();
+                      setAllSourcesFailed(false);
+                      selectAndSyncServer(selectedServerId, true);
+                    }}
+                    className="px-4 py-2 rounded-xl bg-[#00c896] hover:bg-[#00b084] text-slate-950 text-xs font-bold flex items-center gap-1.5 cursor-pointer"
+                  >
+                    <RefreshCw className="w-3.5 h-3.5" />
+                    <span>Retry HLX Server</span>
+                  </button>
+                  <a
+                    href={cleanNewWindowUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="px-4 py-2 rounded-xl bg-[#111622] hover:bg-[#1a2234] text-[#00c896] text-xs font-bold border border-[#1e2638] flex items-center gap-1.5"
+                  >
+                    <ExternalLink className="w-3.5 h-3.5" />
+                    <span>PLAY NOW</span>
+                  </a>
+                </div>
+              </div>
+            ) : activeDirectVideo ? (
+              <VideoJsPlayer
+                src={activeDirectVideo.url}
+                sourceType={activeDirectVideo.type}
+                poster={tmdbMeta?.backdrop || drama.backdrop || drama.poster}
+                effectiveLang={effectiveLang}
+                languageAliases={activeLangMeta.aliases}
+                autoEnableSubtitles={Boolean(hlsAudioStatus && !hlsAudioStatus.matched)}
+                playbackRate={playbackRate}
+                tracks={resolvedHlsSubs}
+                videoElementRef={videoRef}
+                hlsInstanceRef={hlsRef}
+                onAudioTracksReady={tracks => {
+                  setHlsAudioTracks(tracks);
+                  if (hlsRef.current) setActiveHlsAudioTrackIdx(hlsRef.current.audioTrack || 0);
+                }}
+                onQualitiesReady={setHlsQualities}
+                onSubtitlesReady={setHlsSubtitles}
+                onManifestReady={() => {
+                  setAllSourcesFailed(false);
+                  saveLastWorkingServer(selectedServerId);
+                }}
+                onLoadedMetadata={handleVideoLoadedMetadata}
+                onTimeUpdate={handleVideoTimeUpdate}
+                onEnded={handleVideoEnded}
+                onFatalError={() => {
+                  setHlsFailed(true);
+                  if (currentServer.mode !== 'hlx-direct') {
+                    handleAutoFallback();
+                  }
+                }}
+              />
+            ) : activeDirectDashUrl ? (
+              <div className="w-full h-full bg-[#0a0d14] flex flex-col items-center justify-center p-6 text-center gap-3">
+                <Layers className="w-8 h-8 text-[#00c896]" />
+                <p className="text-sm font-semibold text-white">MPEG-DASH Stream Ready</p>
+                <button
+                  type="button"
+                  onClick={() => selectAndSyncServer(1, false)}
+                  className="px-4 py-2 rounded-lg bg-[#00c896] text-slate-950 text-xs font-bold cursor-pointer"
+                >
+                  Switch to HLX Proxy
+                </button>
+              </div>
+            ) : activeIframeSrc ? (
               <iframe
-                key={`${selectedServer}-${currentEpisode}-${selectedLang}-${serverReloadKey}-${resolvedDynamicUrl || ''}-${sandboxShieldEnabled ? 'relay' : 'direct'}`}
+                key={`${selectedCustomSource?.id || selectedServerId}-${selectedSeasonNumber}-${currentEpisode}-${effectiveLang}-${serverReloadKey}-${sandboxShieldEnabled ? 'relay' : 'direct'}`}
                 src={activeIframeSrc}
                 frameBorder="0"
                 allowFullScreen
                 allow="autoplay *; fullscreen *; picture-in-picture *; encrypted-media *; accelerometer; gyroscope; clipboard-write *"
                 referrerPolicy="no-referrer-when-downgrade"
+                onLoad={() => {
+                  setIframeLoaded(true);
+                  setAllSourcesFailed(false);
+                  saveLastWorkingServer(selectedServerId);
+                }}
                 onError={handleAutoFallback}
-                title={`Watch ${drama.title} Episode ${currentEpisode} ${activeLangMeta.label}`}
+                title={`Watch ${drama.title} Episode ${currentEpisode} (${activeLangMeta.label})`}
                 className="w-full h-full border-0"
               />
+            ) : null}
+
+            {resumeToast && (
+              <div className="absolute top-3 left-3 z-20 px-3 py-1.5 rounded-lg bg-[#111622]/95 border border-[#00c896]/40 text-xs font-semibold text-[#00c896] shadow-lg">
+                {resumeToast}
+              </div>
             )}
 
-            {(serverStatus === 'checking' || resolvingDynamic) && !useHlsMode && (
-              <div className="absolute inset-0 bg-slate-950/75 backdrop-blur-xs flex flex-col items-center justify-center gap-2 pointer-events-none">
-                <div className="w-8 h-8 border-2 border-blue-500 border-t-transparent rounded-full animate-spin" />
-                <span className="text-xs font-medium text-blue-200">
-                  {resolvingDynamic
-                    ? `Resolving ${currentProvider.name} (${activeLangMeta.label} Audio)...`
-                    : `Verifying ${currentProvider.name} stream availability...`}
+            {autoNextCountdown !== null && currentEpisode < activeSeasonEpisodeCount && (
+              <div className="absolute bottom-14 right-4 z-30 bg-[#111622]/95 border border-[#1e2638] rounded-xl p-3.5 shadow-2xl max-w-xs space-y-2">
+                <p className="text-xs font-bold text-white flex items-center gap-1.5">
+                  <SkipForward className="w-4 h-4 text-[#00c896]" />
+                  <span>Up Next: Episode {currentEpisode + 1} in {autoNextCountdown}s</span>
+                </p>
+                <div className="flex items-center gap-2">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setAutoNextCountdown(null);
+                      onSelectEpisode(currentEpisode + 1, selectedSeasonNumber);
+                    }}
+                    className="px-3 py-1.5 rounded-lg bg-[#00c896] text-slate-950 text-xs font-bold cursor-pointer"
+                  >
+                    Play Now
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setAutoNextCountdown(null)}
+                    className="px-3 py-1.5 rounded-lg bg-[#1a2234] text-slate-300 text-xs font-semibold cursor-pointer"
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </div>
+            )}
+
+            {(serverStatus === 'checking' || resolvingStream) && !isDirectVideoMode && (
+              <div className="absolute inset-0 bg-[#0a0d14]/80 backdrop-blur-xs flex flex-col items-center justify-center gap-2 pointer-events-none">
+                <div className="w-8 h-8 border-2 border-[#00c896] border-t-transparent rounded-full animate-spin" />
+                <span className="text-xs font-medium text-slate-200">
+                  Syncing {currentServer.name} ({activeLangMeta.label})...
                 </span>
               </div>
             )}
           </div>
 
-          {/* 3. Sleek Dark-Mode Control Bar Below Player: Audio Language Pills & Server Switcher */}
-          <div className="bg-slate-900/95 border-t border-slate-800 px-4 py-3 space-y-2.5">
-            {/* Audio Language Pills Row */}
-            <div className="flex flex-wrap items-center justify-between gap-3">
-              <div className="flex flex-wrap items-center gap-1.5">
-                <span className="text-xs font-semibold text-slate-400 flex items-center gap-1.5 mr-1">
-                  <Volume2 className="w-3.5 h-3.5 text-blue-400" />
-                  <span>Audio Language:</span>
+          {/* 4. Direct HLS Control Bar (when playing M3U8/MP4 via Video.js) */}
+          {isDirectVideoMode && (
+            <div className="bg-[#111622] border-t border-[#1e2638] px-4 py-2.5 flex flex-wrap items-center justify-between gap-2 text-xs">
+              <div className="flex flex-wrap items-center gap-2">
+                <span className="flex items-center gap-1 text-slate-400 font-semibold">
+                  <Gauge className="w-3.5 h-3.5 text-[#00c896]" />
+                  Speed:
                 </span>
-                {hindiOnlyLocked ? (
-                  <>
-                    <span className="px-3 py-1 rounded-md text-xs font-semibold bg-emerald-600 text-white shadow-sm shadow-emerald-600/40 ring-1 ring-emerald-400 flex items-center gap-1.5">
-                      <span>🇮🇳</span>
-                      <span>Hindi Only (Locked Dubbed)</span>
-                    </span>
-                    <span className="text-[11px] text-emerald-300/90 ml-1">
-                      Pure Hindi Dubbed K-Drama stream
-                    </span>
-                  </>
-                ) : (
-                  AUDIO_LANGUAGES.map(lang => {
-                    const isActive = effectiveLang === lang.code;
-                    return (
-                      <button
-                        key={lang.code}
-                        onClick={() => handleSelectAudioLanguage(lang.code)}
-                        className={`px-3 py-1 rounded-md text-xs font-semibold transition-all flex items-center gap-1.5 cursor-pointer ${
-                          isActive
-                            ? 'bg-blue-600 text-white shadow-sm shadow-blue-600/40 ring-1 ring-blue-400'
-                            : 'bg-slate-800 text-slate-300 hover:bg-slate-700 hover:text-white border border-slate-700/60'
-                        }`}
-                      >
-                        <span>{lang.flag}</span>
-                        <span>{lang.label}</span>
-                      </button>
-                    );
-                  })
+                {[0.75, 1, 1.25, 1.5, 2].map(rate => (
+                  <button
+                    key={rate}
+                    type="button"
+                    onClick={() => setPlaybackRate(rate)}
+                    className={`px-2 py-0.5 rounded font-mono text-[11px] cursor-pointer ${
+                      playbackRate === rate
+                        ? 'bg-[#00c896] text-slate-950 font-bold'
+                        : 'bg-[#0a0d14] text-slate-300 hover:bg-[#1a2234]'
+                    }`}
+                  >
+                    {rate}x
+                  </button>
+                ))}
+
+                {hlsQualities.length > 0 && (
+                  <label className="flex items-center gap-1 text-slate-400 ml-1">
+                    <span>Quality:</span>
+                    <select
+                      value={selectedQuality}
+                      onChange={e => handleChangeQuality(Number(e.target.value))}
+                      className="bg-[#0a0d14] border border-[#1e2638] rounded px-2 py-0.5 text-xs text-slate-200"
+                    >
+                      <option value={-1}>Auto</option>
+                      {hlsQualities.map(q => (
+                        <option key={q.index} value={q.index}>
+                          {q.height ? `${q.height}p` : `${Math.round(q.bitrate / 1000)}kbps`}
+                        </option>
+                      ))}
+                    </select>
+                  </label>
                 )}
-                {useHlsMode && hlsAudioTracks.length > 0 && (
-                  <span className="text-[11px] text-emerald-400 ml-1">
-                    ({hlsAudioTracks.length} HLS tracks detected)
-                  </span>
+
+                {(hlsSubtitles.length > 0 || resolvedHlsSubs.length > 0) && (
+                  <label className="flex items-center gap-1 text-slate-400 ml-1">
+                    <Subtitles className="w-3.5 h-3.5 text-[#00c896]" />
+                    <select
+                      value={selectedSubtitle}
+                      onChange={e => handleChangeSubtitle(Number(e.target.value))}
+                      className="bg-[#0a0d14] border border-[#1e2638] rounded px-2 py-0.5 text-xs text-slate-200"
+                    >
+                      <option value={-1}>Subtitles Off</option>
+                      {(hlsSubtitles.length > 0
+                        ? hlsSubtitles
+                        : resolvedHlsSubs.map((s, i) => ({ id: i, name: s.label }))
+                      ).map(s => (
+                        <option key={s.id} value={s.id}>
+                          {s.name}
+                        </option>
+                      ))}
+                    </select>
+                  </label>
+                )}
+
+                {hlsAudioTracks.length > 1 && (
+                  <label className="flex items-center gap-1 text-slate-400 ml-1">
+                    <Volume2 className="w-3.5 h-3.5 text-[#00c896]" />
+                    <select
+                      value={activeHlsAudioTrackIdx}
+                      onChange={e => {
+                        const idx = Number(e.target.value);
+                        setActiveHlsAudioTrackIdx(idx);
+                        if (hlsRef.current) hlsRef.current.audioTrack = idx;
+                      }}
+                      className="bg-[#0a0d14] border border-[#1e2638] rounded px-2 py-0.5 text-xs text-slate-200"
+                    >
+                      {hlsAudioTracks.map(t => (
+                        <option key={t.id} value={t.id}>
+                          {t.name} {t.lang ? `(${t.lang.toUpperCase()})` : ''}
+                        </option>
+                      ))}
+                    </select>
+                  </label>
                 )}
               </div>
 
-              <span className="flex items-center gap-1.5 text-[11px] text-emerald-400 font-medium">
-                <Activity className="w-3.5 h-3.5" />
-                <span>
-                  {serverStatus === 'checking'
-                    ? 'Checking...'
-                    : serverLatency
-                      ? `Online (${serverLatency}ms)`
-                      : 'HD Auto-Sync Ready'}
-                </span>
-              </span>
+              <div className="flex items-center gap-2">
+                {currentEpisode < activeSeasonEpisodeCount && (
+                  <button
+                    type="button"
+                    onClick={() => setAutoNextEnabled(prev => !prev)}
+                    className={`px-2.5 py-1 rounded font-semibold flex items-center gap-1 cursor-pointer border ${
+                      autoNextEnabled
+                        ? 'bg-[#00c896]/15 border-[#00c896]/40 text-[#00c896]'
+                        : 'bg-[#0a0d14] border-[#1e2638] text-slate-400'
+                    }`}
+                  >
+                    <SkipForward className="w-3.5 h-3.5" />
+                    <span>Auto-Next: {autoNextEnabled ? 'ON' : 'OFF'}</span>
+                  </button>
+                )}
+                {pipSupported && (
+                  <button
+                    type="button"
+                    onClick={handleTogglePiP}
+                    className="px-2.5 py-1 rounded bg-[#0a0d14] hover:bg-[#1a2234] text-slate-200 border border-[#1e2638] font-semibold flex items-center gap-1 cursor-pointer"
+                  >
+                    <PictureInPicture2 className="w-3.5 h-3.5" />
+                    <span className="hidden sm:inline">PiP</span>
+                  </button>
+                )}
+              </div>
             </div>
-
-            {/* Server Switcher Row */}
-            <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar pt-2 border-t border-slate-800/80 text-xs">
-              <span className="text-slate-400 font-medium mr-1 flex items-center gap-1 shrink-0">
-                <Tv className="w-3.5 h-3.5 text-blue-400" />
-                <span>Servers:</span>
-              </span>
-              {SERVER_TEMPLATES.map(srv => (
-                <button
-                  key={srv.id}
-                  onClick={() => {
-                    setHlsFailed(true);
-                    pingAndSelectServer(srv.id, true);
-                  }}
-                  className={`px-2.5 py-1 rounded font-medium transition-colors whitespace-nowrap cursor-pointer ${
-                    !useHlsMode && selectedServer === srv.id
-                      ? 'bg-blue-600 text-white font-semibold shadow-sm'
-                      : 'bg-slate-800 text-slate-300 hover:bg-slate-700'
-                  }`}
-                >
-                  Server {srv.id} ({srv.name})
-                </button>
-              ))}
-            </div>
-
-            {/* TMDB Spoken Languages & Quick Notice */}
-            <div className="flex flex-wrap items-center justify-between gap-2 text-[11px] text-slate-400 pt-1">
-              <span className="flex items-center gap-1.5">
-                <Shield className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
-                <span>
-                  Preferred audio is saved automatically • TMDB Languages:{' '}
-                  <strong className="text-slate-300">
-                    {tmdbMeta?.spokenLanguages?.length
-                      ? tmdbMeta.spokenLanguages.map(l => l.english_name).join(', ')
-                      : `${drama.country}, Hindi Dubbed`}
-                  </strong>
-                </span>
-              </span>
-              <span className="text-slate-500 hidden sm:inline">1080p Ultra HD Streaming</span>
-            </div>
-          </div>
+          )}
         </div>
 
-        {/* Adsterra High-Speed VIP Server Banner right under player */}
         <AdsterraBanner type="player" className="mb-6" />
 
-        {/* Title and Dubbing Subtitle */}
+        {/* Episode Heading & Next/Prev Navigation */}
         <div className="mb-6">
-          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b border-slate-800">
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b border-[#1e2638]">
             <div>
               <h1 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
-                Watch Online {drama.title} · Episode {currentEpisode}
+                {drama.title} {mediaType === 'movie' ? 'Full Movie' : `· Episode ${currentEpisode}`}
               </h1>
-              <p className="text-sm font-semibold text-blue-400 mt-1">
-                {drama.country} Drama · Hindi Dubbed ({activeLangMeta.label} Track Active)
+              <p className="text-sm font-semibold text-[#00c896] mt-1">
+                {drama.country} {mediaType === 'movie' ? 'Movie' : 'Drama'} · {activeLangMeta.label} ({currentServer.name})
               </p>
             </div>
 
-            <div className="flex items-center gap-2 self-start md:self-auto">
-              {currentEpisode > 1 && (
-                <a
-                  href={`/watch/${drama.slug}/episode-${currentEpisode - 1}`}
-                  onClick={e => {
-                    e.preventDefault();
-                    onSelectEpisode(currentEpisode - 1);
-                  }}
-                  className="flex items-center gap-1.5 px-3.5 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs sm:text-sm font-semibold border border-slate-700 transition-colors"
-                >
-                  <ChevronLeft className="w-4 h-4" />
-                  <span>Episode {currentEpisode - 1}</span>
-                </a>
-              )}
-              {currentEpisode < drama.totalEpisodes && (
-                <a
-                  href={`/watch/${drama.slug}/episode-${currentEpisode + 1}`}
-                  onClick={e => {
-                    e.preventDefault();
-                    onSelectEpisode(currentEpisode + 1);
-                  }}
-                  className="flex items-center gap-1.5 px-4 py-2 rounded-lg bg-blue-600 hover:bg-blue-500 text-white text-xs sm:text-sm font-semibold transition-colors shadow-sm shadow-blue-500/20"
-                >
-                  <span>Next</span>
-                  <ChevronRight className="w-4 h-4" />
-                </a>
-              )}
-            </div>
+            {mediaType !== 'movie' && (
+              <div className="flex items-center gap-2 self-start md:self-auto">
+                {currentEpisode > 1 && (
+                  <a
+                    href={`/watch/${drama.slug}/episode-${currentEpisode - 1}`}
+                    onClick={e => {
+                      e.preventDefault();
+                      onSelectEpisode(currentEpisode - 1, selectedSeasonNumber);
+                    }}
+                    className="flex items-center gap-1.5 px-3.5 py-2 rounded-lg bg-[#111622] hover:bg-[#1a2234] text-slate-200 text-xs sm:text-sm font-semibold border border-[#1e2638] transition-colors"
+                  >
+                    <ChevronLeft className="w-4 h-4" />
+                    <span>Episode {currentEpisode - 1}</span>
+                  </a>
+                )}
+                {currentEpisode < activeSeasonEpisodeCount && (
+                  <a
+                    href={`/watch/${drama.slug}/episode-${currentEpisode + 1}`}
+                    onClick={e => {
+                      e.preventDefault();
+                      onSelectEpisode(currentEpisode + 1, selectedSeasonNumber);
+                    }}
+                    className="flex items-center gap-1.5 px-4 py-2 rounded-lg bg-[#00c896] hover:bg-[#00b084] text-slate-950 text-xs sm:text-sm font-bold transition-colors shadow-sm shadow-emerald-500/20"
+                  >
+                    <span>Next Episode</span>
+                    <ChevronRight className="w-4 h-4" />
+                  </a>
+                )}
+              </div>
+            )}
           </div>
         </div>
 
-        {/* Download Section */}
-        <div className="bg-slate-900/60 border border-slate-800 rounded-xl p-5 mb-8">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        {/* Episode / Movie Metadata Summary (11 green download buttons removed per request) */}
+        <div className="bg-[#111622] border border-[#1e2638] rounded-xl p-5 mb-8">
+          <div className="flex flex-wrap items-center justify-between gap-4">
             <div>
               <h2 className="text-lg sm:text-xl font-bold text-white mb-2">
-                {drama.title} – Episode {currentEpisode}
+                {drama.title} {mediaType === 'movie' ? '' : `– Episode ${currentEpisode}`}
               </h2>
-              <div className="flex flex-wrap items-center gap-3 text-xs sm:text-sm text-slate-300">
+              <div className="flex flex-wrap items-center gap-3 text-xs sm:text-sm text-slate-300 tabular-nums">
                 <span className="flex items-center gap-1 text-amber-400 font-bold">
                   <Star className="w-4 h-4 fill-amber-400" />
                   {drama.rating}
@@ -983,7 +1665,7 @@ export const WatchPlayer: React.FC<WatchPlayerProps> = ({
                   {tmdbMeta?.runtime ? `${tmdbMeta.runtime} min` : drama.duration}
                 </span>
                 <span className="text-slate-500">·</span>
-                <span className="flex flex-wrap gap-1.5">
+                <span className="flex flex-wrap gap-2">
                   {(drama.genres || []).map(g => {
                     const gSlug = slugifyText(g);
                     return (
@@ -994,7 +1676,7 @@ export const WatchPlayer: React.FC<WatchPlayerProps> = ({
                           e.preventDefault();
                           onOpenGenre(gSlug);
                         }}
-                        className="text-blue-400 hover:text-blue-300 font-medium"
+                        className="text-[#00c896] hover:underline font-medium"
                       >
                         {g}
                       </a>
@@ -1004,66 +1686,79 @@ export const WatchPlayer: React.FC<WatchPlayerProps> = ({
               </div>
             </div>
 
-            <div className="shrink-0">
+            <div className="flex items-center gap-2 shrink-0">
               <button
-                onClick={() => setShowDownloadModal(true)}
-                className="w-full sm:w-auto flex items-center justify-center gap-2.5 px-6 py-3.5 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-bold text-sm sm:text-base shadow-lg shadow-blue-600/30 transition-all hover:scale-[1.02] cursor-pointer"
+                type="button"
+                onClick={() => {
+                  if (typeof window !== 'undefined' && navigator.clipboard) {
+                    navigator.clipboard.writeText(
+                      `${window.location.origin}${mp4StreamPath}?lang=${encodeURIComponent(effectiveLang)}`
+                    );
+                    setCopiedMp4(true);
+                    setTimeout(() => setCopiedMp4(false), 2000);
+                  }
+                }}
+                className="px-3 py-2.5 rounded-xl bg-[#0a0d14] hover:bg-[#1a2234] text-slate-200 border border-[#1e2638] font-bold text-xs flex items-center gap-1.5 transition-colors cursor-pointer"
+                title="Copy Direct .MP4 Stream URL"
               >
-                <Download className="w-5 h-5 stroke-[2.5]" />
-                <span>Download Episode {currentEpisode}</span>
+                <Check className={`w-3.5 h-3.5 ${copiedMp4 ? 'text-[#00c896]' : 'text-slate-400'}`} />
+                <span>{copiedMp4 ? 'Copied .MP4!' : 'Copy .MP4'}</span>
               </button>
+
+              <a
+                href={cleanNewWindowUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="px-4 py-2.5 rounded-xl bg-[#00c896] hover:bg-[#00b084] text-slate-950 font-extrabold text-xs sm:text-sm flex items-center gap-2 transition-colors shadow-lg shadow-emerald-500/20 shrink-0"
+                title="PLAY NOW"
+              >
+                <ExternalLink className="w-4 h-4" />
+                <span>PLAY NOW</span>
+              </a>
             </div>
           </div>
         </div>
 
-        {/* Adsterra Download Banner */}
         <AdsterraBanner type="download" className="mb-8" />
 
-        {/* Two-Column Grid */}
+        {/* Two-Column Content: About + FAQs + Comments | TMDB Live Auto-Synced Seasons & Episodes Sidebar */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12">
-          
           <div className="lg:col-span-2 space-y-8">
-            <div className="bg-slate-900/40 border border-slate-800/80 rounded-xl p-6">
+            <div className="bg-[#111622] border border-[#1e2638] rounded-xl p-6">
               <h2 className="text-xl font-bold text-white mb-3 tracking-tight">
                 About {drama.title}
               </h2>
-              <p className="text-sm text-slate-300 leading-relaxed font-normal">
+              <p className="text-sm text-slate-300 leading-relaxed">
                 {tmdbMeta?.overview || drama.overview}
               </p>
-              
-              <div className="mt-4 pt-4 border-t border-slate-800/70 text-xs text-slate-400 italic">
-                Watch <strong className="text-slate-200 font-semibold">{drama.title} Episode {currentEpisode}</strong> Hindi Dubbed online for free in HD on HindiDrama.net.
+              <div className="mt-4 pt-4 border-t border-[#1e2638] text-xs text-slate-400">
+                Stream <strong className="text-slate-200">{drama.title}</strong> with HLX.proxy multi-audio tracks ({activeLangMeta.label}) and live TMDB episode auto-sync.
               </div>
             </div>
 
-            <div className="bg-slate-900/40 border border-slate-800/80 rounded-xl p-6">
+            <div className="bg-[#111622] border border-[#1e2638] rounded-xl p-6">
               <h2 className="text-lg font-bold text-white flex items-center gap-2 mb-4">
-                <HelpCircle className="w-5 h-5 text-blue-400" />
+                <HelpCircle className="w-5 h-5 text-[#00c896]" />
                 <span>Episode {currentEpisode} Streaming FAQs</span>
               </h2>
               <div className="space-y-3">
                 {faqs.map((faq, idx) => (
-                  <div key={idx} className="bg-slate-900/70 border border-slate-800 rounded-lg p-3.5">
+                  <div key={idx} className="bg-[#0a0d14] border border-[#1e2638] rounded-lg p-3.5">
                     <h3 className="text-xs sm:text-sm font-semibold text-slate-100 mb-1">
                       {faq.question}
                     </h3>
-                    <p className="text-xs text-slate-400 leading-relaxed">
-                      {faq.answer}
-                    </p>
+                    <p className="text-xs text-slate-400 leading-relaxed">{faq.answer}</p>
                   </div>
                 ))}
               </div>
             </div>
 
-            <div className="bg-slate-900/40 border border-slate-800/80 rounded-xl p-6">
+            <div className="bg-[#111622] border border-[#1e2638] rounded-xl p-6">
               <div className="flex items-center justify-between mb-4">
                 <h2 className="text-lg font-bold text-white flex items-center gap-2">
-                  <MessageSquare className="w-5 h-5 text-blue-400" />
+                  <MessageSquare className="w-5 h-5 text-[#00c896]" />
                   <span>Comments ({comments.length})</span>
                 </h2>
-                <span className="text-xs text-slate-400">
-                  Shared for all episodes of this drama.
-                </span>
               </div>
 
               <form onSubmit={handlePostComment} className="mb-6 space-y-3">
@@ -1071,210 +1766,367 @@ export const WatchPlayer: React.FC<WatchPlayerProps> = ({
                   type="text"
                   value={commentName}
                   onChange={e => setCommentName(e.target.value)}
-                  placeholder="Your Name (Optional)"
-                  className="w-full bg-slate-900 border border-slate-700/80 rounded-lg px-3.5 py-2 text-xs sm:text-sm text-slate-100 placeholder-slate-400 focus:outline-none focus:border-blue-500"
+                  placeholder="Your Name (optional)"
+                  className="w-full sm:w-64 bg-[#0a0d14] border border-[#1e2638] rounded-lg px-3 py-2 text-xs sm:text-sm text-white placeholder-slate-500 focus:outline-none focus:border-[#00c896]"
                 />
-                <textarea
-                  rows={3}
-                  value={commentText}
-                  onChange={e => setCommentText(e.target.value)}
-                  placeholder="Write your review or comment for this episode..."
-                  required
-                  className="w-full bg-slate-900 border border-slate-700/80 rounded-lg p-3 text-xs sm:text-sm text-slate-100 placeholder-slate-400 focus:outline-none focus:border-blue-500 resize-none"
-                />
-                <div className="flex justify-end">
+                <div className="flex gap-2">
+                  <textarea
+                    rows={2}
+                    value={commentText}
+                    onChange={e => setCommentText(e.target.value)}
+                    placeholder="Share your thoughts on this episode..."
+                    className="flex-1 bg-[#0a0d14] border border-[#1e2638] rounded-lg px-3 py-2 text-xs sm:text-sm text-white placeholder-slate-500 focus:outline-none focus:border-[#00c896] resize-none"
+                  />
                   <button
                     type="submit"
                     disabled={commentSubmitting || !commentText.trim()}
-                    className="flex items-center gap-1.5 px-4 py-2 rounded-lg bg-blue-600 hover:bg-blue-500 text-white text-xs sm:text-sm font-semibold transition-colors disabled:opacity-40 disabled:cursor-not-allowed shadow-sm"
+                    className="px-4 py-2 rounded-lg bg-[#00c896] hover:bg-[#00b084] text-slate-950 font-bold text-xs flex items-center gap-1.5 self-end cursor-pointer disabled:opacity-50"
                   >
                     <Send className="w-3.5 h-3.5" />
-                    <span>Post comment</span>
+                    <span>Post</span>
                   </button>
                 </div>
               </form>
 
-              <div className="space-y-3 divide-y divide-slate-800/60">
-                {comments.length === 0 ? (
-                  <div className="text-center py-6 text-xs text-slate-400">
-                    No comments yet. Be the first to comment!
-                  </div>
-                ) : (
-                  comments.map(cmt => (
-                    <div key={cmt.id} className="pt-3 first:pt-0">
-                      <div className="flex items-center justify-between mb-1">
-                        <div className="flex items-center gap-2">
-                          <div className="w-7 h-7 rounded-full bg-gradient-to-tr from-blue-700 to-indigo-600 flex items-center justify-center text-xs font-bold text-white uppercase">
-                            {cmt.userName.charAt(0)}
-                          </div>
-                          <span className="text-xs sm:text-sm font-semibold text-slate-200">
-                            {cmt.userName}
-                          </span>
-                          {cmt.episodeNumber && (
-                            <span className="text-[10px] bg-slate-800 text-slate-400 px-1.5 py-0.5 rounded">
-                              Ep {cmt.episodeNumber}
-                            </span>
-                          )}
-                        </div>
-                        <span className="text-[11px] text-slate-400">
-                          {cmt.createdAt}
-                        </span>
-                      </div>
-                      <p className="text-xs sm:text-sm text-slate-300 pl-9 mb-2">
-                        {cmt.content}
-                      </p>
-                      <div className="pl-9 flex items-center gap-4 text-xs text-slate-400">
-                        <button
-                          onClick={() => handleLikeComment(cmt.id)}
-                          className="flex items-center gap-1 hover:text-blue-400 transition-colors"
-                        >
-                          <ThumbsUp className="w-3 h-3" />
-                          <span>{cmt.likes || 0}</span>
-                        </button>
-                        <button
-                          onClick={() => setCommentText(`@${cmt.userName} `)}
-                          className="hover:text-blue-400 transition-colors"
-                        >
-                          Reply
-                        </button>
-                      </div>
+              <div className="space-y-3">
+                {comments.map(c => (
+                  <div key={c.id} className="bg-[#0a0d14] border border-[#1e2638] rounded-lg p-3.5">
+                    <div className="flex items-center justify-between mb-1.5">
+                      <span className="text-xs font-bold text-slate-200">{c.userName}</span>
+                      <button
+                        type="button"
+                        onClick={() => handleLikeComment(c.id)}
+                        className="inline-flex items-center gap-1 text-[11px] text-slate-400 hover:text-[#00c896] cursor-pointer"
+                      >
+                        <ThumbsUp className="w-3 h-3" />
+                        <span>{c.likes}</span>
+                      </button>
                     </div>
-                  ))
-                )}
+                    <p className="text-xs text-slate-300 leading-relaxed">{c.content}</p>
+                  </div>
+                ))}
               </div>
             </div>
           </div>
 
+          {/* Right Column: Poster Summary & Live TMDB Seasons/Episodes Sync */}
           <div className="space-y-6">
             <a
-              href={`/drama/${drama.slug}`}
+              href={getContentPath(drama)}
               onClick={e => {
                 e.preventDefault();
                 onOpenDramaDetail(drama.slug);
               }}
-              className="bg-slate-900/60 border border-slate-800 rounded-xl p-4 flex gap-4 cursor-pointer hover:border-blue-500/50 transition-colors group"
+              className="flex items-center gap-3.5 bg-[#111622] border border-[#1e2638] hover:border-[#00c896]/60 rounded-xl p-3.5 transition-colors"
             >
               <OptimizedImage
                 src={drama.poster}
-                alt={`${drama.title} Hindi Dubbed Poster`}
-                width={128}
-                height={192}
-                className="w-16 h-24 object-cover rounded-lg bg-slate-800 shrink-0"
+                alt={drama.title}
+                width={120}
+                height={180}
+                className="w-16 h-24 object-cover rounded-lg shrink-0"
               />
-              <div className="flex flex-col justify-between">
-                <div>
-                  <h3 className="text-sm font-bold text-white group-hover:text-blue-400 transition-colors">
-                    {drama.title}
-                  </h3>
-                  <p className="text-xs text-slate-400 mt-1">
-                    {drama.year} · {drama.country} {(drama.genres || []).slice(0, 2).join(', ')}
-                  </p>
-                </div>
-                <span className="text-xs text-blue-400 font-semibold underline">
-                  All details & cast »
+              <div className="min-w-0">
+                <h3 className="text-sm font-bold text-white line-clamp-1">{drama.title}</h3>
+                <p className="text-xs text-slate-400 mt-0.5 tabular-nums">
+                  {drama.country} · {drama.year} · ★ {drama.rating}
+                </p>
+                <span className="inline-block text-[11px] font-semibold text-[#00c896] mt-1.5">
+                  {mediaType === 'movie' ? 'View Full Movie Page →' : 'View Full Series Details →'}
                 </span>
               </div>
             </a>
 
-            <div className="bg-slate-900/40 border border-slate-800/80 rounded-xl p-4 sm:p-5">
-              <div className="flex items-center justify-between pb-3 mb-3 border-b border-slate-800">
-                <h2 className="text-base font-bold text-white">
-                  Episodes <span className="text-blue-400 font-normal">({drama.totalEpisodes} total)</span>
-                </h2>
-                <span className="text-xs text-slate-400">
-                  Hindi Dubbed
-                </span>
-              </div>
+            {mediaType !== 'movie' && (
+              <div className="bg-[#111622] border border-[#1e2638] rounded-xl p-4 sm:p-5">
+                <div className="flex items-center justify-between pb-3 mb-3 border-b border-[#1e2638]">
+                  <h2 className="text-base font-bold text-white flex items-center gap-2">
+                    <Tv className="w-4 h-4 text-[#00c896]" />
+                    <span>
+                      Episodes{' '}
+                      <span className="text-[#00c896] font-normal tabular-nums">
+                        ({activeSeasonEpisodeCount})
+                      </span>
+                    </span>
+                  </h2>
+                  <span className="text-[11px] text-[#00c896] font-semibold">
+                    TMDB Auto-Sync
+                  </span>
+                </div>
 
-              <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-3 gap-2 max-h-[460px] overflow-y-auto pr-1">
-                {Array.from({ length: drama.totalEpisodes }, (_, i) => i + 1).map(ep => {
-                  const isActive = ep === currentEpisode;
-                  return (
-                    <a
-                      key={ep}
-                      href={`/watch/${drama.slug}/episode-${ep}`}
-                      onClick={e => {
-                        e.preventDefault();
-                        onSelectEpisode(ep);
-                      }}
-                      className={`py-2 px-2 rounded-lg text-xs font-semibold transition-all flex items-center justify-center gap-1 cursor-pointer ${
-                        isActive
-                          ? 'bg-blue-600 text-white shadow-md shadow-blue-600/30 ring-2 ring-blue-400'
-                          : 'bg-slate-800/80 text-slate-300 hover:bg-slate-700 hover:text-white border border-slate-700/50'
-                      }`}
-                    >
-                      {isActive && <Play className="w-2.5 h-2.5 fill-current" />}
-                      <span>Episode {ep}</span>
-                    </a>
-                  );
-                })}
+                {syncedSeasons.length > 1 && (
+                  <div className="flex items-center gap-1.5 overflow-x-auto pb-2.5 mb-3 no-scrollbar border-b border-[#1e2638]">
+                    {syncedSeasons.map(s => (
+                      <button
+                        key={s.seasonNumber}
+                        type="button"
+                        onClick={() => {
+                          setSelectedSeasonNumber(s.seasonNumber);
+                          onSelectEpisode(1, s.seasonNumber);
+                        }}
+                        className={`px-2.5 py-1 rounded text-xs font-semibold whitespace-nowrap transition-colors cursor-pointer border ${
+                          selectedSeasonNumber === s.seasonNumber
+                            ? 'bg-[#00c896] text-slate-950 border-[#00c896]'
+                            : 'bg-[#0a0d14] text-slate-300 hover:bg-[#1a2234] border-[#1e2638]'
+                        }`}
+                      >
+                        Season {s.seasonNumber}
+                      </button>
+                    ))}
+                  </div>
+                )}
+
+                {loadingSyncedEpisodes ? (
+                  <div className="space-y-2 py-2">
+                    {Array.from({ length: 6 }).map((_, i) => (
+                      <div
+                        key={i}
+                        className="h-14 rounded-lg bg-[#1a2234] animate-pulse border border-[#1e2638]"
+                      />
+                    ))}
+                  </div>
+                ) : syncedEpisodes.length > 0 ? (
+                  <div className="space-y-2 max-h-[480px] overflow-y-auto pr-1">
+                    {syncedEpisodes.map(ep => {
+                      const isActive = ep.episodeNumber === currentEpisode;
+                      return (
+                        <button
+                          key={`ep-${ep.seasonNumber}-${ep.episodeNumber}`}
+                          type="button"
+                          onClick={() => onSelectEpisode(ep.episodeNumber, selectedSeasonNumber)}
+                          className={`w-full flex items-center gap-2.5 p-2 rounded-lg text-left transition-all cursor-pointer border ${
+                            isActive
+                              ? 'bg-[#00c896]/15 border-[#00c896] text-white'
+                              : 'bg-[#0a0d14] hover:bg-[#1a2234] border-[#1e2638] text-slate-200'
+                          }`}
+                        >
+                          {ep.stillUrl ? (
+                            <OptimizedImage
+                              src={ep.stillUrl}
+                              alt={ep.name}
+                              width={80}
+                              height={45}
+                              className="w-14 h-9 object-cover rounded bg-[#1a2234] shrink-0"
+                            />
+                          ) : (
+                            <div className="w-14 h-9 rounded bg-[#1a2234] flex items-center justify-center shrink-0 text-slate-400 text-xs font-mono font-bold">
+                              E{ep.episodeNumber}
+                            </div>
+                          )}
+                          <div className="flex-1 min-w-0">
+                            <div className="flex items-center justify-between gap-1">
+                              <p className="text-xs font-bold truncate">
+                                Episode {ep.episodeNumber}
+                                {ep.name && ep.name !== `Episode ${ep.episodeNumber}`
+                                  ? ` · ${ep.name}`
+                                  : ''}
+                              </p>
+                              {ep.runtime && (
+                                <span className="text-[10px] text-slate-400 shrink-0 tabular-nums">
+                                  {ep.runtime}m
+                                </span>
+                              )}
+                            </div>
+                            {ep.overview && (
+                              <p className="text-[10px] text-slate-400 line-clamp-1 mt-0.5">
+                                {ep.overview}
+                              </p>
+                            )}
+                          </div>
+                          {isActive && (
+                            <Play className="w-3.5 h-3.5 fill-[#00c896] text-[#00c896] shrink-0" />
+                          )}
+                        </button>
+                      );
+                    })}
+                  </div>
+                ) : (
+                  <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-3 gap-2 max-h-[480px] overflow-y-auto pr-1">
+                    {Array.from({ length: activeSeasonEpisodeCount }, (_, i) => i + 1).map(ep => {
+                      const isActive = ep === currentEpisode;
+                      return (
+                        <a
+                          key={ep}
+                          href={`/watch/${drama.slug}/episode-${ep}`}
+                          onClick={e => {
+                            e.preventDefault();
+                            onSelectEpisode(ep, selectedSeasonNumber);
+                          }}
+                          className={`py-2 px-2 rounded-lg text-xs font-semibold transition-all flex items-center justify-center gap-1 cursor-pointer border ${
+                            isActive
+                              ? 'bg-[#00c896] text-slate-950 border-[#00c896] font-bold'
+                              : 'bg-[#0a0d14] text-slate-300 hover:bg-[#1a2234] border-[#1e2638]'
+                          }`}
+                        >
+                          {isActive && <Play className="w-2.5 h-2.5 fill-current" />}
+                          <span>Ep {ep}</span>
+                        </a>
+                      );
+                    })}
+                  </div>
+                )}
               </div>
-            </div>
+            )}
 
             <AdsterraBanner type="native" />
           </div>
         </div>
-
       </div>
 
-      {/* Download Resolution Modal with Direct Adsterra Smartlink Anchors */}
-      {showDownloadModal && (
-        <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="bg-slate-900 border border-slate-700 rounded-2xl max-w-md w-full p-6 shadow-2xl relative">
-            <div className="flex items-center justify-between pb-4 border-b border-slate-800">
-              <div className="flex items-center gap-2">
-                <Download className="w-5 h-5 text-blue-400" />
-                <h3 className="text-lg font-bold text-white">
-                  Download Episode {currentEpisode}
+      {/* Lightbox Video Player Modal */}
+      {cleanPopupOpen && (
+        <div
+          role="dialog"
+          aria-modal="true"
+          aria-label={`Lightbox Video Player - ${drama.title} Episode ${currentEpisode}`}
+          onClick={() => setCleanPopupOpen(false)}
+          className="fixed inset-0 z-50 bg-black/92 backdrop-blur-md flex items-center justify-center p-2.5 sm:p-6 overflow-y-auto"
+        >
+          <div
+            onClick={e => e.stopPropagation()}
+            className="bg-[#0a0d14] border border-[#1e2638] rounded-2xl w-full max-w-6xl overflow-hidden shadow-2xl shadow-black my-auto"
+          >
+            <div className="px-4 py-3 bg-[#111622] border-b border-[#1e2638] flex flex-wrap items-center justify-between gap-3">
+              <div className="flex flex-wrap items-center gap-2 min-w-0">
+                <span className="text-xs font-bold text-[#00c896] shrink-0">HLX Lightbox</span>
+                <h3 className="text-sm font-bold text-white truncate">
+                  {drama.title} · Episode {currentEpisode} ({activeLangMeta.flag} {activeLangMeta.label})
                 </h3>
               </div>
-              <button
-                onClick={() => setShowDownloadModal(false)}
-                className="text-slate-400 hover:text-white text-lg font-bold p-1 cursor-pointer"
-              >
-                ✕
-              </button>
-            </div>
-
-            <p className="text-xs text-slate-300 mt-3 mb-4">
-              Select your desired video quality to download <strong className="text-white">{drama.title} Ep {currentEpisode}</strong> with crystal clear Hindi Dubbed audio:
-            </p>
-
-            <div className="space-y-3">
-              {[
-                { quality: '1080p Full HD [Hindi Dubbed]', size: '1.2 GB', audio: 'Pure Hindi 5.1 + English Subs' },
-                { quality: '720p HD [Dual Audio]', size: '650 MB', audio: 'Hindi Clean Stereo' },
-                { quality: '480p Mobile Fast', size: '280 MB', audio: 'Hindi Optimized Audio' },
-              ].map((opt, idx) => (
+              <div className="flex items-center gap-2 shrink-0 text-xs">
                 <a
-                  key={opt.quality}
-                  href={getNextAdsterraLink()}
+                  href={cleanNewWindowUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  onClick={() => {
-                    triggerSmartlink(() => setShowDownloadModal(false));
-                  }}
-                  className="w-full flex items-center justify-between p-3.5 rounded-xl bg-slate-800 hover:bg-blue-600/30 border border-slate-700 hover:border-blue-500 text-left transition-all group cursor-pointer"
+                  className="px-3 py-1.5 rounded bg-[#00c896] hover:bg-[#00b084] text-slate-950 font-extrabold flex items-center gap-1 transition-colors"
                 >
-                  <div>
-                    <p className="text-sm font-bold text-white group-hover:text-blue-400">
-                      {opt.quality}
-                    </p>
-                    <p className="text-xs text-slate-400">
-                      {opt.audio} • {opt.size} • Mirror #{idx + 1}
-                    </p>
-                  </div>
-                  <span className="flex items-center gap-1 text-xs font-semibold text-blue-400 group-hover:text-blue-300 bg-slate-900 px-2.5 py-1 rounded-lg border border-slate-700">
-                    <Download className="w-3.5 h-3.5" />
-                    Download
-                  </span>
+                  <ExternalLink className="w-3.5 h-3.5" />
+                  <span>PLAY NOW</span>
                 </a>
-              ))}
+                <button
+                  type="button"
+                  onClick={handleAutoFallback}
+                  className="px-2.5 py-1.5 rounded bg-[#1a2234] hover:bg-[#232d45] text-white font-semibold flex items-center gap-1 cursor-pointer"
+                >
+                  <Sparkles className="w-3.5 h-3.5 text-[#00c896]" />
+                  <span>Next Server</span>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setCleanPopupOpen(false)}
+                  className="px-2 py-1.5 rounded bg-[#0a0d14] hover:bg-[#1a2234] text-slate-200 cursor-pointer flex items-center gap-1 border border-[#1e2638]"
+                  aria-label="Close Lightbox"
+                >
+                  <X className="w-4 h-4" />
+                  <span className="hidden md:inline text-[11px] text-slate-400">Esc</span>
+                </button>
+              </div>
             </div>
 
-            <div className="mt-5 p-3 rounded-lg bg-blue-950/40 border border-blue-900/60 text-[11px] text-blue-200 flex items-center gap-2">
-              <ExternalLink className="w-4 h-4 shrink-0 text-blue-400" />
-              <span>Downloads are secured and delivered via AsiaFilm cloud mirrors with no waiting queue.</span>
+            <div className="relative aspect-video max-h-[75vh] w-full bg-black">
+              {activeDirectVideo ? (
+                <VideoJsPlayer
+                  src={activeDirectVideo.url}
+                  sourceType={activeDirectVideo.type}
+                  poster={tmdbMeta?.backdrop || drama.backdrop || drama.poster}
+                  effectiveLang={effectiveLang}
+                  languageAliases={activeLangMeta.aliases}
+                  playbackRate={playbackRate}
+                  tracks={resolvedHlsSubs}
+                  videoElementRef={lightboxVideoRef}
+                  hlsInstanceRef={hlsRef}
+                  onAudioTracksReady={setHlsAudioTracks}
+                  onQualitiesReady={setHlsQualities}
+                  onSubtitlesReady={setHlsSubtitles}
+                  onLoadedMetadata={handleVideoLoadedMetadata}
+                  onTimeUpdate={handleVideoTimeUpdate}
+                  onEnded={handleVideoEnded}
+                  onFatalError={() => {
+                    setHlsFailed(true);
+                    if (currentServer.mode !== 'hlx-direct') handleAutoFallback();
+                  }}
+                />
+              ) : activeIframeSrc ? (
+                <iframe
+                  key={`lightbox-${selectedCustomSource?.id || selectedServerId}-${selectedSeasonNumber}-${currentEpisode}-${effectiveLang}-${serverReloadKey}-${sandboxShieldEnabled ? 'relay' : 'direct'}`}
+                  src={activeIframeSrc}
+                  frameBorder="0"
+                  allowFullScreen
+                  allow="autoplay *; fullscreen *; picture-in-picture *; encrypted-media *; accelerometer; gyroscope; clipboard-write *"
+                  referrerPolicy="no-referrer-when-downgrade"
+                  onLoad={() => setIframeLoaded(true)}
+                  onError={handleAutoFallback}
+                  title={`Lightbox - ${drama.title} Episode ${currentEpisode}`}
+                  className="w-full h-full border-0"
+                />
+              ) : null}
+            </div>
+
+            <div className="px-4 py-3 bg-[#111622] border-t border-[#1e2638] space-y-2.5 text-xs">
+              <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar">
+                <span className="text-slate-400 font-semibold shrink-0 mr-1">Servers:</span>
+                {HLX_SERVERS.map(srv => (
+                  <button
+                    key={srv.id}
+                    type="button"
+                    onClick={() => selectAndSyncServer(srv.id, false)}
+                    className={`px-2.5 py-1 rounded font-semibold whitespace-nowrap cursor-pointer transition-colors ${
+                      selectedServerId === srv.id
+                        ? 'bg-[#00c896] text-slate-950'
+                        : 'bg-[#0a0d14] text-slate-300 hover:bg-[#1a2234] border border-[#1e2638]'
+                    }`}
+                  >
+                    {srv.name}
+                  </button>
+                ))}
+              </div>
+              <div className="flex flex-wrap items-center justify-between gap-2 pt-2 border-t border-[#1e2638]">
+                <div className="flex flex-wrap items-center gap-1.5">
+                  <span className="text-slate-400 font-semibold mr-1">Audio:</span>
+                  {hindiOnlyLocked ? (
+                    <span className="px-2.5 py-0.5 rounded bg-[#00c896] text-slate-950 font-bold">
+                      🇮🇳 Hindi Only
+                    </span>
+                  ) : (
+                    HLX_AUDIO_LANGUAGES.map(lang => (
+                      <button
+                        key={lang.code}
+                        type="button"
+                        onClick={() => handleSelectAudioLanguage(lang.code)}
+                        className={`px-2.5 py-0.5 rounded font-semibold cursor-pointer ${
+                          effectiveLang === lang.code
+                            ? 'bg-[#00c896] text-slate-950 font-bold'
+                            : 'bg-[#0a0d14] text-slate-300 hover:bg-[#1a2234] border border-[#1e2638]'
+                        }`}
+                      >
+                        {lang.flag} {lang.shortLabel}
+                      </button>
+                    ))
+                  )}
+                </div>
+                <div className="flex items-center gap-2 shrink-0">
+                  {currentEpisode > 1 && (
+                    <button
+                      type="button"
+                      onClick={() => onSelectEpisode(currentEpisode - 1, selectedSeasonNumber)}
+                      className="px-2.5 py-1 rounded bg-[#0a0d14] hover:bg-[#1a2234] text-slate-200 border border-[#1e2638] cursor-pointer flex items-center gap-1"
+                    >
+                      <ChevronLeft className="w-3.5 h-3.5" />
+                      <span>Prev Ep</span>
+                    </button>
+                  )}
+                  {currentEpisode < activeSeasonEpisodeCount && (
+                    <button
+                      type="button"
+                      onClick={() => onSelectEpisode(currentEpisode + 1, selectedSeasonNumber)}
+                      className="px-2.5 py-1 rounded bg-[#00c896] hover:bg-[#00b084] text-slate-950 font-bold cursor-pointer flex items-center gap-1"
+                    >
+                      <span>Next Ep</span>
+                      <ChevronRight className="w-3.5 h-3.5" />
+                    </button>
+                  )}
+                </div>
+              </div>
             </div>
           </div>
         </div>

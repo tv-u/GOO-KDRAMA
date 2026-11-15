@@ -1,4 +1,4 @@
-name: HindiDrama CI & TMDB Auto-Sync
+name: HindiDrama CI, GitHub Pages & TMDB Auto-Sync
 
 on:
   push:
@@ -12,6 +12,12 @@ on:
 
 permissions:
   contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
 
 jobs:
   ci-build-and-typecheck:
@@ -38,6 +44,47 @@ jobs:
           SITE_URL: ${{ vars.SITE_URL || 'https://hindidrama.net' }}
           TMDB_API_KEY: ${{ secrets.TMDB_API_KEY || '174d0214bf933dd59b3d5ec68a0c967f' }}
         run: npm run build
+
+  deploy-github-pages:
+    name: Deploy Static Site to GitHub Pages
+    if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
+    needs: ci-build-and-typecheck
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Compute GitHub Pages Base Path & Build
+        run: |
+          REPO_NAME="${{ github.event.repository.name }}"
+          if [[ "$REPO_NAME" == *.github.io ]]; then
+            BASE_PATH="/"
+          else
+            BASE_PATH="/${REPO_NAME}/"
+          fi
+          echo "Using VITE_BASE_PATH=$BASE_PATH"
+          VITE_BASE_PATH="$BASE_PATH" SITE_URL="${{ vars.SITE_URL || 'https://hindidrama.net' }}" npm run build:gh
+
+      - name: Upload GitHub Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
 
   auto-sync-tmdb-catalog:
     name: Daily TMDB Catalog & Sitemap Auto-Sync

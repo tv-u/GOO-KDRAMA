@@ -28,6 +28,12 @@ The included workflow (`.github/workflows/auto-sync-and-ci.yml`) runs daily at `
 - Updates `src/data/dramas.json`, `public/sitemap.xml`, and `public/robots.txt`.
 - Commits and pushes updates back to GitHub, automatically triggering a fresh Cloudflare Pages production deployment.
 
+## Deploy to GitHub Pages (Static — Zero Blank Screen)
+
+The workflow (`.github/workflows/auto-sync-and-ci.yml`) includes an automated `deploy-github-pages` job:
+1. Enable **Settings → Pages → Source: GitHub Actions** in your GitHub repository.
+2. Push to `main` (or trigger `build:gh`): Vite automatically configures `VITE_BASE_PATH` (`/your-repo-name/` or `/` for user sites), generates `dist/404.html` and `dist/.nojekyll`, and serves all client routes cleanly with zero 404 asset blank screens.
+
 ## Local Development & Node SSR
 
 ```bash
@@ -35,5 +41,6 @@ npm install
 npm run dev       # Express + Vite SSR/ISR dev server on http://localhost:3000
 npm run lint      # TypeScript type-check
 npm run build     # Static SEO + Client bundle (dist/) + Node SSR bundle (dist-server/)
+npm run build:gh  # GitHub Pages static bundle with SPA 404 fallback + .nojekyll
 npm run start     # Production Node SSR server on port 3000
 ```

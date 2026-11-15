@@ -14,14 +14,17 @@ export interface SsrRenderOptions {
 export function renderPage({ url, origin, dramas, castProfile = null }: SsrRenderOptions): {
   appHtml: string;
   headTags: string;
+  htmlLang: string;
   statusCode: number;
 } {
   const parsed = parseRouteUrl(url);
-  const [pathOnly] = url.split('?');
+  const [pathOnly, queryString = ''] = url.split('?');
+  const qs = new URLSearchParams(queryString);
+  const hlLang = qs.get('hl') || undefined;
 
   const activeDrama =
     parsed.dramaSlug
-      ? dramas.find(d => d.slug.toLowerCase() === parsed.dramaSlug.toLowerCase()) || dramas[0]
+      ? dramas.find(d => d.slug.toLowerCase() === parsed.dramaSlug.toLowerCase())
       : undefined;
 
   const seoMeta = buildSeoMetadata({
@@ -30,11 +33,13 @@ export function renderPage({ url, origin, dramas, castProfile = null }: SsrRende
     dramas,
     activeDrama,
     episode: parsed.episode,
+    season: parsed.season,
     category: parsed.category,
     genre: parsed.genreSlug,
     castProfile,
     searchQuery: parsed.searchQuery,
     staticPage: parsed.view === 'static' ? parsed.staticPage : undefined,
+    hlLang,
   });
 
   const appHtml = renderToString(
@@ -53,6 +58,7 @@ export function renderPage({ url, origin, dramas, castProfile = null }: SsrRende
   return {
     appHtml,
     headTags,
+    htmlLang: seoMeta.htmlLang || 'en',
     statusCode: 200,
   };
 }

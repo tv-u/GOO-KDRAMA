@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Sparkles, Download, Zap, ExternalLink } from 'lucide-react';
-import { ADSTERRA_SMARTLINKS, getNextAdsterraLink, triggerSmartlink } from '../services/adsterra.ts';
+import { ADSTERRA_SMARTLINKS, getNextAdsterraLink } from '../services/adsterra.ts';
 
 interface AdsterraBannerProps {
   type?: 'top' | 'player' | 'download' | 'native';
@@ -58,13 +58,7 @@ export const AdsterraBanner: React.FC<AdsterraBannerProps> = ({ type = 'native',
             </p>
           </div>
         </div>
-        <span
-          onClick={e => {
-            e.preventDefault();
-            triggerSmartlink();
-          }}
-          className="shrink-0 bg-blue-600 hover:bg-blue-500 text-white text-xs font-semibold px-3 py-1.5 rounded transition-colors whitespace-nowrap"
-        >
+        <span className="shrink-0 bg-blue-600 group-hover:bg-blue-500 text-white text-xs font-semibold px-3 py-1.5 rounded transition-colors whitespace-nowrap">
           Connect VIP
         </span>
       </a>

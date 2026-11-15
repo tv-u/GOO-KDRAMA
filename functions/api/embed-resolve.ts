@@ -1,6 +1,8 @@
-import { resolveDynamicEmbed } from '../../src/services/embedResolver.ts';
+import { resolveDynamicEmbed, type DynamicEmbedProvider } from '../../src/services/embedResolver.ts';
 import type { AudioLanguageCode } from '../../src/types/drama.ts';
 import type { CFContext } from '../types.ts';
+
+const ALLOWED_PROVIDERS = new Set(['dailymotion', 'youtube', 'archive', 'wikimedia', 'peertube']);
 
 export async function onRequestPost(context: CFContext): Promise<Response> {
   try {
@@ -12,12 +14,10 @@ export async function onRequestPost(context: CFContext): Promise<Response> {
       season?: number;
       episode?: number;
       lang?: AudioLanguageCode;
+      strictHindiOnly?: boolean;
     };
 
-    if (
-      (body.provider !== 'dailymotion' && body.provider !== 'youtube') ||
-      typeof body.title !== 'string'
-    ) {
+    if (!body.provider || !ALLOWED_PROVIDERS.has(body.provider) || typeof body.title !== 'string') {
       return new Response(
         JSON.stringify({ ok: false, error: 'Valid provider and title required' }),
         {
@@ -28,14 +28,16 @@ export async function onRequestPost(context: CFContext): Promise<Response> {
     }
 
     const result = await resolveDynamicEmbed({
-      provider: body.provider,
+      provider: body.provider as DynamicEmbedProvider,
       title: body.title,
       tmdbId: Number(body.tmdbId) || 0,
       type: body.type === 'movie' ? 'movie' : 'tv',
       season: Number(body.season) || 1,
       episode: Number(body.episode) || 1,
       lang: body.lang || 'hi',
+      strictHindiOnly: Boolean(body.strictHindiOnly),
       apiKey: context.env.TMDB_API_KEY,
+      dailymotionApiKey: context.env.DAILYMOTION_API_KEY,
     });
 
     return new Response(JSON.stringify(result), {

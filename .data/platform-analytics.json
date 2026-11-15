@@ -1,0 +1,208 @@
+{
+  "totalVisits": 12,
+  "uniqueVisitorIds": [
+    "v_mwgbpbq1_accumoxk",
+    "v_mwgyf7re_t9sjmuo3",
+    "v_mwgkjnk6_bk7tw7si"
+  ],
+  "totalPosterClicks": 3,
+  "totalEpisodePlays": 9,
+  "titleStats": {
+    "my-demon": {
+      "slug": "my-demon",
+      "title": "My Demon Season 1",
+      "visits": 2,
+      "posterClicks": 1,
+      "episodePlays": 3
+    },
+    "one-and-only": {
+      "slug": "one-and-only",
+      "title": "One and Only",
+      "visits": 1,
+      "posterClicks": 1,
+      "episodePlays": 2
+    },
+    "100-days-my-prince": {
+      "slug": "100-days-my-prince",
+      "title": "100 Days My Prince",
+      "visits": 5,
+      "posterClicks": 1,
+      "episodePlays": 4
+    }
+  },
+  "episodeStats": {
+    "my-demon::ep-1": {
+      "key": "my-demon::ep-1",
+      "dramaSlug": "my-demon",
+      "dramaTitle": "My Demon Season 1",
+      "episode": 1,
+      "plays": 2
+    },
+    "my-demon::ep-2": {
+      "key": "my-demon::ep-2",
+      "dramaSlug": "my-demon",
+      "dramaTitle": "My Demon Season 1",
+      "episode": 2,
+      "plays": 1
+    },
+    "one-and-only::ep-1": {
+      "key": "one-and-only::ep-1",
+      "dramaSlug": "one-and-only",
+      "dramaTitle": "One and Only",
+      "episode": 1,
+      "plays": 2
+    },
+    "100-days-my-prince::ep-3": {
+      "key": "100-days-my-prince::ep-3",
+      "dramaSlug": "100-days-my-prince",
+      "dramaTitle": "100 Days My Prince",
+      "episode": 3,
+      "plays": 4
+    }
+  },
+  "sourceHealth": {
+    "7:VIDARA": {
+      "serverId": 7,
+      "serverName": "VIDARA",
+      "checks": 15,
+      "successes": 15,
+      "failures": 0,
+      "totalLatencyMs": 0,
+      "lastCheckedAt": "2026-11-14T15:35:18.995Z"
+    },
+    "2:Byse": {
+      "serverId": 2,
+      "serverName": "Byse",
+      "checks": 3,
+      "successes": 2,
+      "failures": 1,
+      "totalLatencyMs": 0,
+      "lastCheckedAt": "2026-11-14T15:35:29.895Z",
+      "lastError": "Ping failed or timed out"
+    },
+    "3:EARNVIDS": {
+      "serverId": 3,
+      "serverName": "EARNVIDS",
+      "checks": 4,
+      "successes": 2,
+      "failures": 2,
+      "totalLatencyMs": 0,
+      "lastCheckedAt": "2026-11-14T15:35:41.521Z",
+      "lastError": "Ping failed or timed out"
+    }
+  },
+  "failedReports": [],
+  "syncLogs": [
+    {
+      "trigger": "scheduled",
+      "added": 598,
+      "updated": 0,
+      "episodesDiscovered": 1798,
+      "duplicatesSkipped": 0,
+      "errors": [],
+      "id": "sync_1794775367969_szd8",
+      "timestamp": "2026-11-15T20:42:47.969Z"
+    },
+    {
+      "trigger": "scheduled",
+      "added": 598,
+      "updated": 0,
+      "episodesDiscovered": 1798,
+      "duplicatesSkipped": 0,
+      "errors": [],
+      "id": "sync_1794775266196_p6ri",
+      "timestamp": "2026-11-15T20:41:06.196Z"
+    },
+    {
+      "trigger": "scheduled",
+      "added": 598,
+      "updated": 0,
+      "episodesDiscovered": 1798,
+      "duplicatesSkipped": 0,
+      "errors": [],
+      "id": "sync_1794775167354_yzdy",
+      "timestamp": "2026-11-15T20:39:27.354Z"
+    },
+    {
+      "trigger": "scheduled",
+      "added": 598,
+      "updated": 0,
+      "episodesDiscovered": 1798,
+      "duplicatesSkipped": 0,
+      "errors": [],
+      "id": "sync_1794775071021_0vdp",
+      "timestamp": "2026-11-15T20:37:51.021Z"
+    },
+    {
+      "trigger": "scheduled",
+      "added": 598,
+      "updated": 0,
+      "episodesDiscovered": 1798,
+      "duplicatesSkipped": 0,
+      "errors": [],
+      "id": "sync_1794771696566_cuxv",
+      "timestamp": "2026-11-15T19:41:36.566Z"
+    },
+    {
+      "trigger": "scheduled",
+      "added": 598,
+      "updated": 0,
+      "episodesDiscovered": 1798,
+      "duplicatesSkipped": 0,
+      "errors": [],
+      "id": "sync_1794771653180_1idn",
+      "timestamp": "2026-11-15T19:40:53.181Z"
+    },
+    {
+      "trigger": "scheduled",
+      "added": 598,
+      "updated": 0,
+      "episodesDiscovered": 1798,
+      "duplicatesSkipped": 0,
+      "errors": [],
+      "id": "sync_1794771294183_p5es",
+      "timestamp": "2026-11-15T19:34:54.183Z"
+    },
+    {
+      "trigger": "scheduled",
+      "added": 598,
+      "updated": 0,
+      "episodesDiscovered": 1798,
+      "duplicatesSkipped": 0,
+      "errors": [],
+      "id": "sync_1794766039796_suc4",
+      "timestamp": "2026-11-15T18:07:19.796Z"
+    },
+    {
+      "trigger": "scheduled",
+      "added": 598,
+      "updated": 0,
+      "episodesDiscovered": 1798,
+      "duplicatesSkipped": 0,
+      "errors": [],
+      "id": "sync_1794765965485_o3zt",
+      "timestamp": "2026-11-15T18:06:05.485Z"
+    },
+    {
+      "trigger": "scheduled",
+      "added": 598,
+      "updated": 0,
+      "episodesDiscovered": 1798,
+      "duplicatesSkipped": 0,
+      "errors": [],
+      "id": "sync_1794765759421_xznh",
+      "timestamp": "2026-11-15T18:02:39.421Z"
+    },
+    {
+      "trigger": "scheduled",
+      "added": 598,
+      "updated": 0,
+      "episodesDiscovered": 1798,
+      "duplicatesSkipped": 0,
+      "errors": [],
+      "id": "sync_1794765392875_lxfy",
+      "timestamp": "2026-11-15T17:56:32.875Z"
+    }
+  ],
+  "manualSources": []
+}

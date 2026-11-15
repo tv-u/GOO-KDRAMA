@@ -1,10 +1,14 @@
 @import "tailwindcss";
+@import "video.js/dist/video-js.css";
 @custom-variant dark (&:where(.dark, .dark *));
 
 @layer base {
   :root {
-    --brand-blue: #2563eb;
-    --brand-blue-hover: #1d4ed8;
+    --brand-accent: #00c896;
+    --brand-accent-hover: #00b084;
+    --surface-canvas: #0a0d14;
+    --surface-card: #111622;
+    --surface-border: #1e2638;
   }
 }
 
@@ -15,16 +19,25 @@
 }
 
 ::-webkit-scrollbar-track {
-  background: #0b0f19;
+  background: #0a0d14;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #1e293b;
+  background: #1e2638;
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #334155;
+  background: #2f3b54;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 
 .aspect-video {

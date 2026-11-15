@@ -13,9 +13,73 @@ const ALLOWED_RELAY_HOSTS = new Set([
   'vidlink.pro',
   'cinemaos.tech',
   'vidfast.pro',
+  'vidfast.vc',
+  'www.vidfast.vc',
   'vidsrc.to',
   'vidsrc.me',
+  'vidsrc.sh',
+  'www.vidsrc.sh',
   'embed.smashystream.com',
+  'anyembed.xyz',
+  'multiembed.mov',
+  'streamingnow.mov',
+  'archive.org',
+  'viduki.net',
+  'www.viduki.net',
+  '111movies.com',
+  'ok.ru',
+  'www.ok.ru',
+  'vk.com',
+  'm.vk.com',
+  'facebook.com',
+  'www.facebook.com',
+  'rumble.com',
+  'www.rumble.com',
+  'odysee.com',
+  'lbry.tv',
+  'twitch.tv',
+  'player.twitch.tv',
+  'drive.google.com',
+  'vimeo.com',
+  'player.vimeo.com',
+  'streamable.com',
+  'screenpal.com',
+  'catbox.moe',
+  'files.catbox.moe',
+  'streamwish.to',
+  'streamwish.com',
+  'filemoon.sx',
+  'filemoon.in',
+  'vidhidepro.com',
+  'vidhide.com',
+  'byse.to',
+  'www.byse.to',
+  'earnvids.com',
+  'www.earnvids.com',
+  'lulustream.com',
+  'www.lulustream.com',
+  'upbolt.com',
+  'www.upbolt.com',
+  'vidara.su',
+  'www.vidara.su',
+  'abyss.to',
+  'www.abyss.to',
+  'doodstream.com',
+  'www.doodstream.com',
+  'pkmbed.com',
+  'www.pkmbed.com',
+  'pkembed.site',
+  'www.pkembed.site',
+  'vidhide.vip',
+  'smoothpre.com',
+  'd000d.com',
+  'vidsrc.cc',
+  'www.vidsrc.cc',
+  'vidsrc.xyz',
+  'vidsrc.pm',
+  'autoembed.cc',
+  'player.autoembed.cc',
+  'embed.su',
 ]);
 
 const BROWSER_UA =
@@ -52,6 +116,20 @@ function buildSandboxShieldHeadSnippet(upstreamOrigin: string, upstreamBasePath:
   try {
     Object.defineProperty(window, 'frameElement', { get: function(){ return null; }, configurable: true });
   } catch(e) {}
+  try {
+    Object.defineProperty(Document.prototype, 'domain', {
+      get: function(){ return location.hostname; },
+      set: function(){ return true; },
+      configurable: true
+    });
+  } catch(e) {}
+  try {
+    var _origHasAttr = Element.prototype.hasAttribute;
+    Element.prototype.hasAttribute = function(name) {
+      if (typeof name === 'string' && name.toLowerCase() === 'sandbox') return false;
+      return _origHasAttr.call(this, name);
+    };
+  } catch(e) {}
   try { window.isReallySandboxed = function(){ return false; }; } catch(e) {}
   try { window.opaqueOrigin = function(){ return false; }; } catch(e) {}
   try { window.sandboxVerdict = function(){ return 'clean'; }; } catch(e) {}
@@ -70,13 +148,48 @@ function buildSandboxShieldHeadSnippet(upstreamOrigin: string, upstreamBasePath:
         abs.hostname.indexOf('videm.buzz') !== -1 ||
         abs.hostname.indexOf('2embed.cc') !== -1 ||
         abs.hostname.indexOf('nontongo.win') !== -1 ||
-        abs.hostname.indexOf('vidrock.net') !== -1
+        abs.hostname.indexOf('vidrock.net') !== -1 ||
+        abs.hostname.indexOf('vidfast.') !== -1 ||
+        abs.hostname.indexOf('vidsrc.sh') !== -1
       ) {
         return '/api/player-relay?url=' + encodeURIComponent(abs.toString());
       }
       return inputUrl;
     } catch(e) { return inputUrl; }
   }
+  try {
+    var _allowedPopupHosts = ['vidsrc', 'videm', '2embed', 'nontongo', 'vidrock', 'vidfast', 'vidlink', 'cinemaos', 'anyembed', 'youtube', 'dailymotion'];
+    function _isSafeStreamHost(urlStr) {
+      try {
+        var u = new URL(urlStr, window.location.href);
+        if (u.origin === window.location.origin || u.origin === ${safeOrigin}) return true;
+        var h = u.hostname.toLowerCase();
+        for (var i = 0; i < _allowedPopupHosts.length; i++) {
+          if (h.indexOf(_allowedPopupHosts[i]) !== -1) return true;
+        }
+        return false;
+      } catch(e) { return false; }
+    }
+    window.open = function(url) {
+      if (url && _isSafeStreamHost(String(url))) {
+        return { closed: false, focus: function(){}, close: function(){}, location: { href: String(url) } };
+      }
+      return { closed: false, focus: function(){}, close: function(){}, location: { href: '' } };
+    };
+    document.addEventListener('click', function(ev) {
+      try {
+        var el = ev.target;
+        while (el && el.tagName !== 'A') el = el.parentElement;
+        if (el && el.href) {
+          var tgt = (el.getAttribute('target') || '').toLowerCase();
+          if ((tgt === '_blank' || tgt === '_top' || tgt === '_parent') && !_isSafeStreamHost(el.href)) {
+            ev.preventDefault();
+            ev.stopPropagation();
+          }
+        }
+      } catch(e) {}
+    }, true);
+  } catch(e) {}
   if (typeof window.fetch === 'function') {
     var _origFetch = window.fetch.bind(window);
     window.fetch = function(resource, init) {
@@ -112,17 +225,21 @@ function rewriteEmbedHtml(html: string, target: URL): string {
   const host = target.hostname.toLowerCase();
   let out = html;
 
-  // 1. Neutralize known sandbox detector functions directly in inline JS
+  // 1. Neutralize known sandbox detector functions, disable-devtool, and top-window homepage redirects
   out = out
     .replace(/function\s+isReallySandboxed\s*\(\s*\)\s*\{/gi, 'function isReallySandboxed(){return false;}function _hdDisabledSbx(){')
     .replace(/function\s+opaqueOrigin\s*\(\s*\)\s*\{/gi, 'function opaqueOrigin(){return false;}function _hdDisabledOpaque(){')
     .replace(/function\s+sandboxVerdict\s*\(\s*\)\s*\{/gi, 'function sandboxVerdict(){return "clean";}function _hdDisabledVerdict(){')
     .replace(/function\s+sandboxDeny\s*\(\s*\)\s*\{/gi, 'function sandboxDeny(){return;}function _hdDisabledDeny(){')
+    .replace(/if\s*\(\s*window\s*==={1,2}\s*window\.top\s*\)\s*\{[^}]*location\.replace\([^)]*\)[^}]*\}/gi, '')
     .replace(/document\.domain\s*=\s*[^;\n}]+/gi, 'void 0');
 
-  // 2. Remove aggressive popup ad scripts on embed wrappers (sandbox overlay is hidden by injected CSS)
+  // 2. Remove meta-refresh redirects, disable-devtool, 2embed.skin redirects, & aggressive popunder/redirect ad scripts
   out = out
-    .replace(/<script[^>]+src=["']https?:\/\/(?:tagivi\.com|adplox\.com)[^"']*["'][^>]*>\s*<\/script>/gi, '');
+    .replace(/<meta[^>]+http-equiv=["']?refresh["']?[^>]*>/gi, '')
+    .replace(/<script[^>]*disable-devtool[^>]*>\s*<\/script>/gi, '')
+    .replace(/<a[^>]+href=["']https?:\/\/(?:www\.)?2embed\.skin[^"']*["'][^>]*>[\s\S]*?<\/a>/gi, '')
+    .replace(/<script[^>]+src=["']https?:\/\/(?:[^"']*\.)?(?:tagivi\.com|adplox\.com|acscdn\.com|onclkds\.com|popads\.net|popcash\.net|clickadu\.com|hilltopads\.net|exoclick\.com|trafficstars\.com|highperformanceformat\.com|disable-devtool|unfortunatelyejectinflected\.com|whos\.amung\.us)[^"']*["'][^>]*>\s*<\/script>/gi, '');
 
   // 3. Route inner sandbox-checked iframe/source URLs inside 2embed through our same-origin relay too
   out = out.replace(
@@ -196,7 +313,8 @@ export async function relayPlayerRequest(params: {
   }
 
   try {
-    const upstreamRes = await fetch(target.toString(), {
+    let fetchTarget = target;
+    let upstreamRes = await fetch(fetchTarget.toString(), {
       method: params.method === 'POST' ? 'POST' : 'GET',
       headers: upstreamHeaders,
       body: params.method === 'POST' && params.bodyText ? params.bodyText : undefined,
@@ -208,8 +326,38 @@ export async function relayPlayerRequest(params: {
     const isHtml = respContentType.toLowerCase().includes('text/html');
 
     if (isHtml) {
-      const rawHtml = await upstreamRes.text();
-      const cleanHtml = rewriteEmbedHtml(rawHtml, new URL(upstreamRes.url || target.toString()));
+      let rawHtml = await upstreamRes.text();
+
+      // Master trick for 2embed.cc: unwrap its homepage/dropdown menu shell and directly serve its clean vidsrc.buzz player!
+      if (fetchTarget.hostname.includes('2embed.cc') && params.method === 'GET') {
+        const innerMatch =
+          rawHtml.match(/<iframe[^>]+id=["']iframesrc["'][^>]+data-src=["'](https:\/\/(?:vidsrc\.buzz|videm\.buzz|streamsrcs\.2embed\.cc)\/[^"']+)["']/i) ||
+          rawHtml.match(/go\(\s*['"](https:\/\/(?:vidsrc\.buzz|streamsrcs\.2embed\.cc)\/[^'"]+)['"]\s*\)/i);
+        if (innerMatch?.[1]) {
+          const unwrappedUrl = new URL(innerMatch[1]);
+          const unwrappedRes = await fetch(unwrappedUrl.toString(), {
+            headers: { ...upstreamHeaders, Referer: 'https://www.2embed.cc/' },
+            redirect: 'follow',
+            signal: AbortSignal.timeout(8000),
+          });
+          if (unwrappedRes.ok) {
+            fetchTarget = unwrappedUrl;
+            upstreamRes = unwrappedRes;
+            rawHtml = await unwrappedRes.text();
+          }
+        }
+      }
+
+      if (upstreamRes.status >= 400) {
+        const errorHtml = `<!doctype html><html><body style="margin:0;background:#0a0d14;color:#e2e8f0;font-family:system-ui,sans-serif;display:flex;align-items:center;justify-content:center;height:100vh;text-align:center;padding:24px;"><script>try{window.parent.postMessage({type:'HLX_RELAY_ERROR',status:${upstreamRes.status},url:${JSON.stringify(fetchTarget.toString())}},'*');}catch(e){}</script><div><p style="font-size:14px;font-weight:600;margin:0 0 6px;">Auto-switching HLX Mirror...</p><p style="font-size:12px;color:#94a3b8;margin:0;">Mirror responded ${upstreamRes.status}, loading backup node.</p></div></body></html>`;
+        return {
+          status: 502,
+          headers: { 'Content-Type': 'text/html; charset=utf-8', 'Cache-Control': 'no-store' },
+          body: errorHtml,
+        };
+      }
+
+      const cleanHtml = rewriteEmbedHtml(rawHtml, new URL(upstreamRes.url || fetchTarget.toString()));
       return {
         status: upstreamRes.status,
         headers: {
@@ -236,7 +384,7 @@ export async function relayPlayerRequest(params: {
     return {
       status: 502,
       headers: { 'Content-Type': 'text/html; charset=utf-8', 'Cache-Control': 'no-store' },
-      body: `<!doctype html><html><body style="margin:0;background:#020617;color:#e2e8f0;font-family:system-ui,sans-serif;display:flex;align-items:center;justify-content:center;height:100vh;text-align:center;padding:24px;"><div><p style="font-size:15px;font-weight:600;margin:0 0 8px;">Stream Temporarily Busy (${message})</p><p style="font-size:12px;color:#94a3b8;margin:0;">Click Auto-Fallback or Direct Play in the player bar above.</p></div></body></html>`,
+      body: `<!doctype html><html><body style="margin:0;background:#0a0d14;color:#e2e8f0;font-family:system-ui,sans-serif;display:flex;align-items:center;justify-content:center;height:100vh;text-align:center;padding:24px;"><script>try{window.parent.postMessage({type:'HLX_RELAY_ERROR',status:502,reason:${JSON.stringify(message)}},'*');}catch(e){}</script><div><p style="font-size:14px;font-weight:600;margin:0 0 6px;">Auto-switching HLX Mirror...</p><p style="font-size:12px;color:#94a3b8;margin:0;">${message}</p></div></body></html>`,
     };
   }
 }

@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Search, Film, Sparkles, PlusCircle, X, Menu } from 'lucide-react';
+import { Search, Play, Sparkles, PlusCircle, X, Menu, Bookmark, ShieldCheck, History, Loader2 } from 'lucide-react';
 import type { DramaCategory, Drama } from '../types/drama.ts';
-import { getAllDramas } from '../services/tmdb.ts';
+import { getAllDramas, searchTMDB, fetchDramaDetailsFromTMDB } from '../services/tmdb.ts';
+import { getSearchHistory, addSearchHistory, clearSearchHistory, trackPlatformEvent } from '../services/storage.ts';
 import { OptimizedImage } from './OptimizedImage.tsx';
 
 interface NavbarProps {
@@ -9,6 +10,9 @@ interface NavbarProps {
   onSelectCategory: (cat: DramaCategory) => void;
   onNavigateHome: () => void;
   onOpenDrama: (slug: string) => void;
+  onOpenDramaSynced?: (drama: Drama) => void;
+  onOpenLibrary: () => void;
+  onOpenAdmin: () => void;
   onOpenRequest: () => void;
   onOpenSync: () => void;
   onSearch: (query: string) => void;
@@ -20,6 +24,9 @@ export const Navbar: React.FC<NavbarProps> = ({
   onSelectCategory,
   onNavigateHome,
   onOpenDrama,
+  onOpenDramaSynced,
+  onOpenLibrary,
+  onOpenAdmin,
   onOpenRequest,
   onOpenSync,
   onSearch,
@@ -27,18 +34,28 @@ export const Navbar: React.FC<NavbarProps> = ({
 }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [suggestions, setSuggestions] = useState<Drama[]>([]);
+  const [tmdbSuggestions, setTmdbSuggestions] = useState<any[]>([]);
+  const [searchingTmdb, setSearchingTmdb] = useState(false);
   const [showSuggestions, setShowSuggestions] = useState(false);
+  const [searchHistory, setSearchHistory] = useState<string[]>([]);
+  const [syncingTmdbId, setSyncingTmdbId] = useState<number | null>(null);
   const searchRef = useRef<HTMLDivElement>(null);
 
   const categories: { label: string; value: DramaCategory }[] = [
-    { label: 'All Drama', value: 'all' },
-    { label: 'Hindi Dubbed K-Drama', value: 'hindi-dubbed' },
+    { label: 'Home', value: 'all' },
+    { label: 'Hindi Dubbed', value: 'hindi-dubbed' },
+    { label: 'K-Drama', value: 'korean' },
+    { label: 'Movies', value: 'movies' },
     { label: 'Trending', value: 'trending' },
-    { label: 'Korean', value: 'korean' },
-    { label: 'Chinese', value: 'chinese' },
-    { label: 'Japanese', value: 'japanese' },
+    { label: 'C-Drama', value: 'chinese' },
+    { label: 'J-Drama', value: 'japanese' },
     { label: 'Indian', value: 'indian' },
+    { label: 'Anime', value: 'anime' },
   ];
+
+  useEffect(() => {
+    setSearchHistory(getSearchHistory());
+  }, []);
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
@@ -51,176 +68,314 @@ export const Navbar: React.FC<NavbarProps> = ({
   }, []);
 
   useEffect(() => {
-    if (!searchQuery.trim() || searchQuery.length < 2) {
+    const trimmed = searchQuery.trim();
+    if (trimmed.length < 2) {
       setSuggestions([]);
-      setShowSuggestions(false);
+      setTmdbSuggestions([]);
+      setSearchingTmdb(false);
       return;
     }
 
-    const q = searchQuery.toLowerCase();
+    const q = trimmed.toLowerCase();
     const local = getAllDramas().filter(
       d =>
         (d.title || '').toLowerCase().includes(q) ||
         (d.hindiTitle || '').toLowerCase().includes(q) ||
         (d.genres || []).some(g => g.toLowerCase().includes(q)) ||
-        (d.country || '').toLowerCase().includes(q)
+        (d.country || '').toLowerCase().includes(q) ||
+        String(d.tmdbId || '') === trimmed ||
+        (d.cast || []).some(c => (c.name || '').toLowerCase().includes(q))
     );
 
     setSuggestions(local.slice(0, 6));
     setShowSuggestions(true);
+
+    const timer = setTimeout(() => {
+      if (local.length >= 4 || /^\d+$/.test(trimmed)) return;
+      setSearchingTmdb(true);
+      searchTMDB(trimmed)
+        .then(res => {
+          const localTmdbIds = new Set(local.map(d => d.tmdbId));
+          setTmdbSuggestions(
+            (res || []).filter((r: any) => r.poster_path && !localTmdbIds.has(r.id)).slice(0, 3)
+          );
+        })
+        .catch(() => {})
+        .finally(() => setSearchingTmdb(false));
+    }, 220);
+
+    return () => clearTimeout(timer);
   }, [searchQuery]);
 
-  const handleSelectSuggestion = (slug: string) => {
+  const handleSelectSuggestion = (drama: Drama) => {
+    setSearchHistory(addSearchHistory(drama.title));
     setShowSuggestions(false);
-    onOpenDrama(slug);
+    trackPlatformEvent({
+      type: 'poster_click',
+      dramaSlug: drama.slug,
+      dramaTitle: drama.title,
+    });
+    onOpenDrama(drama.slug);
+  };
+
+  const handleSyncAndOpenTmdb = async (item: any) => {
+    setSyncingTmdbId(item.id);
+    try {
+      const synced = await fetchDramaDetailsFromTMDB(item.id, item.media_type === 'movie' ? 'movie' : 'tv');
+      if (synced) {
+        setSearchHistory(addSearchHistory(synced.title));
+        onOpenDramaSynced?.(synced);
+        setShowSuggestions(false);
+        onOpenDrama(synced.slug);
+      }
+    } finally {
+      setSyncingTmdbId(null);
+    }
   };
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter') {
+      if (searchQuery.trim().length >= 2) {
+        setSearchHistory(addSearchHistory(searchQuery));
+      }
       setShowSuggestions(false);
       onSearch(searchQuery);
     }
   };
 
   return (
-    <header className="sticky top-0 z-50 bg-[#0b0f19]/95 backdrop-blur-md border-b border-slate-800/80">
+    <header className="sticky top-0 z-50 bg-[#0a0d14]/95 backdrop-blur-md border-b border-[#1e2638]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 gap-4">
-          
-          {/* Logo Zone */}
-          <div className="flex items-center gap-3">
-            <a
-              href="/"
-              onClick={e => {
-                e.preventDefault();
-                onNavigateHome();
-              }}
-              className="flex items-center gap-2 group text-left cursor-pointer"
-            >
-              <div className="w-9 h-9 rounded-lg bg-gradient-to-tr from-blue-700 via-blue-600 to-indigo-500 flex items-center justify-center shadow-lg shadow-blue-500/20 group-hover:scale-105 transition-transform">
-                <Film className="w-5 h-5 text-white" />
-              </div>
-              <div className="flex flex-col">
-                <span className="text-xl font-extrabold tracking-tight text-white group-hover:text-blue-400 transition-colors">
-                  Hindi<span className="text-blue-500">Drama</span>
-                </span>
-                <span className="text-[10px] text-slate-400 -mt-1 hidden sm:inline tracking-wider font-medium">
-                  Asian Dramas in Hindi Dubbed
-                </span>
-              </div>
-            </a>
-          </div>
+          {/* Brand Zone */}
+          <a
+            href="/"
+            onClick={e => {
+              e.preventDefault();
+              onNavigateHome();
+            }}
+            className="flex items-center gap-2.5 group shrink-0 whitespace-nowrap cursor-pointer"
+          >
+            <div className="w-9 h-9 rounded-lg bg-[#00c896] text-slate-950 flex items-center justify-center shadow-lg shadow-emerald-500/20 group-hover:scale-105 transition-transform">
+              <Play className="w-4 h-4 fill-current ml-0.5" />
+            </div>
+            <span className="text-xl font-extrabold tracking-tight text-white">
+              Hindi<span className="text-[#00c896]">Drama</span>
+            </span>
+          </a>
 
-          {/* Search Bar with Autocomplete */}
+          {/* FlixHQ Centered Search */}
           <div ref={searchRef} className="relative flex-1 max-w-md hidden md:block">
             <div className="relative">
               <input
                 type="text"
                 value={searchQuery}
+                onFocus={() => setShowSuggestions(true)}
                 onChange={e => onSearch(e.target.value)}
                 onKeyDown={handleKeyDown}
-                placeholder="Search dramas, Korean, Chinese, Indian..."
-                className="w-full bg-slate-900/90 text-slate-100 placeholder-slate-400 text-sm rounded-full pl-10 pr-9 py-2 border border-slate-700/70 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all shadow-inner"
+                placeholder="Search K-Dramas, movies, actors, TMDB ID..."
+                className="w-full bg-[#111622] text-slate-100 placeholder-slate-400 text-sm rounded-full pl-10 pr-9 py-2 border border-[#1e2638] focus:outline-none focus:border-[#00c896] focus:ring-1 focus:ring-[#00c896] transition-all"
               />
               <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-2.5 pointer-events-none" />
               {searchQuery && (
                 <button
+                  type="button"
                   onClick={() => onSearch('')}
-                  className="absolute right-3 top-2.5 text-slate-400 hover:text-white"
+                  aria-label="Clear search"
+                  className="absolute right-3 top-2.5 text-slate-400 hover:text-white cursor-pointer"
                 >
                   <X className="w-4 h-4" />
                 </button>
               )}
             </div>
 
-            {showSuggestions && suggestions.length > 0 && (
-              <div className="absolute left-0 right-0 top-full mt-2 bg-slate-900 border border-slate-700 rounded-xl shadow-2xl overflow-hidden z-50 divide-y divide-slate-800">
+            {showSuggestions && (searchQuery.trim().length >= 2 || searchHistory.length > 0) && (
+              <div className="absolute left-0 right-0 top-full mt-2 bg-[#111622] border border-[#1e2638] rounded-xl shadow-2xl overflow-hidden z-50 divide-y divide-[#1e2638] max-h-[70vh] overflow-y-auto">
+                {searchQuery.trim().length < 2 && searchHistory.length > 0 && (
+                  <div className="p-3">
+                    <div className="flex items-center justify-between text-[11px] text-slate-400 mb-2">
+                      <span className="inline-flex items-center gap-1 font-semibold">
+                        <History className="w-3 h-3" />
+                        Recent Searches
+                      </span>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          clearSearchHistory();
+                          setSearchHistory([]);
+                        }}
+                        className="text-slate-400 hover:text-white cursor-pointer"
+                      >
+                        Clear
+                      </button>
+                    </div>
+                    <div className="flex flex-wrap gap-1.5">
+                      {searchHistory.map(h => (
+                        <button
+                          key={h}
+                          type="button"
+                          onClick={() => {
+                            onSearch(h);
+                            setShowSuggestions(true);
+                          }}
+                          className="px-2.5 py-1 rounded-md bg-[#1a2234] hover:bg-[#232d45] text-xs text-slate-200 cursor-pointer"
+                        >
+                          {h}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
                 {suggestions.map(drama => (
                   <a
                     key={drama.id}
-                    href={`/drama/${drama.slug}`}
+                    href={drama.type === 'movie' ? `/movie/${drama.slug}` : `/drama/${drama.slug}`}
                     onClick={e => {
                       e.preventDefault();
-                      handleSelectSuggestion(drama.slug);
+                      handleSelectSuggestion(drama);
                     }}
-                    className="w-full text-left p-2.5 hover:bg-slate-800/80 flex items-center gap-3 transition-colors cursor-pointer"
+                    className="w-full text-left p-2.5 hover:bg-[#1a2234] flex items-center gap-3 transition-colors cursor-pointer"
                   >
                     <OptimizedImage
                       src={drama.poster}
-                      alt={`${drama.title} Hindi Dubbed Poster`}
+                      alt={`${drama.title} Poster`}
                       width={80}
                       height={112}
-                      className="w-10 h-14 object-cover rounded bg-slate-800 shrink-0"
+                      className="w-10 h-14 object-cover rounded bg-[#1a2234] shrink-0"
                     />
                     <div className="flex-1 min-w-0">
                       <p className="text-sm font-semibold text-slate-100 truncate">
                         {drama.title}
                       </p>
-                      <p className="text-xs text-slate-400 truncate">
-                        {drama.country} • {drama.year} • {drama.totalEpisodes} Eps • Hindi Dubbed
+                      <p className="text-xs text-slate-400 truncate tabular-nums">
+                        {drama.country} · {drama.year} · {drama.type === 'movie' ? 'Movie' : `${drama.totalEpisodes} Eps`}
                       </p>
                     </div>
-                    <span className="text-xs font-semibold text-amber-400 shrink-0 mr-1">
+                    <span className="text-xs font-semibold text-amber-400 shrink-0 mr-1 tabular-nums">
                       ★ {drama.rating}
                     </span>
                   </a>
                 ))}
-                <button
-                  onClick={() => {
-                    setShowSuggestions(false);
-                    onSearch(searchQuery);
-                  }}
-                  className="w-full py-2 bg-slate-800/50 hover:bg-blue-600 text-center text-xs font-medium text-blue-400 hover:text-white transition-colors"
-                >
-                  View all results for "{searchQuery}"
-                </button>
+
+                {tmdbSuggestions.map(item => (
+                  <button
+                    key={`tmdb-${item.id}`}
+                    type="button"
+                    onClick={() => handleSyncAndOpenTmdb(item)}
+                    className="w-full text-left p-2.5 hover:bg-[#1a2234] flex items-center gap-3 transition-colors cursor-pointer"
+                  >
+                    <img
+                      src={`https://image.tmdb.org/t/p/w200${item.poster_path}`}
+                      alt={item.name || item.title}
+                      referrerPolicy="no-referrer"
+                      className="w-10 h-14 object-cover rounded bg-[#1a2234] shrink-0"
+                    />
+                    <div className="flex-1 min-w-0">
+                      <p className="text-sm font-semibold text-[#00c896] truncate">
+                        {item.name || item.title}
+                      </p>
+                      <p className="text-xs text-slate-400 truncate">
+                        TMDB #{item.id} · Sync & Stream
+                      </p>
+                    </div>
+                    {syncingTmdbId === item.id && <Loader2 className="w-4 h-4 text-[#00c896] animate-spin shrink-0" />}
+                  </button>
+                ))}
+
+                {searchQuery.trim().length >= 2 && (
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setSearchHistory(addSearchHistory(searchQuery));
+                      setShowSuggestions(false);
+                      onSearch(searchQuery);
+                    }}
+                    className="w-full py-2.5 bg-[#161d2d] hover:bg-[#00c896] text-center text-xs font-semibold text-[#00c896] hover:text-slate-950 transition-colors cursor-pointer"
+                  >
+                    {searchingTmdb
+                      ? `Searching TMDB for "${searchQuery}"...`
+                      : `View all results for "${searchQuery}"`}
+                  </button>
+                )}
               </div>
             )}
           </div>
 
-          {/* Action Tools */}
-          <div className="hidden lg:flex items-center gap-2">
+          {/* Right Action Controls */}
+          <div className="hidden lg:flex items-center gap-2 shrink-0">
+            <a
+              href="/library"
+              onClick={e => {
+                e.preventDefault();
+                onOpenLibrary();
+              }}
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold bg-[#111622] hover:bg-[#1a2234] text-slate-200 border border-[#1e2638] transition-colors whitespace-nowrap shrink-0 cursor-pointer"
+            >
+              <Bookmark className="w-3.5 h-3.5 text-[#00c896]" />
+              <span>Library</span>
+            </a>
             <button
+              type="button"
               onClick={onOpenSync}
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700/60 transition-colors cursor-pointer"
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold bg-[#111622] hover:bg-[#1a2234] text-slate-200 border border-[#1e2638] transition-colors whitespace-nowrap shrink-0 cursor-pointer"
               title="Auto-Sync Asian Dramas via TMDB API"
             >
-              <Sparkles className="w-3.5 h-3.5 text-blue-400" />
-              <span>TMDB Auto-Sync</span>
+              <Sparkles className="w-3.5 h-3.5 text-cyan-400" />
+              <span>TMDB Sync</span>
             </button>
+            <a
+              href="/admin"
+              onClick={e => {
+                e.preventDefault();
+                onOpenAdmin();
+              }}
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold bg-[#111622] hover:bg-[#1a2234] text-slate-200 border border-[#1e2638] transition-colors whitespace-nowrap shrink-0 cursor-pointer"
+              title="Admin Analytics & Sync Console"
+            >
+              <ShieldCheck className="w-3.5 h-3.5 text-slate-300" />
+              <span>Admin</span>
+            </a>
             <button
+              type="button"
               onClick={onOpenRequest}
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold bg-blue-600 hover:bg-blue-500 text-white transition-colors shadow-sm shadow-blue-500/20 cursor-pointer"
+              className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg text-xs font-bold bg-[#00c896] hover:bg-[#00b084] text-slate-950 transition-colors shadow-sm shadow-emerald-500/20 whitespace-nowrap shrink-0 cursor-pointer"
             >
               <PlusCircle className="w-3.5 h-3.5" />
-              <span>Request Drama</span>
+              <span>Request</span>
             </button>
           </div>
 
-          {/* Mobile menu button */}
-          <div className="flex md:hidden items-center gap-2">
+          {/* Mobile Controls */}
+          <div className="flex lg:hidden items-center gap-2 shrink-0">
             <button
-              onClick={onOpenSync}
-              className="p-2 text-slate-300 hover:text-white rounded-lg bg-slate-800/60"
-              title="TMDB Sync"
+              type="button"
+              onClick={onOpenLibrary}
+              className="p-2 text-slate-300 hover:text-white rounded-lg bg-[#111622] border border-[#1e2638] cursor-pointer"
+              aria-label="Open Library"
             >
-              <Sparkles className="w-4 h-4 text-blue-400" />
+              <Bookmark className="w-4 h-4 text-[#00c896]" />
             </button>
             <button
+              type="button"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="p-2 text-slate-300 hover:text-white rounded-lg bg-slate-800"
+              className="p-2 text-slate-300 hover:text-white rounded-lg bg-[#111622] border border-[#1e2638] cursor-pointer"
+              aria-label="Toggle menu"
             >
               {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
             </button>
           </div>
-
         </div>
 
-        {/* Categories Bar */}
-        <nav aria-label="Main Categories" className="flex items-center gap-1 sm:gap-2 overflow-x-auto py-2.5 no-scrollbar border-t border-slate-800/40">
+        {/* FlixHQ / DramaCool Category Bar */}
+        <nav
+          aria-label="Main Categories"
+          className="flex items-center gap-1.5 overflow-x-auto no-scrollbar py-2 border-t border-[#1e2638]/70"
+        >
           {categories.map(cat => {
             const isActive = currentCategory === cat.value && !searchQuery;
-            const href = cat.value === 'all' ? '/' : `/category/${cat.value}`;
+            const href =
+              cat.value === 'all' ? '/' : cat.value === 'movies' ? '/movies' : `/category/${cat.value}`;
             return (
               <a
                 key={cat.value}
@@ -234,10 +389,10 @@ export const Navbar: React.FC<NavbarProps> = ({
                   }
                   setMobileMenuOpen(false);
                 }}
-                className={`px-3.5 py-1.5 rounded-md text-xs sm:text-sm font-medium transition-all whitespace-nowrap cursor-pointer ${
+                className={`px-3 py-1 rounded-md text-xs sm:text-sm font-semibold transition-all whitespace-nowrap shrink-0 cursor-pointer ${
                   isActive
-                    ? 'bg-blue-600 text-white shadow-sm shadow-blue-600/30 font-semibold'
-                    : 'text-slate-300 hover:text-white hover:bg-slate-800/60'
+                    ? 'bg-[#00c896] text-slate-950 shadow-sm shadow-emerald-500/25'
+                    : 'text-slate-300 hover:text-white hover:bg-[#111622]'
                 }`}
               >
                 {cat.label}
@@ -249,39 +404,63 @@ export const Navbar: React.FC<NavbarProps> = ({
 
       {/* Mobile Drawer */}
       {mobileMenuOpen && (
-        <div className="md:hidden border-t border-slate-800 bg-[#0b0f19] px-4 pt-3 pb-4 space-y-3">
+        <div className="lg:hidden border-t border-[#1e2638] bg-[#0a0d14] px-4 pt-3 pb-4 space-y-3">
           <div className="relative">
             <input
               type="text"
               value={searchQuery}
               onChange={e => onSearch(e.target.value)}
               onKeyDown={handleKeyDown}
-              placeholder="Search dramas, Korean, Chinese..."
-              className="w-full bg-slate-900 text-slate-100 placeholder-slate-400 text-sm rounded-lg pl-10 pr-4 py-2 border border-slate-700 focus:outline-none focus:border-blue-500"
+              placeholder="Search dramas, movies, actors..."
+              className="w-full bg-[#111622] text-slate-100 placeholder-slate-400 text-sm rounded-lg pl-10 pr-4 py-2 border border-[#1e2638] focus:outline-none focus:border-[#00c896]"
             />
             <Search className="w-4 h-4 text-slate-400 absolute left-3 top-2.5" />
           </div>
 
-          <div className="flex gap-2 pt-2">
+          <div className="grid grid-cols-2 gap-2 pt-1">
             <button
+              type="button"
               onClick={() => {
                 onOpenRequest();
                 setMobileMenuOpen(false);
               }}
-              className="flex-1 flex items-center justify-center gap-1.5 py-2 rounded-lg text-xs font-semibold bg-blue-600 text-white"
+              className="flex items-center justify-center gap-1.5 py-2.5 rounded-lg text-xs font-bold bg-[#00c896] text-slate-950 cursor-pointer"
             >
               <PlusCircle className="w-4 h-4" />
-              Request Drama
+              <span>Request Title</span>
             </button>
             <button
+              type="button"
               onClick={() => {
                 onOpenSync();
                 setMobileMenuOpen(false);
               }}
-              className="flex-1 flex items-center justify-center gap-1.5 py-2 rounded-lg text-xs font-semibold bg-slate-800 text-slate-200 border border-slate-700"
+              className="flex items-center justify-center gap-1.5 py-2.5 rounded-lg text-xs font-semibold bg-[#111622] text-slate-200 border border-[#1e2638] cursor-pointer"
             >
-              <Sparkles className="w-4 h-4 text-blue-400" />
-              TMDB Auto-Sync
+              <Sparkles className="w-4 h-4 text-cyan-400" />
+              <span>TMDB Sync</span>
+            </button>
+            <button
+              type="button"
+              onClick={() => {
+                onOpenLibrary();
+                setMobileMenuOpen(false);
+              }}
+              className="flex items-center justify-center gap-1.5 py-2.5 rounded-lg text-xs font-semibold bg-[#111622] text-slate-200 border border-[#1e2638] cursor-pointer"
+            >
+              <Bookmark className="w-4 h-4 text-[#00c896]" />
+              <span>My Library</span>
+            </button>
+            <button
+              type="button"
+              onClick={() => {
+                onOpenAdmin();
+                setMobileMenuOpen(false);
+              }}
+              className="flex items-center justify-center gap-1.5 py-2.5 rounded-lg text-xs font-semibold bg-[#111622] text-slate-200 border border-[#1e2638] cursor-pointer"
+            >
+              <ShieldCheck className="w-4 h-4 text-slate-300" />
+              <span>Admin Panel</span>
             </button>
           </div>
         </div>

@@ -69,11 +69,23 @@ export const ZERO_COMPETITION_CATEGORY_KEYWORDS = [
   'where to watch pure hindi dubbed kdrama free no buffering',
   'completed hindi dubbed kdrama list 2026 all episodes unlocked',
   'hindi mein kdrama kaise dekhe free hd online player',
-  'best low mb 480p 720p hindi dubbed korean drama download site',
-  'hindi dubbed kdrama fast server vidlink 2embed multiembed streamtape',
+  'korean drama direct mp4 url instant play 1080p zero buffering',
+  'kdrama instant play hls proxy 2embed multiembed direct stream',
   'hindidrama net official hindi dubbed asian drama archive',
   'new 2025 2026 korean drama in pure hindi language free watch',
+  'korean drama multi audio hindi english korean urdu free hd',
+  'watch new ongoing kdrama episode today fast mp4 player',
 ];
+
+export function resolveWorldLanguageSeo(hlCode?: string | null): WorldLanguageSeo {
+  if (!hlCode) return TOP_50_WORLD_LANGUAGES[0];
+  const lower = hlCode.trim().toLowerCase();
+  return (
+    TOP_50_WORLD_LANGUAGES.find(l => l.code.toLowerCase() === lower) ||
+    TOP_50_WORLD_LANGUAGES.find(l => l.code.toLowerCase().startsWith(lower.split('-')[0])) ||
+    TOP_50_WORLD_LANGUAGES[0]
+  );
+}
 
 export function buildLongTailDramaKeywords(opts: {
   title: string;
@@ -82,57 +94,65 @@ export function buildLongTailDramaKeywords(opts: {
   genres: string[];
   episode?: number;
   castNames?: string[];
+  hlCode?: string;
 }): string[] {
   const lowerTitle = opts.title.toLowerCase();
   const lowerCountry = opts.country.toLowerCase();
   const genreJoined = opts.genres.slice(0, 2).join(' ').toLowerCase();
   const ep = opts.episode;
+  const activeWorldLang = resolveWorldLanguageSeo(opts.hlCode);
 
   const base = [
-    `watch ${lowerTitle} real hindi dubbed online free no ads`,
-    `${lowerTitle} ${opts.year} ${lowerCountry} drama in pure hindi audio track`,
+    `watch ${lowerTitle} real hindi dubbed online free instant play`,
+    `${lowerTitle} ${opts.year} ${lowerCountry} drama direct mp4 1080p stream`,
     `where to watch ${lowerTitle} all episodes in hindi dubbed free 1080p`,
-    `${lowerTitle} hindi dubbed telegram 720p 1080p full series hindidrama`,
-    `best ${genreJoined} ${lowerCountry} drama ${lowerTitle} hindi explain dubbed free`,
-    `${lowerTitle} official hindi audio no subtitles required stream fast`,
+    `${lowerTitle} ${genreJoined} ${lowerCountry} drama hindi dubbed full series`,
+    `${lowerTitle} official multi audio hindi korean english urdu player`,
+    `${lowerTitle} episode list watch free no buffering hindidrama`,
+    `${opts.title} ${activeWorldLang.phrase}`,
   ];
 
   if (ep) {
     base.unshift(
       `watch ${lowerTitle} episode ${ep} real hindi dubbed online free 1080p`,
-      `${lowerTitle} ep ${ep} hindi audio only stream zero buffering`,
-      `${lowerTitle} season 1 episode ${ep} hindi dubbed download 480p 720p`
+      `${lowerTitle} ep ${ep} hindi dubbed direct mp4 url zero buffering`,
+      `${lowerTitle} season 1 episode ${ep} english sub & hindi audio hd`
     );
   }
 
   if (opts.castNames && opts.castNames.length > 0) {
-    base.push(...opts.castNames.slice(0, 3).map(n => `${n.toLowerCase()} ${lowerTitle} hindi dubbed full drama`));
+    base.push(
+      ...opts.castNames.slice(0, 4).map(n => `${n.toLowerCase()} ${lowerTitle} hindi dubbed full drama`),
+      ...opts.castNames.slice(0, 2).map(n => `${n.toLowerCase()} best korean drama hindi audio watch free`)
+    );
   }
 
-  // Add compact global multilingual index terms so international crawlers associate the title with Hindi dubbed queries
-  base.push(
-    `${opts.title} ${TOP_50_WORLD_LANGUAGES[1].phrase}`,
-    `${opts.title} ${TOP_50_WORLD_LANGUAGES[2].phrase}`,
-    `${opts.title} ${TOP_50_WORLD_LANGUAGES[6].phrase}`,
-    `${opts.title} ${TOP_50_WORLD_LANGUAGES[11].phrase}`,
-    `${opts.title} ${TOP_50_WORLD_LANGUAGES[13].phrase}`
-  );
+  // Spread multilingual search discovery anchors across major global search regions
+  TOP_50_WORLD_LANGUAGES.slice(0, 18).forEach(lang => {
+    base.push(`${opts.title} ${lang.phrase}`);
+  });
 
   return Array.from(new Set(base));
 }
 
 export const INDEXNOW_KEY = 'hindidrama2026seoindexnowkey';
 
+export function buildHreflangUrl(cleanBaseUrl: string, langCode: string): string {
+  const sep = cleanBaseUrl.includes('?') ? '&' : '?';
+  return langCode === 'en' ? cleanBaseUrl : `${cleanBaseUrl}${sep}hl=${encodeURIComponent(langCode)}`;
+}
+
 export function buildHreflangSitemapLinks(locUrl: string): string {
-  const esc = locUrl
-    .replace(/&/g, '&amp;')
-    .replace(/"/g, '&quot;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;');
+  const esc = (u: string) =>
+    u
+      .replace(/&/g, '&amp;')
+      .replace(/"/g, '&quot;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;');
   const altLinks = TOP_50_WORLD_LANGUAGES.map(
-    lang => `    <xhtml:link rel="alternate" hreflang="${lang.code}" href="${esc}" />`
+    lang => `    <xhtml:link rel="alternate" hreflang="${lang.code}" href="${esc(buildHreflangUrl(locUrl, lang.code))}" />`
   );
-  altLinks.push(`    <xhtml:link rel="alternate" hreflang="x-default" href="${esc}" />`);
+  altLinks.push(`    <xhtml:link rel="alternate" hreflang="x-default" href="${esc(locUrl)}" />`);
   return altLinks.join('\n');
 }
 
