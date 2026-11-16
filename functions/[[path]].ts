@@ -93,7 +93,7 @@ async function fetchCastProfileEdge(castSlug: string, apiKey: string): Promise<C
       name: data.name || 'Asian Drama Star',
       biography:
         data.biography ||
-        `${data.name} is an acclaimed Asian television and film actor featured across top Hindi dubbed Korean and Chinese dramas on kdrama-hindi.pages.dev.`,
+        `${data.name} is an acclaimed Asian television and film actor featured across top Hindi dubbed Korean and Chinese dramas on HindiDrama.net.`,
       birthday: data.birthday || undefined,
       placeOfBirth: data.place_of_birth || undefined,
       knownForDepartment: data.known_for_department || 'Acting',
@@ -153,7 +153,7 @@ async function fetchDramaBySlugFallbackEdge(slug: string, apiKey: string): Promi
       duration: `${data.episode_run_time?.[0] || 45} min`,
       totalEpisodes,
       genres: (data.genres || []).map((g: any) => g.name).slice(0, 4) || ['Drama', 'Romance'],
-      overview: data.overview || `Watch ${title} Hindi Dubbed full episodes online in HD on kdrama-hindi.pages.dev.`,
+      overview: data.overview || `Watch ${title} Hindi Dubbed full episodes online in HD on HindiDrama.net.`,
       poster: data.poster_path
         ? `https://image.tmdb.org/t/p/w500${data.poster_path}`
         : 'https://image.tmdb.org/t/p/w500/jyc9HDQDmJC4PthBUdw95XJJog9.jpg',

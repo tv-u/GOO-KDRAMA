@@ -1,4 +1,4 @@
-# kdrama-hindi.pages.dev – GitHub, Cloudflare Pages & Google SEO Ready
+# HindiDrama.net – GitHub, Cloudflare Pages & Google SEO Ready
 
 Enterprise SSR/Edge streaming web application for Korean, Chinese, Japanese, and Indian dramas in Hindi dubbed HD, built with React, Vite, Tailwind CSS, `hls.js`, TMDB live sync, and Cloudflare Pages Functions.
 

@@ -37,7 +37,7 @@ export const Footer: React.FC<FooterProps> = ({
               </span>
             </a>
             <p className="text-xs text-slate-400 leading-relaxed">
-              Watch Korean, Chinese, Japanese, and Indian dramas in Hindi dubbed &amp; original audio online for free in HD. High-speed servers, auto-sync with TMDB, and daily episode releases on kdrama-hindi.pages.dev.
+              Watch Korean, Chinese, Japanese, and Indian dramas in Hindi dubbed &amp; original audio online for free in HD. High-speed servers, auto-sync with TMDB, and daily episode releases on HindiDrama.net.
             </p>
             <div className="pt-1">
               <a
@@ -222,7 +222,7 @@ export const Footer: React.FC<FooterProps> = ({
               Disclaimer
             </h4>
             <p className="leading-relaxed">
-              kdrama-hindi.pages.dev does not host any files on its servers. All videos and streams are embedded from third-party media hosting platforms (HLX Proxy, pkembed, Streamwish, Filemoon, Streamtape, Vidhide, Abyss, etc.).
+              HindiDrama.net does not host any files on its servers. All videos and streams are embedded from third-party media hosting platforms (HLX Proxy, pkembed, Streamwish, Filemoon, Streamtape, Vidhide, Abyss, etc.).
             </p>
             <p className="leading-relaxed">
               For copyright issues, please submit an official takedown request via our DMCA page.
@@ -276,7 +276,7 @@ export const Footer: React.FC<FooterProps> = ({
         {/* Bottom Copyright */}
         <div className="pt-6 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-400 gap-3">
           <p className="text-center sm:text-left">
-            © 2026 <strong className="text-slate-300">kdrama-hindi.pages.dev</strong> — Korean, Chinese, Japanese &amp; Indian dramas in Hindi dubbed.
+            © 2026 <strong className="text-slate-300">HindiDrama.net</strong> — Korean, Chinese, Japanese &amp; Indian dramas in Hindi dubbed.
           </p>
           <div className="flex items-center gap-4 text-slate-400">
             <a href="/dmca" onClick={e => { e.preventDefault(); onOpenPage('dmca'); }} className="hover:text-slate-200">DMCA</a>

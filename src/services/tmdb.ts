@@ -473,7 +473,7 @@ export async function fetchCastDetails(castSlugOrId: string): Promise<CastProfil
       name: data.name || 'Asian Drama Star',
       biography:
         data.biography ||
-        `${data.name} is an acclaimed Asian television and film actor featured across top Hindi dubbed Korean and Chinese dramas on kdrama-hindi.pages.dev.`,
+        `${data.name} is an acclaimed Asian television and film actor featured across top Hindi dubbed Korean and Chinese dramas on HindiDrama.net.`,
       birthday: data.birthday || undefined,
       placeOfBirth: data.place_of_birth || undefined,
       knownForDepartment: data.known_for_department || 'Acting',
@@ -545,7 +545,7 @@ export async function fetchDramaDetailsFromTMDB(tmdbId: number, type: 'tv' | 'mo
       duration: '45 min',
       totalEpisodes,
       genres: genres.length > 0 ? genres : ['Drama', 'Romance'],
-      overview: data.overview || `Watch ${title} Hindi Dubbed full episodes online in HD on kdrama-hindi.pages.dev.`,
+      overview: data.overview || `Watch ${title} Hindi Dubbed full episodes online in HD on HindiDrama.net.`,
       poster: data.poster_path
         ? `${IMAGE_BASE}${data.poster_path}`
         : 'https://image.tmdb.org/t/p/w500/jyc9HDQDmJC4PthBUdw95XJJog9.jpg',
@@ -608,7 +608,7 @@ export async function fetchTmdbEpisodeSync(
     const overview =
       epData?.overview ||
       showData.overview ||
-      `Stream ${title} Episode ${episode} in Hindi Dubbed HD on kdrama-hindi.pages.dev.`;
+      `Stream ${title} Episode ${episode} in Hindi Dubbed HD on HindiDrama.net.`;
     const backdropPath = epData?.still_path || showData.backdrop_path || showData.poster_path;
     const ytTrailer = (showData.videos?.results || []).find(
       (v: any) => v.site === 'YouTube' && v.key

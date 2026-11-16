@@ -1,5 +1,5 @@
-https://kdrama-hindi.pages.dev/* https://kdrama-hindi.pages.dev/:splat 301!
-https://www.kdrama-hindi.pages.dev/* https://kdrama-hindi.pages.dev/:splat 301!
+https://kdrama-hindi.pages.dev/* https://hindidrama.net/:splat 301!
+https://www.hindidrama.net/* https://hindidrama.net/:splat 301!
 /movie/* /index.html 200
 /movies /index.html 200
 /movies/* /index.html 200
