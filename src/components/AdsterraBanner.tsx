@@ -1,6 +1,11 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Sparkles, Download, Zap, ExternalLink } from 'lucide-react';
-import { ADSTERRA_SMARTLINKS, getNextAdsterraLink } from '../services/adsterra.ts';
+import {
+  ADSTERRA_NATIVE_CONTAINER_ID,
+  ADSTERRA_NATIVE_SCRIPT_URL,
+  ADSTERRA_SMARTLINKS,
+  getNextAdsterraLink,
+} from '../services/adsterra.ts';
 
 interface AdsterraBannerProps {
   type?: 'top' | 'player' | 'download' | 'native';
@@ -10,6 +15,32 @@ interface AdsterraBannerProps {
 export const AdsterraBanner: React.FC<AdsterraBannerProps> = ({ type = 'native', className = '' }) => {
   const initialIdx = type === 'top' ? 0 : type === 'player' ? 1 : type === 'download' ? 2 : 2;
   const [activeHref, setActiveHref] = useState<string>(ADSTERRA_SMARTLINKS[initialIdx]);
+  const [mountLiveNativeSlot, setMountLiveNativeSlot] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (type !== 'native' || typeof document === 'undefined') return;
+    // Ensure only one primary Adsterra Native Banner container ID mounts per active view
+    const existing = document.getElementById(ADSTERRA_NATIVE_CONTAINER_ID);
+    if (!existing) {
+      setMountLiveNativeSlot(true);
+    }
+  }, [type]);
+
+  useEffect(() => {
+    if (!mountLiveNativeSlot || typeof document === 'undefined') return;
+    const container = document.getElementById(ADSTERRA_NATIVE_CONTAINER_ID);
+    if (!container) return;
+
+    const existingScript = document.querySelector(`script[src="${ADSTERRA_NATIVE_SCRIPT_URL}"]`);
+    if (existingScript) {
+      existingScript.remove();
+    }
+    const script = document.createElement('script');
+    script.async = true;
+    script.setAttribute('data-cfasync', 'false');
+    script.src = ADSTERRA_NATIVE_SCRIPT_URL;
+    container.parentNode?.insertBefore(script, container);
+  }, [mountLiveNativeSlot]);
 
   const handleLinkClick = () => {
     // Rotate smartlink URL for the next interaction while letting the native <a> open reliably
@@ -90,30 +121,40 @@ export const AdsterraBanner: React.FC<AdsterraBannerProps> = ({ type = 'native',
   }
 
   return (
-    <a
-      href={activeHref}
-      target="_blank"
-      rel="noopener noreferrer"
-      onClick={handleLinkClick}
-      className={`block relative overflow-hidden rounded-lg border border-slate-800 bg-slate-900/60 p-4 cursor-pointer hover:border-blue-500/40 transition-all ${className}`}
-    >
-      <div className="flex items-center justify-between text-xs text-slate-500 mb-2">
-        <span className="uppercase tracking-wider text-[10px] font-semibold text-slate-400">Sponsored Link</span>
-        <span className="text-[10px]">AsiaFilm Ad Network</span>
-      </div>
-      <div className="flex items-center gap-4">
-        <div className="w-12 h-12 rounded bg-gradient-to-br from-blue-600 to-indigo-700 flex items-center justify-center shrink-0 text-white font-bold">
-          <Sparkles className="w-6 h-6" />
+    <div className={`space-y-3 ${className}`}>
+      {mountLiveNativeSlot && (
+        <div className="rounded-xl border border-slate-800/80 bg-slate-900/50 p-2 overflow-hidden">
+          <div id={ADSTERRA_NATIVE_CONTAINER_ID} />
         </div>
-        <div>
-          <h4 className="text-sm font-semibold text-slate-100 hover:text-blue-400 transition-colors">
-            Watch Latest Korean & Chinese Dramas in Hindi Dubbed on Ultra HD
-          </h4>
-          <p className="text-xs text-slate-400 mt-0.5">
-            Access unlimited HD Asian drama episodes, direct cloud downloads, and official Hindi audio tracks.
-          </p>
+      )}
+
+      <a
+        href={activeHref}
+        target="_blank"
+        rel="noopener noreferrer"
+        onClick={handleLinkClick}
+        className="block relative overflow-hidden rounded-lg border border-slate-800 bg-slate-900/60 p-4 cursor-pointer hover:border-blue-500/40 transition-all"
+      >
+        <div className="flex items-center justify-between text-xs text-slate-500 mb-2">
+          <span className="uppercase tracking-wider text-[10px] font-semibold text-slate-400">
+            Sponsored Link
+          </span>
+          <span className="text-[10px]">AsiaFilm Ad Network</span>
         </div>
-      </div>
-    </a>
+        <div className="flex items-center gap-4">
+          <div className="w-12 h-12 rounded bg-gradient-to-br from-blue-600 to-indigo-700 flex items-center justify-center shrink-0 text-white font-bold">
+            <Sparkles className="w-6 h-6" />
+          </div>
+          <div>
+            <h4 className="text-sm font-semibold text-slate-100 hover:text-blue-400 transition-colors">
+              Watch Latest Korean &amp; Chinese Dramas in Hindi Dubbed on Ultra HD
+            </h4>
+            <p className="text-xs text-slate-400 mt-0.5">
+              Access unlimited HD Asian drama episodes, direct cloud downloads, and official Hindi audio tracks.
+            </p>
+          </div>
+        </div>
+      </a>
+    </div>
   );
 };

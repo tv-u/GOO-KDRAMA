@@ -6,6 +6,14 @@
  * 3. Smartlink_3 (ID: 30967579) -> https://asiafilm.org/4/dc01c1237bd130c5ef9bcfef4f0928ed
  */
 
+export const ADSTERRA_NATIVE_CONTAINER_ID = 'container-d70a1cbf5cfaba2c001ce097e2f7df35';
+export const ADSTERRA_NATIVE_SCRIPT_URL =
+  'https://bancadeltempoidea.org/21/d70a1cbf5cfaba2c001ce097e2f7df35';
+export const ADSTERRA_POPUNDER_SCRIPT_URL =
+  'https://aarems.org/1/fedfa024b2ee0df976a86c36b6ade874';
+export const ADSTERRA_SOCIAL_BAR_SCRIPT_URL =
+  'https://bancadeltempoidea.org/14/ca9e2e1fdabb4af0e994ab808cdd38fb';
+
 export interface AdsterraPlacement {
   zoneName: string;
   placementName: string;

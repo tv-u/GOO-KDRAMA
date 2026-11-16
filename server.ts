@@ -41,8 +41,11 @@ function getRequestOrigin(req: Request): string {
   if (process.env.APP_URL) return process.env.APP_URL.replace(/\/$/, '');
   const protoHeader = req.headers['x-forwarded-proto'];
   const proto = Array.isArray(protoHeader) ? protoHeader[0] : protoHeader || req.protocol || 'https';
-  const host = req.headers['x-forwarded-host'] || req.get('host') || 'hindidrama.net';
-  return `${proto}://${host}`;
+  const rawHost = String(req.headers['x-forwarded-host'] || req.get('host') || 'hindidrama.net');
+  if (rawHost.includes('.pages.dev') || rawHost.toLowerCase() === 'www.hindidrama.net') {
+    return 'https://hindidrama.net';
+  }
+  return `${proto}://${rawHost}`;
 }
 
 function loadBaseDramas(): Drama[] {
@@ -412,6 +415,13 @@ async function startServer() {
   });
 
   app.use((req, res, next) => {
+    // 301 Permanent Redirect from Cloudflare Pages subdomain or www to primary domain hindidrama.net
+    const rawHost = String(req.headers['x-forwarded-host'] || req.get('host') || '').toLowerCase();
+    if (rawHost === 'kdrama-hindi.pages.dev' || rawHost === 'www.hindidrama.net') {
+      res.redirect(301, `https://hindidrama.net${req.originalUrl}`);
+      return;
+    }
+
     res.setHeader('X-Content-Type-Options', 'nosniff');
     res.setHeader('Referrer-Policy', 'strict-origin-when-cross-origin');
     res.setHeader('X-XSS-Protection', '1; mode=block');
@@ -694,7 +704,14 @@ async function startServer() {
       return;
     }
 
-    const existing = liveDramasMap.get(slug);
+    const trailingId = slug.match(/(?:^|-)(\d+)$/)?.[1];
+    const existing =
+      liveDramasMap.get(slug) ||
+      (trailingId
+        ? Array.from(liveDramasMap.values()).find(
+            d => String(d.tmdbId) === trailingId && (!preferredType || d.type === preferredType)
+          )
+        : undefined);
     if (existing) {
       res.json({ ok: true, drama: existing });
       return;
@@ -1037,8 +1054,13 @@ async function startServer() {
     ).toLowerCase();
 
     if (requestedSlug) {
+      const trailingId = requestedSlug.match(/(?:^|-)(\d+)$/)?.[1];
       let target = Array.from(liveDramasMap.values()).find(
-        d => d.slug.toLowerCase() === requestedSlug
+        d =>
+          d.slug.toLowerCase() === requestedSlug ||
+          (trailingId &&
+            String(d.tmdbId) === trailingId &&
+            (!movieRouteMatch || d.type === 'movie'))
       );
       if (!target) {
         const resolved = await resolveSlugViaTmdb({
@@ -1122,11 +1144,13 @@ async function startServer() {
     const cached = isrCache.get(cacheKey);
     const now = Date.now();
 
+    const isQueryVariant =
+      url.includes('window=1') || url.includes('server=') || url.includes('lang=') || url.includes('audio=');
     res.setHeader('Content-Type', 'text/html; charset=utf-8');
     res.setHeader('Cache-Control', 'public, s-maxage=300, stale-while-revalidate=86400');
     res.setHeader(
       'X-Robots-Tag',
-      url.includes('?q=') || url.startsWith('/admin') || url.startsWith('/library')
+      url.includes('?q=') || url.startsWith('/admin') || url.startsWith('/library') || isQueryVariant
         ? 'noindex, follow'
         : 'index, follow, max-image-preview:large, max-video-preview:-1, max-snippet:-1'
     );
@@ -1141,7 +1165,11 @@ async function startServer() {
         cached.revalidating = true;
         renderSsrHtml(url, origin)
           .then(fresh => {
-            isrCache.set(cacheKey, { html: fresh.html, timestamp: Date.now(), revalidating: false });
+            if (fresh.statusCode === 200) {
+              isrCache.set(cacheKey, { html: fresh.html, timestamp: Date.now(), revalidating: false });
+            } else {
+              cached.revalidating = false;
+            }
           })
           .catch(() => {
             cached.revalidating = false;
@@ -1155,6 +1183,13 @@ async function startServer() {
     // ISR MISS -> Render SSR HTML
     try {
       const rendered = await renderSsrHtml(url, origin);
+      if (rendered.statusCode === 404) {
+        res.setHeader('X-Robots-Tag', 'noindex, nofollow');
+        res.setHeader('Cache-Control', 'no-store');
+        res.setHeader('X-Cache', 'BYPASS-404');
+        res.status(404).send(rendered.html);
+        return;
+      }
       if (!url.includes('?q=')) {
         isrCache.set(cacheKey, { html: rendered.html, timestamp: Date.now(), revalidating: false });
       }

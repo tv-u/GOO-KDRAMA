@@ -294,22 +294,19 @@ function mapLanguageToCountry(origLang?: string, origins: string[] = []): string
 
 function ensureUniqueSlug(
   baseTitle: string,
-  year: number,
+  _year: number,
   tmdbId: number,
   mediaType: 'tv' | 'movie',
   bySlug: Map<string, Drama>
 ): string {
-  const rawSlug = slugifyText(baseTitle) || `${mediaType}-${tmdbId}`;
-  const existing = bySlug.get(rawSlug);
-  if (!existing || (existing.tmdbId === tmdbId && (existing.type || 'tv') === mediaType)) {
+  const rawSlug = slugifyText(baseTitle) || `${mediaType}`;
+  // Industry-standard TMDB/IMDb pattern (title-tmdbid) eliminates duplicate name collisions forever
+  const idSlug = `${rawSlug}-${tmdbId}`;
+  const existingExact = bySlug.get(rawSlug);
+  if (existingExact && existingExact.tmdbId === tmdbId && (existingExact.type || 'tv') === mediaType) {
     return rawSlug;
   }
-  const yearSlug = `${rawSlug}-${year}`;
-  const existingYear = bySlug.get(yearSlug);
-  if (!existingYear || (existingYear.tmdbId === tmdbId && (existingYear.type || 'tv') === mediaType)) {
-    return yearSlug;
-  }
-  return `${rawSlug}-${tmdbId}`;
+  return idSlug;
 }
 
 /**
@@ -513,15 +510,45 @@ export async function resolveSlugViaTmdb(params: {
   if (!cleanSlug) return null;
 
   try {
-    // Support trailing -<tmdbId> or pure numeric tmdbId
-    const trailingIdMatch = cleanSlug.match(/-(\d{4,9})$/);
-    if (trailingIdMatch && preferredType) {
-      const built = await fetchAndBuildRecord(Number(trailingIdMatch[1]), preferredType, apiKey);
-      if (built) return { ...built, slug: cleanSlug };
+    // Support trailing -<tmdbId> (e.g. parasite-496243, oldboy-670) or bare numeric ID on /movie, /drama, and /watch
+    const trailingIdMatch = cleanSlug.match(/(?:^|-)(\d+)$/);
+    if (trailingIdMatch) {
+      const tmdbNum = Number(trailingIdMatch[1]);
+      if (tmdbNum > 0) {
+        const tryOrder: ('movie' | 'tv')[] =
+          preferredType === 'movie'
+            ? ['movie', 'tv']
+            : preferredType === 'tv'
+              ? ['tv', 'movie']
+              : ['movie', 'tv'];
+        for (const candidateType of tryOrder) {
+          try {
+            const built = await fetchAndBuildRecord(tmdbNum, candidateType, apiKey);
+            if (built) {
+              const titleSlug = slugifyText(built.title);
+              // Sanity verify if slug had title prefix or bare ID
+              const cleanPrefix = cleanSlug.replace(/-\d+$/, '');
+              if (
+                /^\d+$/.test(cleanSlug) ||
+                !cleanPrefix ||
+                titleSlug === cleanPrefix ||
+                titleSlug.includes(cleanPrefix) ||
+                cleanPrefix.includes(titleSlug) ||
+                tryOrder.length === 1 ||
+                candidateType === preferredType
+              ) {
+                return { ...built, slug: cleanSlug, id: cleanSlug };
+              }
+            }
+          } catch {
+            // Try fallback mediaType
+          }
+        }
+      }
     }
 
     const cleanWords = cleanSlug
-      .replace(/-\d{4}$/, '')
+      .replace(/-\d{2,9}$/, '')
       .replace(/-/g, ' ')
       .trim();
     if (!cleanWords) return null;

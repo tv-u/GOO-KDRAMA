@@ -11,6 +11,7 @@ import {
 } from '../services/hlxPlayerEngine.ts';
 import { VideoJsPlayer } from './VideoJsPlayer.tsx';
 import { getMp4StreamPath, slugifyText } from '../services/seo.ts';
+import { triggerSmartlinkWithCooldown } from '../services/adsterra.ts';
 
 export type HlxLanguage = AudioLanguageCode;
 
@@ -261,19 +262,17 @@ export const DynamicMoviePlayer: React.FC<DynamicMoviePlayerProps> = ({
     setReloadKey(prev => prev + 1);
   };
 
+  const handleLanguageChangeWithAds = (lang: AudioLanguageCode) => {
+    triggerSmartlinkWithCooldown(45000);
+    handleLanguageChange(lang);
+  };
+
   const handleServerChange = (serverId: number) => {
+    triggerSmartlinkWithCooldown(45000);
     setPreferOriginalStream(false);
     setIsLoading(true);
     setSelectedServerId(serverId);
     setReloadKey(prev => prev + 1);
-  };
-
-  const handlePlayNowNewWindow = () => {
-    if (onOpenNewWindow) {
-      onOpenNewWindow(cleanNewWindowUrl);
-    } else if (typeof window !== 'undefined') {
-      window.open(cleanNewWindowUrl, '_blank', 'noopener,noreferrer');
-    }
   };
 
   const handleManualReload = () => {
@@ -353,15 +352,22 @@ export const DynamicMoviePlayer: React.FC<DynamicMoviePlayerProps> = ({
             {copied ? 'Copied .MP4!' : 'Copy .MP4'}
           </button>
 
-          <button
-            onClick={handlePlayNowNewWindow}
-            type="button"
+          <a
+            href={cleanNewWindowUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={e => {
+              if (onOpenNewWindow) {
+                e.preventDefault();
+                onOpenNewWindow(cleanNewWindowUrl);
+              }
+            }}
             className="px-3.5 py-1.5 rounded-lg bg-[#00c896] hover:bg-[#00b084] text-slate-950 font-extrabold text-xs flex items-center gap-1.5 transition-colors cursor-pointer whitespace-nowrap shrink-0 shadow-md shadow-emerald-500/20"
             title="PLAY NOW"
           >
             <ExternalLink className="w-3.5 h-3.5" />
             <span>PLAY NOW</span>
-          </button>
+          </a>
         </div>
       </div>
 
@@ -409,7 +415,7 @@ export const DynamicMoviePlayer: React.FC<DynamicMoviePlayerProps> = ({
               return (
                 <button
                   key={lang.code}
-                  onClick={() => handleLanguageChange(lang.code)}
+                  onClick={() => handleLanguageChangeWithAds(lang.code)}
                   type="button"
                   className={`px-2.5 py-1 rounded-md text-xs font-semibold transition-all flex items-center gap-1.5 cursor-pointer border whitespace-nowrap shrink-0 ${
                     isActive

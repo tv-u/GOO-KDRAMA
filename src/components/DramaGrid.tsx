@@ -87,7 +87,7 @@ export const DramaGrid: React.FC<DramaGridProps> = ({
               <div className="relative aspect-[2/3] w-full rounded-xl overflow-hidden bg-[#111622] border border-[#1e2638] group-hover:border-[#00c896]/70 shadow-md transition-all duration-300 group-hover:-translate-y-1">
                 <OptimizedImage
                   src={drama.poster}
-                  alt={`${drama.title} (${drama.year}) Poster`}
+                  alt={`${drama.title} (${drama.year}) Hindi Dubbed Poster`}
                   width={342}
                   height={513}
                   sizes="(max-width: 640px) 50vw, 18vw"

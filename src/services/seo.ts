@@ -126,6 +126,14 @@ const WORLDWIDE_AUDIENCE = {
   },
 };
 
+function normalizeCanonicalOrigin(rawOrigin: string): string {
+  const cleaned = (rawOrigin || '').replace(/\/$/, '');
+  if (!cleaned || cleaned.includes('.pages.dev') || cleaned.includes('www.hindidrama.net')) {
+    return 'https://hindidrama.net';
+  }
+  return cleaned;
+}
+
 export function buildSeoMetadata(params: {
   path: string;
   origin: string;
@@ -139,8 +147,9 @@ export function buildSeoMetadata(params: {
   searchQuery?: string;
   staticPage?: string;
   hlLang?: string;
+  isPlayerQueryVariant?: boolean;
 }): SeoMetadata {
-  const cleanOrigin = params.origin.replace(/\/$/, '') || 'https://hindidrama.net';
+  const cleanOrigin = normalizeCanonicalOrigin(params.origin);
   const normalizedPath = params.path === '/' ? '' : params.path;
   const worldLang = resolveWorldLanguageSeo(params.hlLang);
   const isLocalizedHl = Boolean(params.hlLang && worldLang.code !== 'en');
@@ -148,6 +157,32 @@ export function buildSeoMetadata(params: {
   const canonicalUrl = isLocalizedHl ? buildHreflangUrl(baseDefaultCanonical, worldLang.code) : baseDefaultCanonical;
   const availableLanguage = TOP_50_LANGUAGE_NAMES;
   const hlTitleSuffix = isLocalizedHl ? ` – ${worldLang.phrase}` : '';
+  const watchRobots = params.isPlayerQueryVariant
+    ? 'noindex, follow'
+    : 'index, follow, max-image-preview:large, max-video-preview:-1, max-snippet:-1';
+
+  // Hard 404 SEO Guard: eliminate Soft 404 indexing on unresolved /movie, /drama, or /watch URLs
+  if (
+    (params.path.startsWith('/movie/') ||
+      params.path.startsWith('/drama/') ||
+      params.path.startsWith('/watch/')) &&
+    !params.activeDrama
+  ) {
+    return {
+      title: 'Title Not Found (404) | HindiDrama.net',
+      description: 'The requested drama or movie could not be located on HindiDrama.net.',
+      keywords: 'hindidrama, not found',
+      canonicalUrl: `${cleanOrigin}/`,
+      baseCanonicalUrl: `${cleanOrigin}/`,
+      htmlLang: 'en',
+      ogLocale: 'en_US',
+      ogType: 'website',
+      ogImage: 'https://image.tmdb.org/t/p/w500/jyc9HDQDmJC4PthBUdw95XJJog9.jpg',
+      ogImageAlt: 'HindiDrama.net',
+      robots: 'noindex, nofollow',
+      jsonLd: [],
+    };
+  }
 
   // 0. Dedicated Movie Page (/movie/:slug) or Movie on /watch/:slug
   if (
@@ -199,7 +234,7 @@ export function buildSeoMetadata(params: {
       ogImage: movie.backdrop || movie.poster,
       ogImageAlt: `${movie.title} (${movie.year}) Full Movie Hindi Dubbed Poster`,
       videoUrl: mp4Url,
-      robots: 'index, follow, max-image-preview:large, max-video-preview:-1, max-snippet:-1',
+      robots: params.path.startsWith('/watch/') ? watchRobots : 'index, follow, max-image-preview:large, max-video-preview:-1, max-snippet:-1',
       jsonLd: [
         {
           '@context': 'https://schema.org',
@@ -214,6 +249,10 @@ export function buildSeoMetadata(params: {
           genre: movie.genres,
           keywords,
           inLanguage: worldLang.code,
+          director: {
+            '@type': 'Organization',
+            name: `${movie.country} Film Studio`,
+          },
           countryOfOrigin: {
             '@type': 'Country',
             name: movie.country,
@@ -386,7 +425,7 @@ export function buildSeoMetadata(params: {
       ogImage: drama.backdrop || drama.poster,
       ogImageAlt: `Watch ${drama.title} Episode ${ep} Hindi Dubbed`,
       videoUrl: mp4Url,
-      robots: 'index, follow, max-image-preview:large, max-video-preview:-1, max-snippet:-1',
+      robots: watchRobots,
       jsonLd: [
         {
           '@context': 'https://schema.org',

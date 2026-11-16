@@ -11,6 +11,20 @@ export interface SsrRenderOptions {
   castProfile?: CastProfile | null;
 }
 
+function findActiveDramaForSsr(dramas: Drama[], dramaSlug: string, view: string): Drama | undefined {
+  if (!dramaSlug) return undefined;
+  const lower = dramaSlug.toLowerCase();
+  const exact = dramas.find(d => d.slug.toLowerCase() === lower || d.id.toLowerCase() === lower);
+  if (exact) return exact;
+  const trailingId = lower.match(/(?:^|-)(\d+)$/)?.[1];
+  if (trailingId) {
+    return dramas.find(
+      d => String(d.tmdbId) === trailingId && (view !== 'movie' || d.type === 'movie')
+    );
+  }
+  return undefined;
+}
+
 export function renderPage({ url, origin, dramas, castProfile = null }: SsrRenderOptions): {
   appHtml: string;
   headTags: string;
@@ -21,11 +35,13 @@ export function renderPage({ url, origin, dramas, castProfile = null }: SsrRende
   const [pathOnly, queryString = ''] = url.split('?');
   const qs = new URLSearchParams(queryString);
   const hlLang = qs.get('hl') || undefined;
+  const isPlayerQueryVariant =
+    qs.get('window') === '1' || qs.has('server') || qs.has('lang') || qs.has('audio');
 
-  const activeDrama =
-    parsed.dramaSlug
-      ? dramas.find(d => d.slug.toLowerCase() === parsed.dramaSlug.toLowerCase())
-      : undefined;
+  const activeDrama = findActiveDramaForSsr(dramas, parsed.dramaSlug, parsed.view);
+  const isMissingTitle =
+    (parsed.view === 'movie' || parsed.view === 'detail' || parsed.view === 'watch') &&
+    !activeDrama;
 
   const seoMeta = buildSeoMetadata({
     path: pathOnly || '/',
@@ -40,6 +56,7 @@ export function renderPage({ url, origin, dramas, castProfile = null }: SsrRende
     searchQuery: parsed.searchQuery,
     staticPage: parsed.view === 'static' ? parsed.staticPage : undefined,
     hlLang,
+    isPlayerQueryVariant,
   });
 
   const appHtml = renderToString(
@@ -59,6 +76,6 @@ export function renderPage({ url, origin, dramas, castProfile = null }: SsrRende
     appHtml,
     headTags,
     htmlLang: seoMeta.htmlLang || 'en',
-    statusCode: 200,
+    statusCode: isMissingTitle ? 404 : 200,
   };
 }

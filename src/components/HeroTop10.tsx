@@ -84,7 +84,7 @@ export const HeroTop10: React.FC<HeroTop10Props> = ({ dramas, onOpenDrama, onWat
             <div className="relative aspect-[2/3] w-full rounded-xl overflow-hidden bg-[#111622] border border-[#1e2638] group-hover:border-[#00c896]/70 shadow-lg transition-all duration-300 group-hover:-translate-y-1">
               <OptimizedImage
                 src={item.poster}
-                alt={`${item.title} (${item.year}) Poster`}
+                alt={`${item.title} (${item.year}) Hindi Dubbed Poster`}
                 width={342}
                 height={513}
                 sizes="(max-width: 640px) 176px, 208px"

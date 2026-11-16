@@ -170,7 +170,7 @@ export const OttCarouselRow: React.FC<OttCarouselRowProps> = ({
                     <div className="relative aspect-[2/3] w-full rounded-xl overflow-hidden bg-[#111622] border border-[#1e2638] group-hover:border-[#00c896]/70 transition-colors">
                       <OptimizedImage
                         src={item.poster}
-                        alt={`${item.title} Poster`}
+                        alt={`${item.title} Hindi Dubbed Poster`}
                         width={342}
                         height={513}
                         sizes="(max-width: 640px) 144px, 176px"

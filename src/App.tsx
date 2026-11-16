@@ -378,8 +378,17 @@ export default function App({
 
   const activeDrama = useMemo(() => {
     if (!activeDramaSlug) return dramas[0];
-    return dramas.find(d => d.slug.toLowerCase() === activeDramaSlug.toLowerCase());
-  }, [dramas, activeDramaSlug]);
+    const lower = activeDramaSlug.toLowerCase();
+    const exact = dramas.find(d => d.slug.toLowerCase() === lower || d.id.toLowerCase() === lower);
+    if (exact) return exact;
+    const trailingId = lower.match(/(?:^|-)(\d+)$/)?.[1];
+    if (trailingId) {
+      return dramas.find(
+        d => String(d.tmdbId) === trailingId && (currentView !== 'movie' || d.type === 'movie')
+      );
+    }
+    return undefined;
+  }, [dramas, activeDramaSlug, currentView]);
 
   // Dynamically resolve any unknown /movie/:slug, /drama/:slug, or /watch/:slug directly from TMDB
   useEffect(() => {
@@ -431,6 +440,8 @@ export default function App({
       searchQuery,
       staticPage: currentView === 'static' ? activeStaticPage : undefined,
       hlLang: qs.get('hl') || undefined,
+      isPlayerQueryVariant:
+        qs.get('window') === '1' || qs.has('server') || qs.has('lang') || qs.has('audio'),
     });
     applyClientSeo(meta);
   }, [

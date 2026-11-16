@@ -55,7 +55,14 @@ export function getAllDramas(extraDramas: Drama[] = [], includeLocal = true): Dr
 
 export function getDramaBySlug(slug: string, extraDramas: Drama[] = []): Drama | undefined {
   const all = getAllDramas(extraDramas);
-  return all.find(d => d.slug.toLowerCase() === slug.toLowerCase() || d.id === slug);
+  const lower = slug.toLowerCase();
+  const exact = all.find(d => d.slug.toLowerCase() === lower || d.id.toLowerCase() === lower);
+  if (exact) return exact;
+  const trailingId = lower.match(/(?:^|-)(\d+)$/)?.[1];
+  if (trailingId) {
+    return all.find(d => String(d.tmdbId) === trailingId);
+  }
+  return undefined;
 }
 
 export async function searchTMDB(query: string): Promise<any[]> {
