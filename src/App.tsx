@@ -201,7 +201,7 @@ export default function App({
   initialUrl,
   initialDramas,
   initialCastProfile = null,
-  origin = 'https://hindidrama.net',
+  origin = 'https://kdrama-hindi.pages.dev',
 }: AppProps) {
   const startingUrl =
     initialUrl ||

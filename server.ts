@@ -41,9 +41,9 @@ function getRequestOrigin(req: Request): string {
   if (process.env.APP_URL) return process.env.APP_URL.replace(/\/$/, '');
   const protoHeader = req.headers['x-forwarded-proto'];
   const proto = Array.isArray(protoHeader) ? protoHeader[0] : protoHeader || req.protocol || 'https';
-  const rawHost = String(req.headers['x-forwarded-host'] || req.get('host') || 'hindidrama.net');
-  if (rawHost.includes('.pages.dev') || rawHost.toLowerCase() === 'www.hindidrama.net') {
-    return 'https://hindidrama.net';
+  const rawHost = String(req.headers['x-forwarded-host'] || req.get('host') || 'kdrama-hindi.pages.dev');
+  if (rawHost.includes('.pages.dev') || rawHost.toLowerCase() === 'kdrama-hindi.pages.dev') {
+    return 'https://kdrama-hindi.pages.dev';
   }
   return `${proto}://${rawHost}`;
 }
@@ -415,10 +415,10 @@ async function startServer() {
   });
 
   app.use((req, res, next) => {
-    // 301 Permanent Redirect from Cloudflare Pages subdomain or www to primary domain hindidrama.net
+    // 301 Permanent Redirect from Cloudflare Pages subdomain or www to primary domain kdrama-hindi.pages.dev
     const rawHost = String(req.headers['x-forwarded-host'] || req.get('host') || '').toLowerCase();
-    if (rawHost === 'kdrama-hindi.pages.dev' || rawHost === 'www.hindidrama.net') {
-      res.redirect(301, `https://hindidrama.net${req.originalUrl}`);
+    if (rawHost === 'kdrama-hindi.pages.dev' || rawHost === 'kdrama-hindi.pages.dev') {
+      res.redirect(301, `https://kdrama-hindi.pages.dev${req.originalUrl}`);
       return;
     }
 

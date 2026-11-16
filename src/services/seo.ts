@@ -128,8 +128,8 @@ const WORLDWIDE_AUDIENCE = {
 
 function normalizeCanonicalOrigin(rawOrigin: string): string {
   const cleaned = (rawOrigin || '').replace(/\/$/, '');
-  if (!cleaned || cleaned.includes('.pages.dev') || cleaned.includes('www.hindidrama.net')) {
-    return 'https://hindidrama.net';
+  if (!cleaned || cleaned.includes('.pages.dev') || cleaned.includes('kdrama-hindi.pages.dev')) {
+    return 'https://kdrama-hindi.pages.dev';
   }
   return cleaned;
 }
@@ -215,7 +215,7 @@ export function buildSeoMetadata(params: {
       }),
       `${movie.title.toLowerCase()} full movie mp4 direct stream`,
       `watch ${movie.title.toLowerCase()} online free hd`,
-      'hindidrama.net',
+      'kdrama-hindi.pages.dev',
     ].join(', ');
     const faqs = getDramaFaqs(movie);
     const ratingCount = Math.max(180, Math.round(movie.rating * 420));
@@ -553,7 +553,7 @@ export function buildSeoMetadata(params: {
         castNames,
         hlCode: worldLang.code,
       }),
-      'hindidrama.net',
+      'kdrama-hindi.pages.dev',
     ].join(', ');
     const faqs = getDramaFaqs(drama);
     const ratingCount = Math.max(150, Math.round(drama.rating * 390));

@@ -8,7 +8,7 @@ const PUBLIC_DIR = path.resolve(ROOT, 'public');
 const rawOrigin =
   process.env.SITE_URL ||
   process.env.CF_PAGES_URL ||
-  'https://hindidrama.net';
+  'https://kdrama-hindi.pages.dev';
 const origin = rawOrigin.replace(/\/$/, '');
 const INDEXNOW_KEY = 'hindidrama2026seoindexnowkey';
 

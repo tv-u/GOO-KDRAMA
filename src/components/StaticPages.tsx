@@ -63,7 +63,7 @@ export const StaticPages: React.FC<StaticPagesProps> = ({ page, onBack }) => {
               <li>A statement under penalty of perjury that the information in the notification is accurate.</li>
             </ul>
             <p>
-              Send your takedown notices to: <span className="text-blue-400 font-mono">dmca@hindidrama.net</span> or use our Contact Form. Legitimate requests are processed within 24–48 business hours.
+              Send your takedown notices to: <span className="text-blue-400 font-mono">dmca@kdrama-hindi.pages.dev</span> or use our Contact Form. Legitimate requests are processed within 24–48 business hours.
             </p>
           </div>
         </div>

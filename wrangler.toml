@@ -5,4 +5,4 @@ compatibility_flags = ["nodejs_compat"]
 
 [vars]
 TMDB_API_KEY = "174d0214bf933dd59b3d5ec68a0c967f"
-SITE_URL = "https://hindidrama.net"
+SITE_URL = "https://kdrama-hindi.pages.dev"

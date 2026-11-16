@@ -347,7 +347,7 @@ async function resolveWikimediaCommons(req: ResolveEmbedRequest): Promise<Resolv
       )}&prop=videoinfo&viprop=url|mime&gsrlimit=10&format=json`;
       const res = await fetch(apiUrl, {
         headers: {
-          'User-Agent': 'HindiDramaNet/1.0 (https://hindidrama.net; media-resolver)',
+          'User-Agent': 'HindiDramaNet/1.0 (https://kdrama-hindi.pages.dev; media-resolver)',
           Accept: 'application/json',
         },
         signal: AbortSignal.timeout(4500),

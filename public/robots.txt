@@ -29,4 +29,4 @@ Allow: /
 User-agent: Applebot
 Allow: /
 
-Sitemap: https://hindidrama.net/sitemap.xml
+Sitemap: https://kdrama-hindi.pages.dev/sitemap.xml
