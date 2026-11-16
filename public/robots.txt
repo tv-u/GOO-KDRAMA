@@ -1,32 +1,4 @@
 User-agent: *
 Allow: /
-Disallow: /api/
 
-User-agent: Googlebot
-Allow: /
-
-User-agent: Googlebot-Image
-Allow: /
-
-User-agent: Googlebot-Video
-Allow: /
-
-User-agent: Bingbot
-Allow: /
-
-User-agent: DuckDuckBot
-Allow: /
-
-User-agent: YandexBot
-Allow: /
-
-User-agent: Baiduspider
-Allow: /
-
-User-agent: Yeti
-Allow: /
-
-User-agent: Applebot
-Allow: /
-
-Sitemap: https://kdrama-hindi.pages.dev/sitemap.xml
+Sitemap: https://pages.dev

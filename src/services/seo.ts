@@ -67,7 +67,7 @@ export function getDramaFaqs(drama: Drama, episode?: number): DramaFAQ[] {
     return [
       {
         question: `Where can I watch ${drama.title} (${drama.year}) Full Movie in Hindi Dubbed & Original HD online?`,
-        answer: `You can stream ${drama.title} (${drama.year}) full ${drama.country} movie in 1080p HD on HindiDrama.net with instant HLS.proxy, 2Embed, MultiEmbed, vipstream-Y, vipstream-F, vipstream-R, GDrive, doodstream, and mixdrop servers plus multi-audio switching.`,
+        answer: `You can stream ${drama.title} (${drama.year}) full ${drama.country} movie in 1080p HD on kdrama-hindi.pages.dev with instant HLS.proxy, 2Embed, MultiEmbed, vipstream-Y, vipstream-F, vipstream-R, GDrive, doodstream, and mixdrop servers plus multi-audio switching.`,
       },
       {
         question: `Does ${drama.title} support multi-audio tracks and instant .mp4 streaming?`,
@@ -88,7 +88,7 @@ export function getDramaFaqs(drama: Drama, episode?: number): DramaFAQ[] {
   return [
     {
       question: `Where can I watch ${drama.title} ${episode ? `Episode ${epNum} ` : ''}online in 1080p HD?`,
-      answer: `You can stream ${drama.title} (${drama.year}) ${episode ? `Episode ${epNum} ` : 'all episodes '}in 1080p HD for free on HindiDrama.net using fast auto-synced HLS.proxy, 2Embed, MultiEmbed, vipstream-Y, vipstream-F, vipstream-R, GDrive, doodstream, and mixdrop servers.`,
+      answer: `You can stream ${drama.title} (${drama.year}) ${episode ? `Episode ${epNum} ` : 'all episodes '}in 1080p HD for free on kdrama-hindi.pages.dev using fast auto-synced HLS.proxy, 2Embed, MultiEmbed, vipstream-Y, vipstream-F, vipstream-R, GDrive, doodstream, and mixdrop servers.`,
     },
     {
       question: `Is ${drama.title} available with multi-audio tracks and subtitles?`,
@@ -100,7 +100,7 @@ export function getDramaFaqs(drama: Drama, episode?: number): DramaFAQ[] {
     },
     {
       question: `Does ${drama.title} Episode ${epNum} have a direct .mp4 stream URL?`,
-      answer: `Yes, every K-Drama episode on HindiDrama.net automatically generates a dedicated .mp4 stream URL and clean PLAY NOW window for instant playback.`,
+      answer: `Yes, every K-Drama episode on kdrama-hindi.pages.dev automatically generates a dedicated .mp4 stream URL and clean PLAY NOW window for instant playback.`,
     },
     {
       question: `What is the genre and TMDB rating of ${drama.title}?`,
@@ -169,8 +169,8 @@ export function buildSeoMetadata(params: {
     !params.activeDrama
   ) {
     return {
-      title: 'Title Not Found (404) | HindiDrama.net',
-      description: 'The requested drama or movie could not be located on HindiDrama.net.',
+      title: 'Title Not Found (404) | kdrama-hindi.pages.dev',
+      description: 'The requested drama or movie could not be located on kdrama-hindi.pages.dev.',
       keywords: 'hindidrama, not found',
       canonicalUrl: `${cleanOrigin}/`,
       baseCanonicalUrl: `${cleanOrigin}/`,
@@ -178,7 +178,7 @@ export function buildSeoMetadata(params: {
       ogLocale: 'en_US',
       ogType: 'website',
       ogImage: 'https://image.tmdb.org/t/p/w500/jyc9HDQDmJC4PthBUdw95XJJog9.jpg',
-      ogImageAlt: 'HindiDrama.net',
+      ogImageAlt: 'kdrama-hindi.pages.dev',
       robots: 'noindex, nofollow',
       jsonLd: [],
     };
@@ -200,8 +200,8 @@ export function buildSeoMetadata(params: {
       : `${movie.title} (${movie.year}) Full Movie Hindi Dubbed & Korean Watch Free HD | HindiDrama`;
     const description = (
       isLocalizedHl
-        ? `[${worldLang.name}] ${worldLang.phrase}: ${movie.title} (${movie.year}) ${movie.country} Full HD .mp4 stream on HindiDrama.net.`
-        : `Watch ${movie.title} (${movie.year}) full ${movie.country} movie instant play 1080p HD with Hindi Dub, Korean Original, English Dub & Urdu on HindiDrama.net.`
+        ? `[${worldLang.name}] ${worldLang.phrase}: ${movie.title} (${movie.year}) ${movie.country} Full HD .mp4 stream on kdrama-hindi.pages.dev.`
+        : `Watch ${movie.title} (${movie.year}) full ${movie.country} movie instant play 1080p HD with Hindi Dub, Korean Original, English Dub & Urdu on kdrama-hindi.pages.dev.`
     ).slice(0, 160);
     const castNames = (movie.cast || []).slice(0, 4).map(a => a.name);
     const keywords = [
@@ -325,7 +325,7 @@ export function buildSeoMetadata(params: {
       pageNum > 1
         ? `Asian & Korean Movies Page ${pageNum} – Watch Full HD Online Free | HindiDrama`
         : `All ${movieItems.length}+ Asian & Korean Movies in HD Hindi Dubbed | HindiDrama`;
-    const description = `Browse ${movieItems.length}+ dedicated movie pages with 1080p HD streaming, HLX.proxy multi-audio (Hindi, Korean, English, Urdu) and instant downloads on HindiDrama.net.`;
+    const description = `Browse ${movieItems.length}+ dedicated movie pages with 1080p HD streaming, HLX.proxy multi-audio (Hindi, Korean, English, Urdu) and instant downloads on kdrama-hindi.pages.dev.`;
 
     return {
       title,
@@ -389,8 +389,8 @@ export function buildSeoMetadata(params: {
       : `Watch ${drama.title} Episode ${ep} Hindi Dubbed & Original HD | HindiDrama`;
     const description = (
       isLocalizedHl
-        ? `[${worldLang.name}] ${worldLang.phrase}: ${drama.title} Episode ${ep} direct .mp4 1080p HD stream on HindiDrama.net.`
-        : `Stream ${drama.title} Episode ${ep} instant play 1080p HD on HindiDrama.net. Fast HLS.proxy, 2Embed, MultiEmbed, vipstream-Y & direct .mp4 multi-audio player.`
+        ? `[${worldLang.name}] ${worldLang.phrase}: ${drama.title} Episode ${ep} direct .mp4 1080p HD stream on kdrama-hindi.pages.dev.`
+        : `Stream ${drama.title} Episode ${ep} instant play 1080p HD on kdrama-hindi.pages.dev. Fast HLS.proxy, 2Embed, MultiEmbed, vipstream-Y & direct .mp4 multi-audio player.`
     ).slice(0, 160);
     const castNames = (drama.cast || []).slice(0, 4).map(a => a.name);
     const longTail = buildLongTailDramaKeywords({
@@ -446,7 +446,7 @@ export function buildSeoMetadata(params: {
           audience: WORLDWIDE_AUDIENCE,
           publisher: {
             '@type': 'Organization',
-            name: 'HindiDrama.net',
+            name: 'kdrama-hindi.pages.dev',
             url: `${cleanOrigin}/`,
             logo: {
               '@type': 'ImageObject',
@@ -541,7 +541,7 @@ export function buildSeoMetadata(params: {
     const description = (
       isLocalizedHl
         ? `[${worldLang.name}] ${worldLang.phrase}: ${drama.title} (${drama.totalEpisodes} Episodes). ${drama.overview}`
-        : `Watch all ${drama.totalEpisodes} episodes of ${drama.title} (${drama.country} Drama) in 1080p HD on HindiDrama.net with direct .mp4 streaming & multi-audio. ${drama.overview}`
+        : `Watch all ${drama.totalEpisodes} episodes of ${drama.title} (${drama.country} Drama) in 1080p HD on kdrama-hindi.pages.dev with direct .mp4 streaming & multi-audio. ${drama.overview}`
     ).slice(0, 160);
     const castNames = (drama.cast || []).slice(0, 4).map(a => a.name);
     const keywords = [
@@ -655,7 +655,7 @@ export function buildSeoMetadata(params: {
 
     const hubFaqs: DramaFAQ[] = [
       {
-        question: 'Which Korean dramas on HindiDrama.net play 100% in real Hindi Dubbed audio only?',
+        question: 'Which Korean dramas on kdrama-hindi.pages.dev play 100% in real Hindi Dubbed audio only?',
         answer: 'All dramas listed in our Hindi Dubbed K-Drama category are verified Korean television series that lock playback strictly to Pure Hindi audio track without switching to other languages.'
       },
       {
@@ -725,7 +725,7 @@ export function buildSeoMetadata(params: {
   if (params.path.startsWith('/genre/') && params.genre) {
     const genreLabel = params.genre.charAt(0).toUpperCase() + params.genre.slice(1);
     const title = `Best ${genreLabel} Asian & K-Dramas in Hindi Dubbed${hlTitleSuffix} | HindiDrama`;
-    const description = `Stream top-rated ${genreLabel} Korean, Chinese, and Japanese dramas in Hindi dubbed online for free in 1080p HD worldwide on HindiDrama.net.`;
+    const description = `Stream top-rated ${genreLabel} Korean, Chinese, and Japanese dramas in Hindi dubbed online for free in 1080p HD worldwide on kdrama-hindi.pages.dev.`;
     return {
       title,
       description,
@@ -771,8 +771,8 @@ export function buildSeoMetadata(params: {
     const titleCaseName = castName.replace(/\b\w/g, c => c.toUpperCase());
     const title = `${titleCaseName} Dramas & Movies in Hindi Dubbed | HindiDrama`;
     const description = params.castProfile?.biography
-      ? `${params.castProfile.name} Hindi dubbed dramas, filmography, biography, and latest episodes on HindiDrama.net. ${params.castProfile.biography}`.slice(0, 160)
-      : `Explore all Korean & Chinese dramas starring ${titleCaseName} in Hindi dubbed HD on HindiDrama.net.`;
+      ? `${params.castProfile.name} Hindi dubbed dramas, filmography, biography, and latest episodes on kdrama-hindi.pages.dev. ${params.castProfile.biography}`.slice(0, 160)
+      : `Explore all Korean & Chinese dramas starring ${titleCaseName} in Hindi dubbed HD on kdrama-hindi.pages.dev.`;
 
     return {
       title,
@@ -812,7 +812,7 @@ export function buildSeoMetadata(params: {
   if (params.path.startsWith('/category/') && params.category && params.category !== 'all') {
     const catCap = params.category.charAt(0).toUpperCase() + params.category.slice(1);
     const title = `${catCap} Dramas Hindi Dubbed Watch Online Free HD${hlTitleSuffix} | HindiDrama`;
-    const description = `Watch latest ${catCap} dramas and web series online free in 1080p HD worldwide with direct .mp4 streaming on HindiDrama.net.`;
+    const description = `Watch latest ${catCap} dramas and web series online free in 1080p HD worldwide with direct .mp4 streaming on kdrama-hindi.pages.dev.`;
     return {
       title,
       description,
@@ -856,10 +856,10 @@ export function buildSeoMetadata(params: {
   if (params.path === '/admin' || params.path === '/library') {
     const isAdmin = params.path === '/admin';
     return {
-      title: isAdmin ? 'Admin Dashboard | HindiDrama.net' : 'My Library & Continue Watching | HindiDrama.net',
+      title: isAdmin ? 'Admin Dashboard | kdrama-hindi.pages.dev' : 'My Library & Continue Watching | kdrama-hindi.pages.dev',
       description: isAdmin
         ? 'Platform analytics, TMDB synchronization, and streaming source management console.'
-        : 'Manage your continue watching progress, watchlist, favorites, and viewing history on HindiDrama.net.',
+        : 'Manage your continue watching progress, watchlist, favorites, and viewing history on kdrama-hindi.pages.dev.',
       keywords: 'hindidrama library, watchlist, continue watching',
       canonicalUrl,
       baseCanonicalUrl: baseDefaultCanonical,
@@ -867,7 +867,7 @@ export function buildSeoMetadata(params: {
       ogLocale: 'en_US',
       ogType: 'website',
       ogImage: 'https://image.tmdb.org/t/p/w500/jyc9HDQDmJC4PthBUdw95XJJog9.jpg',
-      ogImageAlt: 'HindiDrama.net',
+      ogImageAlt: 'kdrama-hindi.pages.dev',
       robots: 'noindex, nofollow',
       jsonLd: [],
     };
@@ -876,16 +876,16 @@ export function buildSeoMetadata(params: {
   // 8. Legal/Static Pages
   if (params.staticPage) {
     const titles: Record<string, string> = {
-      dmca: 'DMCA Notice & Copyright Policy | HindiDrama.net',
-      disclaimer: 'Disclaimer & Content Policy | HindiDrama.net',
-      privacy: 'Privacy Policy | HindiDrama.net',
-      terms: 'Terms of Service | HindiDrama.net',
-      contact: 'Contact Us & Support | HindiDrama.net'
+      dmca: 'DMCA Notice & Copyright Policy | kdrama-hindi.pages.dev',
+      disclaimer: 'Disclaimer & Content Policy | kdrama-hindi.pages.dev',
+      privacy: 'Privacy Policy | kdrama-hindi.pages.dev',
+      terms: 'Terms of Service | kdrama-hindi.pages.dev',
+      contact: 'Contact Us & Support | kdrama-hindi.pages.dev'
     };
     const title = titles[params.staticPage] || 'HindiDrama – Watch Kdrama & Asian Drama Hindi Dubbed';
     return {
       title,
-      description: 'Official legal information, DMCA compliance, privacy policy, and user support for HindiDrama.net.',
+      description: 'Official legal information, DMCA compliance, privacy policy, and user support for kdrama-hindi.pages.dev.',
       keywords: 'hindidrama dmca, hindidrama contact, hindidrama privacy policy',
       canonicalUrl,
       baseCanonicalUrl: baseDefaultCanonical,
@@ -913,7 +913,7 @@ export function buildSeoMetadata(params: {
     ? `HindiDrama – ${worldLang.phrase}`
     : 'HindiDrama – Watch K-Drama & Asian Drama Free 1080p HD Instant Play';
   const homeDescription = isLocalizedHl
-    ? `[${worldLang.name}] ${worldLang.phrase}. Stream 650+ Korean & Asian dramas and movies with direct .mp4 URLs, multi-audio & zero buffering on HindiDrama.net.`
+    ? `[${worldLang.name}] ${worldLang.phrase}. Stream 650+ Korean & Asian dramas and movies with direct .mp4 URLs, multi-audio & zero buffering on kdrama-hindi.pages.dev.`
     : 'Watch Korean, Chinese, Japanese dramas & 500+ movies online free in 1080p HD. Instant play HLS.proxy, 2Embed & direct .mp4 multi-audio streaming.';
   const homeKeywords = [
     ...ZERO_COMPETITION_CATEGORY_KEYWORDS,
@@ -936,7 +936,7 @@ export function buildSeoMetadata(params: {
       {
         '@context': 'https://schema.org',
         '@type': 'WebSite',
-        name: 'HindiDrama.net',
+        name: 'kdrama-hindi.pages.dev',
         alternateName: ['HindiDrama', ...TOP_50_LOCALIZED_PHRASES.slice(0, 25)],
         url: `${cleanOrigin}/`,
         description: homeDescription,
@@ -951,7 +951,7 @@ export function buildSeoMetadata(params: {
       {
         '@context': 'https://schema.org',
         '@type': 'Organization',
-        name: 'HindiDrama.net',
+        name: 'kdrama-hindi.pages.dev',
         url: `${cleanOrigin}/`,
         logo: `${cleanOrigin}/favicon.svg`,
         description: homeDescription,
@@ -1007,7 +1007,7 @@ export function renderSeoHeadTags(meta: SeoMetadata): string {
     <meta name="description" content="${escapeHtmlAttr(meta.description)}" />
     <meta name="keywords" content="${escapeHtmlAttr(meta.keywords)}" />
     <meta name="news_keywords" content="${escapeHtmlAttr(meta.keywords.split(',').slice(0, 10).join(','))}" />
-    <meta name="author" content="HindiDrama.net" />
+    <meta name="author" content="kdrama-hindi.pages.dev" />
     <meta name="robots" content="${escapeHtmlAttr(meta.robots)}" />
     <meta name="googlebot" content="${escapeHtmlAttr(meta.robots)}" />
     <meta name="bingbot" content="${escapeHtmlAttr(meta.robots)}" />
@@ -1020,7 +1020,7 @@ export function renderSeoHeadTags(meta: SeoMetadata): string {
     <meta property="og:type" content="${escapeHtmlAttr(meta.ogType)}" />
     <meta property="og:locale" content="${escapeHtmlAttr(meta.ogLocale)}" />
     ${ogLocaleAlternates}
-    <meta property="og:site_name" content="HindiDrama.net" />
+    <meta property="og:site_name" content="kdrama-hindi.pages.dev" />
     <meta property="og:title" content="${escapeHtmlAttr(meta.title)}" />
     <meta property="og:description" content="${escapeHtmlAttr(meta.description)}" />
     <meta property="og:url" content="${escapeHtmlAttr(meta.canonicalUrl)}" />

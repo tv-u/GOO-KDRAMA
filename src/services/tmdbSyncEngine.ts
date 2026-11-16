@@ -102,7 +102,7 @@ async function fetchAndBuildRecord(
     genres,
     overview:
       data.overview ||
-      `Watch ${title} (${year}) Hindi Dubbed full ${mediaType === 'movie' ? 'movie' : 'episodes'} online in HD on HindiDrama.net.`,
+      `Watch ${title} (${year}) Hindi Dubbed full ${mediaType === 'movie' ? 'movie' : 'episodes'} online in HD on kdrama-hindi.pages.dev.`,
     poster: `https://image.tmdb.org/t/p/w500${data.poster_path}`,
     backdrop: data.backdrop_path
       ? `https://image.tmdb.org/t/p/original${data.backdrop_path}`
@@ -416,7 +416,7 @@ export async function runBulkCatalogAutoSync(params: {
       genres: mapGenreIdsFast(item.genre_ids, 'movie'),
       overview:
         item.overview ||
-        `Watch ${title} (${year}) full movie online in 1080p HD with Hindi Dub, Korean Original, English Dub & Urdu audio on HindiDrama.net.`,
+        `Watch ${title} (${year}) full movie online in 1080p HD with Hindi Dub, Korean Original, English Dub & Urdu audio on kdrama-hindi.pages.dev.`,
       poster: `https://image.tmdb.org/t/p/w500${item.poster_path}`,
       backdrop: item.backdrop_path
         ? `https://image.tmdb.org/t/p/original${item.backdrop_path}`
@@ -465,7 +465,7 @@ export async function runBulkCatalogAutoSync(params: {
       genres: mapGenreIdsFast(item.genre_ids, 'tv'),
       overview:
         item.overview ||
-        `Watch ${title} (${year}) full episodes online in 1080p HD with HLX.proxy multi-audio on HindiDrama.net.`,
+        `Watch ${title} (${year}) full episodes online in 1080p HD with HLX.proxy multi-audio on kdrama-hindi.pages.dev.`,
       poster: `https://image.tmdb.org/t/p/w500${item.poster_path}`,
       backdrop: item.backdrop_path
         ? `https://image.tmdb.org/t/p/original${item.backdrop_path}`

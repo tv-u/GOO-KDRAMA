@@ -139,7 +139,7 @@ async function buildDramaRecord(tmdbId, mediaType = 'tv') {
     genres,
     overview:
       data.overview ||
-      `Watch ${title} Hindi Dubbed full ${mediaType === 'movie' ? 'movie' : 'episodes'} online in HD on HindiDrama.net.`,
+      `Watch ${title} Hindi Dubbed full ${mediaType === 'movie' ? 'movie' : 'episodes'} online in HD on kdrama-hindi.pages.dev.`,
     poster: `https://image.tmdb.org/t/p/w500${data.poster_path}`,
     backdrop: data.backdrop_path
       ? `https://image.tmdb.org/t/p/original${data.backdrop_path}`

@@ -220,7 +220,7 @@ async function fetchCastProfileServer(castSlug: string): Promise<CastProfile | n
       name: data.name || 'Asian Drama Star',
       biography:
         data.biography ||
-        `${data.name} is an acclaimed Asian television and film actor featured across top Hindi dubbed Korean and Chinese dramas on HindiDrama.net.`,
+        `${data.name} is an acclaimed Asian television and film actor featured across top Hindi dubbed Korean and Chinese dramas on kdrama-hindi.pages.dev.`,
       birthday: data.birthday || undefined,
       placeOfBirth: data.place_of_birth || undefined,
       knownForDepartment: data.known_for_department || 'Acting',

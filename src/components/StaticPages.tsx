@@ -46,10 +46,10 @@ export const StaticPages: React.FC<StaticPagesProps> = ({ page, onBack }) => {
 
           <div className="space-y-4 text-xs sm:text-sm leading-relaxed text-slate-300">
             <p>
-              <strong>HindiDrama.net</strong> respects the intellectual property rights of others and strictly complies with the Digital Millennium Copyright Act (DMCA).
+              <strong>kdrama-hindi.pages.dev</strong> respects the intellectual property rights of others and strictly complies with the Digital Millennium Copyright Act (DMCA).
             </p>
             <p>
-              HindiDrama.net operates as an index and database of Asian drama content found publicly on the internet. <strong>We do not host, store, or upload any video files, media, or copyrighted media onto our servers.</strong> All streaming links and player embeds are provided by non-affiliated third-party platforms (including VidSrc, SuperEmbed, DoodStream, etc.).
+              kdrama-hindi.pages.dev operates as an index and database of Asian drama content found publicly on the internet. <strong>We do not host, store, or upload any video files, media, or copyrighted media onto our servers.</strong> All streaming links and player embeds are provided by non-affiliated third-party platforms (including VidSrc, SuperEmbed, DoodStream, etc.).
             </p>
             <h3 className="text-base font-semibold text-white pt-2">Filing a DMCA Notice</h3>
             <p>
@@ -57,7 +57,7 @@ export const StaticPages: React.FC<StaticPagesProps> = ({ page, onBack }) => {
             </p>
             <ul className="list-disc pl-5 space-y-1.5 text-slate-400">
               <li>Identification of the copyrighted work claimed to have been infringed.</li>
-              <li>Identification of the material to be removed with exact URLs on HindiDrama.net.</li>
+              <li>Identification of the material to be removed with exact URLs on kdrama-hindi.pages.dev.</li>
               <li>Your contact information including name, address, telephone number, and email.</li>
               <li>A statement of good faith belief that the disputed use is unauthorized.</li>
               <li>A statement under penalty of perjury that the information in the notification is accurate.</li>
@@ -82,13 +82,13 @@ export const StaticPages: React.FC<StaticPagesProps> = ({ page, onBack }) => {
 
           <div className="space-y-4 text-xs sm:text-sm leading-relaxed text-slate-300">
             <p>
-              The information and media displayed on <strong>HindiDrama.net</strong> are for educational and entertainment purposes only.
+              The information and media displayed on <strong>kdrama-hindi.pages.dev</strong> are for educational and entertainment purposes only.
             </p>
             <p>
-              HindiDrama.net does not host any video streams on its physical servers. All drama streams, trailers, and episode players are embedded from third-party websites across the web. We have no control over the content, privacy policies, or practices of any third-party websites or hosting services.
+              kdrama-hindi.pages.dev does not host any video streams on its physical servers. All drama streams, trailers, and episode players are embedded from third-party websites across the web. We have no control over the content, privacy policies, or practices of any third-party websites or hosting services.
             </p>
             <p>
-              By using HindiDrama.net, you acknowledge and agree that HindiDrama.net shall not be held liable, directly or indirectly, for any damage or loss caused by or in connection with the use of any third-party links or embedded video streams.
+              By using kdrama-hindi.pages.dev, you acknowledge and agree that kdrama-hindi.pages.dev shall not be held liable, directly or indirectly, for any damage or loss caused by or in connection with the use of any third-party links or embedded video streams.
             </p>
           </div>
         </div>
@@ -107,11 +107,11 @@ export const StaticPages: React.FC<StaticPagesProps> = ({ page, onBack }) => {
 
           <div className="space-y-4 text-xs sm:text-sm leading-relaxed text-slate-300">
             <p>
-              At <strong>HindiDrama.net</strong>, the privacy of our visitors is of paramount importance to us. This privacy policy outlines the types of personal information that is received and collected by HindiDrama.net and how it is used.
+              At <strong>kdrama-hindi.pages.dev</strong>, the privacy of our visitors is of paramount importance to us. This privacy policy outlines the types of personal information that is received and collected by kdrama-hindi.pages.dev and how it is used.
             </p>
             <h3 className="text-base font-semibold text-white">Log Files & Cookies</h3>
             <p>
-              Like many other web sites, HindiDrama.net uses log files (IP addresses, browser type, ISP, referring/exit pages) to analyze trends and administer the site. We also use browser local storage to save your episode watch history and comments locally on your device.
+              Like many other web sites, kdrama-hindi.pages.dev uses log files (IP addresses, browser type, ISP, referring/exit pages) to analyze trends and administer the site. We also use browser local storage to save your episode watch history and comments locally on your device.
             </p>
             <h3 className="text-base font-semibold text-white">Advertising Partners</h3>
             <p>
@@ -128,16 +128,16 @@ export const StaticPages: React.FC<StaticPagesProps> = ({ page, onBack }) => {
             <FileText className="w-7 h-7 text-indigo-500" />
             <div>
               <h1 className="text-2xl font-bold text-white">Terms of Service</h1>
-              <p className="text-xs text-slate-400">Rules and user agreements for HindiDrama.net</p>
+              <p className="text-xs text-slate-400">Rules and user agreements for kdrama-hindi.pages.dev</p>
             </div>
           </div>
 
           <div className="space-y-4 text-xs sm:text-sm leading-relaxed text-slate-300">
             <p>
-              By accessing and using <strong>HindiDrama.net</strong>, you accept and agree to be bound by the terms and provisions of this agreement.
+              By accessing and using <strong>kdrama-hindi.pages.dev</strong>, you accept and agree to be bound by the terms and provisions of this agreement.
             </p>
             <p>
-              HindiDrama.net grants you a personal, non-exclusive, non-transferable license to access Asian drama streaming information and player embeds strictly for personal, non-commercial use.
+              kdrama-hindi.pages.dev grants you a personal, non-exclusive, non-transferable license to access Asian drama streaming information and player embeds strictly for personal, non-commercial use.
             </p>
             <p>
               You agree not to use any automated spider, scraper, or harvesting system to disrupt or overload our services.
@@ -162,7 +162,7 @@ export const StaticPages: React.FC<StaticPagesProps> = ({ page, onBack }) => {
               <CheckCircle2 className="w-12 h-12 text-emerald-400 mx-auto" />
               <h3 className="text-lg font-bold text-white">Message Dispatched!</h3>
               <p className="text-xs text-slate-400">
-                Thank you for contacting HindiDrama.net support. We respond within 24 hours.
+                Thank you for contacting kdrama-hindi.pages.dev support. We respond within 24 hours.
               </p>
             </div>
           ) : (
