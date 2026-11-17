@@ -66,7 +66,7 @@
     "hindiTitle": "The Remarried Empress (Hindi Dubbed)",
     "country": "Korean",
     "year": 2025,
-    "rating": 8.2,
+    "rating": 8.6,
     "views": "3.4K",
     "duration": "45 min",
     "totalEpisodes": 10,
@@ -85,7 +85,51 @@
     "hindiOnly": true,
     "imdbId": "tt39325975",
     "tvdbId": 455351,
-    "youtubeKey": "MOoQ9TcXbis"
+    "youtubeKey": "MOoQ9TcXbis",
+    "seasons": [
+      {
+        "seasonNumber": 1,
+        "name": "Season 1",
+        "episodeCount": 10,
+        "airDate": "2026-11-03",
+        "poster": "https://image.tmdb.org/t/p/w342/oYQg1fKSRbjeqFRci2J6yMYmzxY.jpg"
+      }
+    ],
+    "cast": [
+      {
+        "id": 116175,
+        "slug": "116175-shin-min-a",
+        "name": "Shin Min-a",
+        "character": "Navier Ellie Trovi",
+        "profilePath": "https://image.tmdb.org/t/p/w342/6CjxjYvZBuvbAQTcuoPb8EeVrUI.jpg",
+        "popularity": 3.1085
+      },
+      {
+        "id": 150125,
+        "slug": "150125-ju-ji-hoon",
+        "name": "Ju Ji-hoon",
+        "character": "Sovieshu Vict",
+        "profilePath": "https://image.tmdb.org/t/p/w342/7PYfUrBBXhYv5PIsTalJhjbRteg.jpg",
+        "popularity": 2.6808
+      },
+      {
+        "id": 1095818,
+        "slug": "1095818-lee-jong-suk",
+        "name": "Lee Jong-suk",
+        "character": "Heinrey Alles Lazlo",
+        "profilePath": "https://image.tmdb.org/t/p/w342/eW73DbmKQrqb6xDC52oMbVehw6G.jpg",
+        "popularity": 4.0332
+      },
+      {
+        "id": 1257142,
+        "slug": "1257142-lee-se-young",
+        "name": "Lee Se-young",
+        "character": "Rashta Isqua",
+        "profilePath": "https://image.tmdb.org/t/p/w342/58jlu0lSO0rWEzsWPjGLoEI0NWr.jpg",
+        "popularity": 1.8002
+      }
+    ],
+    "updatedAt": "2026-11-17T12:40:13.761Z"
   },
   {
     "id": "love-in-disguise",
@@ -95,7 +139,7 @@
     "hindiTitle": "Love in Disguise (Hindi Dubbed)",
     "country": "Chinese",
     "year": 2023,
-    "rating": 8.3,
+    "rating": 9.1,
     "views": "1.8K",
     "duration": "45 min",
     "totalEpisodes": 12,
@@ -113,7 +157,51 @@
     "latestEpisode": 12,
     "imdbId": "tt45246384",
     "tvdbId": 469591,
-    "youtubeKey": "Q7Xj7sASXSU"
+    "youtubeKey": "Q7Xj7sASXSU",
+    "seasons": [
+      {
+        "seasonNumber": 1,
+        "name": "Season 1",
+        "episodeCount": 12,
+        "airDate": "2026-10-19",
+        "poster": "https://image.tmdb.org/t/p/w342/c9DEtqCDZBPL9i06WmbDrcndrBy.jpg"
+      }
+    ],
+    "cast": [
+      {
+        "id": 1296713,
+        "slug": "1296713-yim-si-wan",
+        "name": "Yim Si-wan",
+        "character": "Yoon Yi-jun",
+        "profilePath": "https://image.tmdb.org/t/p/w342/xhItkYqo5DnFunTLBe65npwi0Me.jpg",
+        "popularity": 5.9487
+      },
+      {
+        "id": 1761412,
+        "slug": "1761412-seorina",
+        "name": "Seorina",
+        "character": "Kang Jae-hee",
+        "profilePath": "https://image.tmdb.org/t/p/w342/nfHLot4nBfqWQKwcXykeol4Owjb.jpg",
+        "popularity": 5.9921
+      },
+      {
+        "id": 1619435,
+        "slug": "1619435-kim-jung-hyun",
+        "name": "Kim Jung-hyun",
+        "character": "Kim Si-hyeon",
+        "profilePath": "https://image.tmdb.org/t/p/w342/hSv3ihM8sK6aGPirXq6j758m05P.jpg",
+        "popularity": 2.0354
+      },
+      {
+        "id": 1875826,
+        "slug": "1875826-yeon-woo",
+        "name": "Yeon Woo",
+        "character": "Lee Hye-jung",
+        "profilePath": "https://image.tmdb.org/t/p/w342/tn2g5D33zqea9eKTpwVFFneyr2s.jpg",
+        "popularity": 2.6664
+      }
+    ],
+    "updatedAt": "2026-11-17T12:40:13.849Z"
   },
   {
     "id": "final-table",
@@ -152,7 +240,7 @@
     "hindiTitle": "Dead-End Job (Hindi Dubbed)",
     "country": "Korean",
     "year": 2024,
-    "rating": 8,
+    "rating": 7.5,
     "views": "1.1K",
     "duration": "45 min",
     "totalEpisodes": 8,
@@ -171,7 +259,51 @@
     "hindiOnly": true,
     "imdbId": "tt36458668",
     "tvdbId": 462838,
-    "youtubeKey": "Sn2ZCxOxsN0"
+    "youtubeKey": "Sn2ZCxOxsN0",
+    "seasons": [
+      {
+        "seasonNumber": 1,
+        "name": "Limited Series",
+        "episodeCount": 8,
+        "airDate": "2026-10-30",
+        "poster": "https://image.tmdb.org/t/p/w342/4fdvT5ADEXxtTtsnRNanK0fynx5.jpg"
+      }
+    ],
+    "cast": [
+      {
+        "id": 1879169,
+        "slug": "1879169-lee-jae-wook",
+        "name": "Lee Jae-wook",
+        "character": "Byeon Hyeok-jun",
+        "profilePath": "https://image.tmdb.org/t/p/w342/9dsWM2kiXO4utrg4GctdXDvhOKD.jpg",
+        "popularity": 2.878
+      },
+      {
+        "id": 1787992,
+        "slug": "1787992-go-min-si",
+        "name": "Go Min-si",
+        "character": "Eum Yeon-joo",
+        "profilePath": "https://image.tmdb.org/t/p/w342/tgBb9dDyewLlautcmJH9KSXZz1O.jpg",
+        "popularity": 2.4463
+      },
+      {
+        "id": 2704830,
+        "slug": "2704830-kim-min-ha",
+        "name": "Kim Min-ha",
+        "character": "Byeon Ji-yoon",
+        "profilePath": "https://image.tmdb.org/t/p/w342/zPNNamrJLWoXADXALQmuTdo6zBS.jpg",
+        "popularity": 1.6943
+      },
+      {
+        "id": 1046863,
+        "slug": "1046863-lee-hee-jun",
+        "name": "Lee Hee-jun",
+        "character": "Head of Spider Staffing Agency",
+        "profilePath": "https://image.tmdb.org/t/p/w342/4slyXnHbKgzmeyJNetBSORgDDEF.jpg",
+        "popularity": 2.1667
+      }
+    ],
+    "updatedAt": "2026-11-17T12:40:15.524Z"
   },
   {
     "id": "make-me-tingle",
@@ -237,7 +369,7 @@
     "hindiTitle": "Doctor X: Mafia in White (Hindi Dubbed)",
     "country": "Japanese",
     "year": 2021,
-    "rating": 8.4,
+    "rating": 8.6,
     "views": "2.7K",
     "duration": "45 min",
     "totalEpisodes": 69,
@@ -255,7 +387,83 @@
     "latestEpisode": 24,
     "imdbId": "tt2349912",
     "tvdbId": 263747,
-    "youtubeKey": "AS5y5Z2dmJI"
+    "youtubeKey": "AS5y5Z2dmJI",
+    "seasons": [
+      {
+        "seasonNumber": 1,
+        "name": "Season 1",
+        "episodeCount": 12,
+        "airDate": "2026-10-09",
+        "poster": "https://image.tmdb.org/t/p/w342/u0DrgmScTheIyCVEaeDKQ3sagLu.jpg"
+      }
+    ],
+    "cast": [
+      {
+        "id": 582130,
+        "slug": "582130-kim-ji-won",
+        "name": "Kim Ji-won",
+        "character": "Gye Su-jeong",
+        "profilePath": "https://image.tmdb.org/t/p/w342/s9RWmg01tHjripYkeIicV78vo6x.jpg",
+        "popularity": 4.3498
+      },
+      {
+        "id": 1572354,
+        "slug": "1572354-lee-jung-eun",
+        "name": "Lee Jung-eun",
+        "character": "Jeong Hee-sook",
+        "profilePath": "https://image.tmdb.org/t/p/w342/4r3K47UpSmzZ5t9cyTRRqRl9rdz.jpg",
+        "popularity": 2.2279
+      },
+      {
+        "id": 1015873,
+        "slug": "1015873-son-hyun-joo",
+        "name": "Son Hyun-joo",
+        "character": "Bu Seung-gwon",
+        "profilePath": "https://image.tmdb.org/t/p/w342/pOpqydpiDrXvd9ynZEt8GQl6yJD.jpg",
+        "popularity": 1.8494
+      },
+      {
+        "id": 2120710,
+        "slug": "2120710-kim-woo-seok",
+        "name": "Kim Woo-seok",
+        "character": "Park Tae-gyeong",
+        "profilePath": "https://image.tmdb.org/t/p/w342/pjuqZJRCw5BgAZf5CtjXNAmOAmd.jpg",
+        "popularity": 2.6305
+      },
+      {
+        "id": 3212792,
+        "slug": "3212792-lee-jin-hee",
+        "name": "Lee Jin-hee",
+        "character": "Jo Won-jin",
+        "profilePath": "https://image.tmdb.org/t/p/w342/ejdN4VmStDyyhi7sN5Nox5VVh5x.jpg",
+        "popularity": 2.5939
+      },
+      {
+        "id": 4259,
+        "slug": "4259-kim-young-min",
+        "name": "Kim Young-min",
+        "character": "Do Yoon-sik",
+        "profilePath": "https://image.tmdb.org/t/p/w342/xXbY65ATWU0VGd59Ry16o3mnxps.jpg",
+        "popularity": 1.2749
+      },
+      {
+        "id": 1682490,
+        "slug": "1682490-lee-sung-wook",
+        "name": "Lee Sung-wook",
+        "character": "Bae Heung-gon",
+        "profilePath": "https://image.tmdb.org/t/p/w342/erpOUfjadjH2duXd6XWDsa2kNfw.jpg",
+        "popularity": 1.1507
+      },
+      {
+        "id": 4039520,
+        "slug": "4039520-kwon-seung-woo",
+        "name": "Kwon Seung-woo",
+        "character": "Ma Seong-gyoo",
+        "profilePath": "https://image.tmdb.org/t/p/w342/9XwjdLbetDegQdolJA91Wykkqdy.jpg",
+        "popularity": 1.2015
+      }
+    ],
+    "updatedAt": "2026-11-17T12:40:13.670Z"
   },
   {
     "id": "my-dearest-nemesis",
@@ -1760,5 +1968,2951 @@
     "imdbId": "tt20234568",
     "tvdbId": 423418,
     "youtubeKey": "GDTz8sLK3_Q"
+  },
+  {
+    "id": "the-silent-storm",
+    "slug": "the-silent-storm",
+    "tmdbId": 279155,
+    "imdbId": "tt34959964",
+    "tvdbId": 484835,
+    "youtubeKey": "dFuaGlCgnEk",
+    "title": "The Silent Storm",
+    "hindiTitle": "The Silent Storm (Hindi Dubbed)",
+    "country": "Chinese",
+    "year": 2026,
+    "rating": 9,
+    "views": "38K",
+    "duration": "46 min",
+    "totalEpisodes": 30,
+    "genres": [
+      "Drama"
+    ],
+    "overview": "In 1994, tax auditor Ouyang Xu, criminal investigator Yan Ping'an, and Zhou Haiyang—who was searching for his missing wife—met through a counterfeit invoice case in Chunjiang City. Under the tide of the times, the three experienced vastly different circumstances, and their fates gradually diverged. Years later, Operation Grain Rain brings them together again—but the brothers of old now stand on opposite sides. Ouyang Xu faces off against the tax fraud ring led by Zhou Haiyang and the protective umbrella behind it, caught in a painful choice between emotion and the law. Starting from a single invoice, he tears away the veil of greed and ultimately eliminates evil, safeguarding justice.",
+    "poster": "https://image.tmdb.org/t/p/w500/c8UHaCOfzyQYagHv7vAAOkrmgDb.jpg",
+    "backdrop": "https://image.tmdb.org/t/p/original/m5tiVhzIFIqDyIPwOsHDsMDGMsK.jpg",
+    "status": "Ongoing",
+    "type": "tv",
+    "language": "Hindi Dubbed",
+    "latestEpisode": 30,
+    "seasons": [
+      {
+        "seasonNumber": 1,
+        "name": "Season 1",
+        "episodeCount": 30,
+        "airDate": "2026-11-05",
+        "poster": "https://image.tmdb.org/t/p/w342/lT2Oam5QyFdjnikmpbMKE9EQn2E.jpg"
+      }
+    ],
+    "cast": [
+      {
+        "id": 1094210,
+        "slug": "1094210-jing-boran",
+        "name": "Jing Boran",
+        "character": "Ouyang Xu",
+        "profilePath": "https://image.tmdb.org/t/p/w342/vsXA4vbmlYDUmAAUuLBYQUUcMcF.jpg",
+        "popularity": 5.3088
+      },
+      {
+        "id": 1086250,
+        "slug": "1086250-zhang-songwen",
+        "name": "Zhang Songwen",
+        "character": "Zhou Haiyang",
+        "profilePath": "https://image.tmdb.org/t/p/w342/niMrmo5vkWJVcIwIt7rgmXPTBPi.jpg",
+        "popularity": 2.1406
+      },
+      {
+        "id": 1258617,
+        "slug": "1258617-sun-yizhou",
+        "name": "Sun Yizhou",
+        "character": "Yan Ping'an",
+        "profilePath": "https://image.tmdb.org/t/p/w342/7LrjgcfjklPW6AyC4sxaNx6z089.jpg",
+        "popularity": 1.6882
+      },
+      {
+        "id": 1310154,
+        "slug": "1310154-sui-junbo",
+        "name": "Sui Junbo",
+        "character": "Tang Muyun",
+        "profilePath": "https://image.tmdb.org/t/p/w342/2guxAzS4RLnZgEzq1UdiYEG8rG3.jpg",
+        "popularity": 1.8216
+      },
+      {
+        "id": 78870,
+        "slug": "78870-li-xiaoran",
+        "name": "Li Xiaoran",
+        "character": "Li Ahong",
+        "profilePath": "https://image.tmdb.org/t/p/w342/9kDjTtOTUEGInaYHDuG0CKn9vuQ.jpg",
+        "popularity": 2.5047
+      },
+      {
+        "id": 1258373,
+        "slug": "1258373-sophie-zhang",
+        "name": "Sophie Zhang",
+        "character": "Lin Ruyi",
+        "profilePath": "https://image.tmdb.org/t/p/w342/ccpdJNXgcDG0nrrYgEqP9fllrVY.jpg",
+        "popularity": 1.6651
+      },
+      {
+        "id": 78869,
+        "slug": "78869-yue-man-lok",
+        "name": "Yue Man-lok",
+        "character": "Cheng Tian Bao",
+        "profilePath": "https://image.tmdb.org/t/p/w342/yZWngh6eSSqZGWIEvGQ0VqW6OnG.jpg",
+        "popularity": 2.1272
+      }
+    ],
+    "updatedAt": "2026-11-17T12:40:13.945Z"
+  },
+  {
+    "id": "crash",
+    "slug": "crash",
+    "tmdbId": 226102,
+    "imdbId": "tt32117300",
+    "tvdbId": 430692,
+    "youtubeKey": "wf6TBxwe884",
+    "title": "Crash",
+    "hindiTitle": "Crash (Hindi Dubbed)",
+    "country": "Korean",
+    "year": 2024,
+    "rating": 8.6,
+    "views": "19K",
+    "duration": "45 min",
+    "totalEpisodes": 24,
+    "genres": [
+      "Action & Adventure",
+      "Comedy",
+      "Crime"
+    ],
+    "overview": "A drama about Cha Yeon-ho, a reasonable individualist from KAIST, and Min So-hee, a traffic investigation ace with cool judgment and warm sensitivity at the Traffic Crime Investigation (TCI).",
+    "poster": "https://image.tmdb.org/t/p/w500/7PbecqJmo620ngl4X3hW0Ht6WVI.jpg",
+    "backdrop": "https://image.tmdb.org/t/p/original/4wZZ8CGEsjXaKt5TosiFqbaPymD.jpg",
+    "status": "Ongoing",
+    "type": "tv",
+    "language": "Hindi Dubbed",
+    "latestEpisode": 24,
+    "seasons": [
+      {
+        "seasonNumber": 1,
+        "name": "Season 1",
+        "episodeCount": 12,
+        "airDate": "2024-05-13",
+        "poster": "https://image.tmdb.org/t/p/w342/uZfEkKi3yn8epQpukKrCtLOv7fc.jpg"
+      },
+      {
+        "seasonNumber": 2,
+        "name": "Season 2",
+        "episodeCount": 12,
+        "airDate": "2026-11-16",
+        "poster": "https://image.tmdb.org/t/p/w342/zIsNHWp7ZUtdcUNChZXGii9wg1g.jpg"
+      }
+    ],
+    "cast": [
+      {
+        "id": 1299351,
+        "slug": "1299351-lee-min-ki",
+        "name": "Lee Min-ki",
+        "character": "Cha Yeon-ho",
+        "profilePath": "https://image.tmdb.org/t/p/w342/cS9o926nFrFaiWPGUXC07gSFGTA.jpg",
+        "popularity": 1.1185
+      },
+      {
+        "id": 2087239,
+        "slug": "2087239-kwak-sun-young",
+        "name": "Kwak Sun-young",
+        "character": "Min So-hee",
+        "profilePath": "https://image.tmdb.org/t/p/w342/xrQkn5PnMInmcbohP8sJJNF6uSA.jpg",
+        "popularity": 0.8956
+      },
+      {
+        "id": 1388365,
+        "slug": "1388365-heo-sung-tae",
+        "name": "Heo Sung-tae",
+        "character": "Jeong Chae-man",
+        "profilePath": "https://image.tmdb.org/t/p/w342/j65kOkZ8RjGVuwNHjuIVbSD49tB.jpg",
+        "popularity": 3.4888
+      },
+      {
+        "id": 2252328,
+        "slug": "2252328-lee-ho-cheol",
+        "name": "Lee Ho-cheol",
+        "character": "Woo Dong-gi",
+        "profilePath": "https://image.tmdb.org/t/p/w342/2PGPILdi22UagXQVEhzEZWTwqze.jpg",
+        "popularity": 0.7148
+      },
+      {
+        "id": 3330331,
+        "slug": "3330331-choi-moon-hee",
+        "name": "Choi Moon-hee",
+        "character": "Eo Hyeon-gyeong",
+        "profilePath": "https://image.tmdb.org/t/p/w342/yuzSt2IzADE5uvYEfRAiphWXxa.jpg",
+        "popularity": 0.6487
+      },
+      {
+        "id": 2097349,
+        "slug": "2097349-jisung",
+        "name": "Jisung",
+        "character": "Ji Dae-se",
+        "profilePath": "https://image.tmdb.org/t/p/w342/hxEW2G2ZurV3UKbaQvTkVVIJwxU.jpg",
+        "popularity": 0.7498
+      },
+      {
+        "id": 1252339,
+        "slug": "1252339-ham-eun-jung",
+        "name": "Ham Eun-jung",
+        "character": "Main Role",
+        "profilePath": "https://image.tmdb.org/t/p/w342/5sra4rsKJknm3ov7NG94PCd1ciC.jpg",
+        "popularity": 2.0689
+      },
+      {
+        "id": 1623728,
+        "slug": "1623728-uhm-hyun-kyung",
+        "name": "Uhm Hyun-kyung",
+        "character": "Main Role",
+        "profilePath": "https://image.tmdb.org/t/p/w342/ekBPnpmP8nN2XMpujoC3A4SU6IJ.jpg",
+        "popularity": 1.1999
+      }
+    ],
+    "updatedAt": "2026-11-17T12:40:14.043Z"
+  },
+  {
+    "id": "one-piece",
+    "slug": "one-piece",
+    "tmdbId": 37854,
+    "imdbId": "tt0388629",
+    "tvdbId": 81797,
+    "youtubeKey": "tnj5YOZpCyo",
+    "title": "One Piece",
+    "hindiTitle": "One Piece (Hindi Dubbed)",
+    "country": "Japanese",
+    "year": 1999,
+    "rating": 8.8,
+    "views": "541K",
+    "duration": "24 min",
+    "totalEpisodes": 1180,
+    "genres": [
+      "Action & Adventure",
+      "Comedy",
+      "Animation"
+    ],
+    "overview": "Years ago, the fearsome Pirate King, Gol D. Roger was executed leaving a huge pile of treasure and the famous \"One Piece\" behind. Whoever claims the \"One Piece\" will be named the new King of the Pirates.\n\nMonkey D. Luffy, a boy who consumed a \"Devil Fruit,\" decides to follow in the footsteps of his idol, the pirate Shanks, and find the One Piece. It helps, of course, that his body has the properties of rubber and that he's surrounded by a bevy of skilled fighters and thieves to help him along the way.\n\nLuffy will do anything to get the One Piece and become King of the Pirates!",
+    "poster": "https://image.tmdb.org/t/p/w500/dB4EDhre2dsC2kxYDavyKWqLQwi.jpg",
+    "backdrop": "https://image.tmdb.org/t/p/original/2rmK7mnchw9Xr3XdiTFSxTTLXqv.jpg",
+    "status": "Ongoing",
+    "type": "tv",
+    "language": "Hindi Dubbed",
+    "latestEpisode": 1180,
+    "seasons": [
+      {
+        "seasonNumber": 1,
+        "name": "East Blue",
+        "episodeCount": 61,
+        "airDate": "1999-10-20",
+        "poster": "https://image.tmdb.org/t/p/w342/9hW62RDq5Dno8vLABXscddjEq9M.jpg"
+      },
+      {
+        "seasonNumber": 2,
+        "name": "Whiskey Peak & Little Garden",
+        "episodeCount": 16,
+        "poster": "https://image.tmdb.org/t/p/w342/gMPQIxlTDt463pnuvr2axpkkB13.jpg"
+      },
+      {
+        "seasonNumber": 3,
+        "name": "Drum Island",
+        "episodeCount": 14,
+        "poster": "https://image.tmdb.org/t/p/w342/fyOt2eCAVAB5tUpf4oOrLqX1cYD.jpg"
+      },
+      {
+        "seasonNumber": 4,
+        "name": "Alabasta",
+        "episodeCount": 39,
+        "poster": "https://image.tmdb.org/t/p/w342/lmO3xnBHVlT8On8E6AukMDyhKzv.jpg"
+      },
+      {
+        "seasonNumber": 5,
+        "name": "Dreams!, The Zenny Pirate Crew Sortie!, Beyond the Rainbow",
+        "episodeCount": 13,
+        "poster": "https://image.tmdb.org/t/p/w342/dJHWwdcNzsbBUAnXdNsrIAgkmiK.jpg"
+      },
+      {
+        "seasonNumber": 6,
+        "name": "Skypiea",
+        "episodeCount": 52,
+        "poster": "https://image.tmdb.org/t/p/w342/hYasiagbhomaEj0Vv1LMqewOuBE.jpg"
+      },
+      {
+        "seasonNumber": 7,
+        "name": "G-8 & Long Ring Long Land",
+        "episodeCount": 33,
+        "poster": "https://image.tmdb.org/t/p/w342/A2msjyMOBEdbSHjiPHWLZhKI5HS.jpg"
+      },
+      {
+        "seasonNumber": 8,
+        "name": "Water Seven",
+        "episodeCount": 35,
+        "poster": "https://image.tmdb.org/t/p/w342/ww1JO056uv4KhDSycDTLkNRveIg.jpg"
+      },
+      {
+        "seasonNumber": 9,
+        "name": "Enies Lobby",
+        "episodeCount": 73,
+        "poster": "https://image.tmdb.org/t/p/w342/7y6yoAIepNVrNTLMxgHEEgjEEge.jpg"
+      },
+      {
+        "seasonNumber": 10,
+        "name": "Thriller Bark",
+        "episodeCount": 45,
+        "poster": "https://image.tmdb.org/t/p/w342/aznhNoyRyJOh6cxFYkcU2zGxOEo.jpg"
+      },
+      {
+        "seasonNumber": 11,
+        "name": "Sabaody Archipelago",
+        "episodeCount": 26,
+        "poster": "https://image.tmdb.org/t/p/w342/kMvtZUg4jCZ4JzEqvOCjkiklQfF.jpg"
+      },
+      {
+        "seasonNumber": 12,
+        "name": "Amazon Lily",
+        "episodeCount": 14,
+        "poster": "https://image.tmdb.org/t/p/w342/bVjlWX17j9t6XB3AZ3KOv7ya7g7.jpg"
+      },
+      {
+        "seasonNumber": 13,
+        "name": "Impel Down & Marineford",
+        "episodeCount": 101,
+        "poster": "https://image.tmdb.org/t/p/w342/zcVNRh5sqdgSgoXm0Z2GlTxF6DN.jpg"
+      },
+      {
+        "seasonNumber": 14,
+        "name": "Fishman Island",
+        "episodeCount": 58,
+        "poster": "https://image.tmdb.org/t/p/w342/wpVC1e0RVK2qRtZMFDYu1c6mHcy.jpg"
+      },
+      {
+        "seasonNumber": 15,
+        "name": "Punk Hazard",
+        "episodeCount": 62,
+        "poster": "https://image.tmdb.org/t/p/w342/slTtfpqvqelTNoRTxTuiSvqWoTU.jpg"
+      },
+      {
+        "seasonNumber": 16,
+        "name": "Dressrosa",
+        "episodeCount": 50,
+        "poster": "https://image.tmdb.org/t/p/w342/sDzpqSCuCyvKIcJADOhPD261maG.jpg"
+      },
+      {
+        "seasonNumber": 17,
+        "name": "Dressrosa (2)",
+        "episodeCount": 56,
+        "poster": "https://image.tmdb.org/t/p/w342/nXyJ2Yor5VUX8Zpwf0eQbuDOsF0.jpg"
+      },
+      {
+        "seasonNumber": 18,
+        "name": "Zou",
+        "episodeCount": 55,
+        "airDate": "2016-07-13",
+        "poster": "https://image.tmdb.org/t/p/w342/wg7ngI5lw0u54xRY5FwmlvzS9cu.jpg"
+      },
+      {
+        "seasonNumber": 19,
+        "name": "Whole Cake Island",
+        "episodeCount": 74,
+        "airDate": "2017-09-05",
+        "poster": "https://image.tmdb.org/t/p/w342/59G8pVHbFqSuAQAitdK9CKGAZXX.jpg"
+      },
+      {
+        "seasonNumber": 20,
+        "name": "Levely Arc",
+        "episodeCount": 14,
+        "airDate": "2019-04-01",
+        "poster": "https://image.tmdb.org/t/p/w342/huF0TU9U8UIt2BaLGn6Ujbjikbg.jpg"
+      },
+      {
+        "seasonNumber": 21,
+        "name": "Wano Country Arc",
+        "episodeCount": 197,
+        "airDate": "2019-07-08",
+        "poster": "https://image.tmdb.org/t/p/w342/awSahTRht2V11NKVp8KaMyd3z2v.jpg"
+      },
+      {
+        "seasonNumber": 22,
+        "name": "Egghead",
+        "episodeCount": 67,
+        "poster": "https://image.tmdb.org/t/p/w342/fqOUJhVYQchjaxOPHiBJ6I7Gr1l.jpg"
+      },
+      {
+        "seasonNumber": 23,
+        "name": "Elbaph",
+        "episodeCount": 25,
+        "poster": "https://image.tmdb.org/t/p/w342/9L4GHTq4YZq1wVq51yFxrdindrB.jpg"
+      }
+    ],
+    "cast": [
+      {
+        "id": 65510,
+        "slug": "65510-mayumi-tanaka",
+        "name": "Mayumi Tanaka",
+        "character": "Monkey D. Luffy (voice)",
+        "profilePath": "https://image.tmdb.org/t/p/w342/by4t1tYtEXsfbFj9TvOjozBmQla.jpg",
+        "popularity": 3.6362
+      },
+      {
+        "id": 84507,
+        "slug": "84507-kazuya-nakai",
+        "name": "Kazuya Nakai",
+        "character": "Roronoa Zoro (voice)",
+        "profilePath": "https://image.tmdb.org/t/p/w342/cOHSa0FBrG3u9P6g8A56sInkvod.jpg",
+        "popularity": 3.596
+      },
+      {
+        "id": 1089376,
+        "slug": "1089376-mari-yaguchi",
+        "name": "Mari Yaguchi",
+        "character": "Yoko (voice)",
+        "profilePath": "https://image.tmdb.org/t/p/w342/edjVzlYS9elEzDHJdAunceWhkWR.jpg",
+        "popularity": 1.929
+      },
+      {
+        "id": 90133,
+        "slug": "90133-akemi-okamura",
+        "name": "Akemi Okamura",
+        "character": "Nami (voice)",
+        "profilePath": "https://image.tmdb.org/t/p/w342/qEwVfsrA23SCzRZMSlghw2sHctQ.jpg",
+        "popularity": 3.8604
+      },
+      {
+        "id": 68472,
+        "slug": "68472-kappei-yamaguchi",
+        "name": "Kappei Yamaguchi",
+        "character": "Usopp (voice)",
+        "profilePath": "https://image.tmdb.org/t/p/w342/mJyxKRZxLv9D7LH5KcNSkjSKYOB.jpg",
+        "popularity": 4.9774
+      },
+      {
+        "id": 84505,
+        "slug": "84505-hiroaki-hirata",
+        "name": "Hiroaki Hirata",
+        "character": "Sanji (voice)",
+        "profilePath": "https://image.tmdb.org/t/p/w342/mMWEdlssJm3TVuXW4Wb7pQeX20Z.jpg",
+        "popularity": 5.3481
+      },
+      {
+        "id": 73044,
+        "slug": "73044-ikue-otani",
+        "name": "Ikue Otani",
+        "character": "Tony Tony Chopper (voice)",
+        "profilePath": "https://image.tmdb.org/t/p/w342/my8LBLQ4MsK4hRz1PAATIqtieaI.jpg",
+        "popularity": 4.3315
+      },
+      {
+        "id": 77933,
+        "slug": "77933-yuriko-yamaguchi",
+        "name": "Yuriko Yamaguchi",
+        "character": "Nico Robin (voice)",
+        "profilePath": "https://image.tmdb.org/t/p/w342/14hV8oOMkZddPpvdpVSODRwVPgv.jpg",
+        "popularity": 0
+      }
+    ],
+    "updatedAt": "2026-11-17T12:40:14.138Z"
+  },
+  {
+    "id": "running-man",
+    "slug": "running-man",
+    "tmdbId": 33238,
+    "imdbId": "tt2185037",
+    "tvdbId": 248870,
+    "youtubeKey": "v90RObJapJI",
+    "title": "Running Man",
+    "hindiTitle": "Running Man (Hindi Dubbed)",
+    "country": "Korean",
+    "year": 2010,
+    "rating": 8.2,
+    "views": "509K",
+    "duration": "85 min",
+    "totalEpisodes": 831,
+    "genres": [
+      "Comedy",
+      "Reality"
+    ],
+    "overview": "These days, as variety shows are gradually disappearing, this is one of Korea’s representative variety shows that has been responsible for Sunday evenings for over 10 years. This program features numerous stars and members going around various places, playing games, and completing missions. In particular, among the many fun elements of variety shows, this one focuses solely on laughter.\n\nOpen your eyes! Big fun is coming in!\n\nOpen your mouth! Big laughter is coming in!\n\nOpen your heart! Useful lessons are coming in!",
+    "poster": "https://image.tmdb.org/t/p/w500/2Wmmu1MkqxJ48J7aySET9EKEjXz.jpg",
+    "backdrop": "https://image.tmdb.org/t/p/original/wsHj4oHQJoe7DMYaqNFwVoyLiAh.jpg",
+    "status": "Ongoing",
+    "type": "tv",
+    "language": "Hindi Dubbed",
+    "latestEpisode": 831,
+    "seasons": [
+      {
+        "seasonNumber": 1,
+        "name": "Season 1",
+        "episodeCount": 831,
+        "airDate": "2010-07-11",
+        "poster": "https://image.tmdb.org/t/p/w342/g6oocQwTsvXN0OaYFYrwvHwqVEp.jpg"
+      }
+    ],
+    "cast": [
+      {
+        "id": 1239240,
+        "slug": "1239240-yu-jae-seok",
+        "name": "Yu Jae-seok",
+        "character": "Self",
+        "profilePath": "https://image.tmdb.org/t/p/w342/1uktAM7R2Hgc3dynIXvzfACOmnW.jpg",
+        "popularity": 1.8459
+      },
+      {
+        "id": 1239238,
+        "slug": "1239238-jee-seok-jin",
+        "name": "Jee Seok-jin",
+        "character": "Self",
+        "profilePath": "https://image.tmdb.org/t/p/w342/mB3mQ3FOqFR5dIrbtyEpvckhCib.jpg",
+        "popularity": 0.8744
+      },
+      {
+        "id": 1241035,
+        "slug": "1241035-kim-jong-kook",
+        "name": "Kim Jong-kook",
+        "character": "Self",
+        "profilePath": "https://image.tmdb.org/t/p/w342/56y9LaL65dbeaWZJt9dB7ifAUhR.jpg",
+        "popularity": 1.114
+      },
+      {
+        "id": 138519,
+        "slug": "138519-haha",
+        "name": "Haha",
+        "character": "Self",
+        "profilePath": "https://image.tmdb.org/t/p/w342/i3vcj3GI3TCmDlnI3aLA7pWKIuN.jpg",
+        "popularity": 1.1414
+      },
+      {
+        "id": 85174,
+        "slug": "85174-song-ji-hyo",
+        "name": "Song Ji-hyo",
+        "character": "Self",
+        "profilePath": "https://image.tmdb.org/t/p/w342/f3QRDGEqHkeLBQZfWe3GbmHeuuX.jpg",
+        "popularity": 2.726
+      },
+      {
+        "id": 1703373,
+        "slug": "1703373-yang-se-chan",
+        "name": "Yang Se-chan",
+        "character": "Self",
+        "profilePath": "https://image.tmdb.org/t/p/w342/odyq0zKjgZjX9o9OWZDImsBCDHQ.jpg",
+        "popularity": 0.7073
+      },
+      {
+        "id": 4159889,
+        "slug": "4159889-ji-ye-eun",
+        "name": "Ji Ye-eun",
+        "character": "Self",
+        "profilePath": "https://image.tmdb.org/t/p/w342/fTJfTdEvOjeKpO4Q4sbFxS7fy6E.jpg",
+        "popularity": 0.6196
+      },
+      {
+        "id": 126351,
+        "slug": "126351-jeon-so-min",
+        "name": "Jeon So-min",
+        "character": "Self – Former Member",
+        "profilePath": "https://image.tmdb.org/t/p/w342/eKTdMgKkvMGrrb7Xj8U1EH8ooYu.jpg",
+        "popularity": 1.461
+      }
+    ],
+    "updatedAt": "2026-11-17T12:40:14.229Z"
+  },
+  {
+    "id": "radio-star",
+    "slug": "radio-star",
+    "tmdbId": 65270,
+    "imdbId": "tt6283624",
+    "tvdbId": 260911,
+    "title": "Radio Star",
+    "hindiTitle": "Radio Star (Hindi Dubbed)",
+    "country": "Korean",
+    "year": 2007,
+    "rating": 5.5,
+    "views": "221K",
+    "duration": "80 min",
+    "totalEpisodes": 988,
+    "genres": [
+      "Talk"
+    ],
+    "overview": "“Radio Star” is a South Korean music talk show where the guests and hosts talk openly and intimately about their lives, their pasts and their work. It is part of Munhwa Broadcasting Corporation's \"Golden Fishery\" programming block.",
+    "poster": "https://image.tmdb.org/t/p/w500/uRUZDsvUfIP3JUEgOC8ReBlQQUU.jpg",
+    "backdrop": "https://image.tmdb.org/t/p/original/kCd0rmnNwCd3sgupO9DqSi9aHa0.jpg",
+    "status": "Ongoing",
+    "type": "tv",
+    "language": "Hindi Dubbed",
+    "latestEpisode": 988,
+    "seasons": [
+      {
+        "seasonNumber": 1,
+        "name": "Season 1",
+        "episodeCount": 990,
+        "airDate": "2007-05-30",
+        "poster": "https://image.tmdb.org/t/p/w342/uRUZDsvUfIP3JUEgOC8ReBlQQUU.jpg"
+      }
+    ],
+    "cast": [
+      {
+        "id": 1628212,
+        "slug": "1628212-kim-gu-ra",
+        "name": "Kim Gu-ra",
+        "character": "Self",
+        "profilePath": "https://image.tmdb.org/t/p/w342/eYj0vwQ99Pzfb91TX6CBgnV7Ne.jpg",
+        "popularity": 0.6932
+      },
+      {
+        "id": 2205888,
+        "slug": "2205888-kim-guk-jin",
+        "name": "Kim Guk-jin",
+        "character": "Self",
+        "profilePath": "https://image.tmdb.org/t/p/w342/aQuLoFCQ7XU6ovPtdrVykDS3Jxv.jpg",
+        "popularity": 0.3462
+      },
+      {
+        "id": 1594569,
+        "slug": "1594569-yoo-se-yoon",
+        "name": "Yoo Se-yoon",
+        "character": "Self",
+        "profilePath": "https://image.tmdb.org/t/p/w342/5pP9ttOJnsCI9wrFC6mdiFsis7O.jpg",
+        "popularity": 0.7555
+      },
+      {
+        "id": 1703372,
+        "slug": "1703372-jang-do-yeon",
+        "name": "Jang Do-yeon",
+        "character": "Main Role",
+        "profilePath": "https://image.tmdb.org/t/p/w342/jf5izJkEzXrBhoC6QxwTjH1uOlG.jpg",
+        "popularity": 1.1426
+      }
+    ],
+    "updatedAt": "2026-11-17T12:40:14.330Z"
+  },
+  {
+    "id": "chicago-typewriter",
+    "slug": "chicago-typewriter",
+    "tmdbId": 70528,
+    "imdbId": "tt6516076",
+    "tvdbId": 324558,
+    "title": "Chicago Typewriter",
+    "hindiTitle": "Chicago Typewriter (Hindi Dubbed)",
+    "country": "Korean",
+    "year": 2017,
+    "rating": 7.9,
+    "views": "213K",
+    "duration": "70 min",
+    "totalEpisodes": 16,
+    "genres": [
+      "Sci-Fi & Fantasy",
+      "Drama"
+    ],
+    "overview": "Writers that lived under Japanese rule in the 1930's are reincarnated into a bestselling writer who is in a slump, a mysterious ghostwriter and an anti-fan of the bestselling writer.",
+    "poster": "https://image.tmdb.org/t/p/w500/1FLgKAjoa4dY3z31nTjZj3Dgr6q.jpg",
+    "backdrop": "https://image.tmdb.org/t/p/original/f44Ykw0MnAcFvBeYhmdKekcX35J.jpg",
+    "status": "Completed",
+    "type": "tv",
+    "language": "Hindi Dubbed",
+    "latestEpisode": 16,
+    "seasons": [
+      {
+        "seasonNumber": 1,
+        "name": "Season 1",
+        "episodeCount": 16,
+        "airDate": "2017-04-06",
+        "poster": "https://image.tmdb.org/t/p/w342/5TQyV407P28DWVcqycy2ip3nVMP.jpg"
+      }
+    ],
+    "cast": [
+      {
+        "id": 572225,
+        "slug": "572225-yoo-ah-in",
+        "name": "Yoo Ah-in",
+        "character": "Han Se-joo / Seo Hwi-young",
+        "profilePath": "https://image.tmdb.org/t/p/w342/a1OhZlBbONBLJ6RhJRK9geS5TU2.jpg",
+        "popularity": 1.3678
+      },
+      {
+        "id": 37940,
+        "slug": "37940-im-soo-jung",
+        "name": "Im Soo-jung",
+        "character": "Jeon Seol / Ryu Soo-hyeon",
+        "profilePath": "https://image.tmdb.org/t/p/w342/vX5teH7vHy7B18vNQCafeML2ZPf.jpg",
+        "popularity": 1.3379
+      },
+      {
+        "id": 1257601,
+        "slug": "1257601-go-kyung-pyo",
+        "name": "Go Kyung-pyo",
+        "character": "Yoo Ji-no / Shin Yool",
+        "profilePath": "https://image.tmdb.org/t/p/w342/71ey2m4Ono5wHYAl4cUjJvYwrzP.jpg",
+        "popularity": 2.3784
+      },
+      {
+        "id": 1547209,
+        "slug": "1547209-kwak-si-yang",
+        "name": "Kwak Si-yang",
+        "character": "Baek Tae-min / Heo Young-min",
+        "profilePath": "https://image.tmdb.org/t/p/w342/8fHGivHyjPxWjLFNlFratxey0To.jpg",
+        "popularity": 1.0895
+      },
+      {
+        "id": 1566012,
+        "slug": "1566012-jo-woo-jin",
+        "name": "Jo Woo-jin",
+        "character": "Gal Ji-seok",
+        "profilePath": "https://image.tmdb.org/t/p/w342/7yoOqi1yV4q9MBLOLMfQDFqbYc7.jpg",
+        "popularity": 1.1444
+      },
+      {
+        "id": 1349163,
+        "slug": "1349163-oh-na-ra",
+        "name": "Oh Na-ra",
+        "character": "Secretary Kang",
+        "profilePath": "https://image.tmdb.org/t/p/w342/vGlPj4WSM0z5J1ZLIX5Y40MXJV8.jpg",
+        "popularity": 7.3231
+      },
+      {
+        "id": 1254631,
+        "slug": "1254631-yang-jin-sung",
+        "name": "Yang Jin-sung",
+        "character": "Ma Bang-jin",
+        "profilePath": "https://image.tmdb.org/t/p/w342/jZfPJjPWLAq9tXQ8qU5ExZHYNIz.jpg",
+        "popularity": 0.5899
+      },
+      {
+        "id": 1299344,
+        "slug": "1299344-jeon-soo-kyung",
+        "name": "Jeon Soo-kyung",
+        "character": "Wang Bang-wool",
+        "profilePath": "https://image.tmdb.org/t/p/w342/jyc9HDQDmJC4PthBUdw95XJJog9.jpg",
+        "popularity": 0.9676
+      }
+    ],
+    "updatedAt": "2026-11-17T12:40:14.419Z"
+  },
+  {
+    "id": "men-on-a-mission",
+    "slug": "men-on-a-mission",
+    "tmdbId": 70672,
+    "imdbId": "tt5247622",
+    "tvdbId": 311603,
+    "title": "Men on a Mission",
+    "hindiTitle": "Men on a Mission (Hindi Dubbed)",
+    "country": "Korean",
+    "year": 2015,
+    "rating": 7.4,
+    "views": "193K",
+    "duration": "90 min",
+    "totalEpisodes": 552,
+    "genres": [
+      "Reality",
+      "Comedy"
+    ],
+    "overview": "Male celebs play make-believe as high schoolers, welcoming star transfer students every week and engaging in battles of witty humor and slapstick.",
+    "poster": "https://image.tmdb.org/t/p/w500/2jIi55JtYKJTL1km8qHMuUilOWo.jpg",
+    "backdrop": "https://image.tmdb.org/t/p/original/a8a8z4aJr40zYgRMfmSESppX2eO.jpg",
+    "status": "Ongoing",
+    "type": "tv",
+    "language": "Hindi Dubbed",
+    "latestEpisode": 552,
+    "seasons": [
+      {
+        "seasonNumber": 1,
+        "name": "Men on a Mission (Knowing Bros)",
+        "episodeCount": 553,
+        "airDate": "2015-12-05",
+        "poster": "https://image.tmdb.org/t/p/w342/2jIi55JtYKJTL1km8qHMuUilOWo.jpg"
+      }
+    ],
+    "cast": [
+      {
+        "id": 1421009,
+        "slug": "1421009-kim-young-cheol",
+        "name": "Kim Young-cheol",
+        "character": "Self",
+        "profilePath": "https://image.tmdb.org/t/p/w342/f0O90cm6qFi8PvBKYuD2ugRLNlD.jpg",
+        "popularity": 0.4401
+      },
+      {
+        "id": 1622151,
+        "slug": "1622151-min-kyung-hoon",
+        "name": "Min Kyung-hoon",
+        "character": "Self",
+        "profilePath": "https://image.tmdb.org/t/p/w342/pRaOrGX36dTTnnxrswegaCoSCYI.jpg",
+        "popularity": 0.5651
+      },
+      {
+        "id": 1250840,
+        "slug": "1250840-kang-ho-dong",
+        "name": "Kang Ho-dong",
+        "character": "Self",
+        "profilePath": "https://image.tmdb.org/t/p/w342/tceyY4cqTxkiar4jFjPnEaZ6QRZ.jpg",
+        "popularity": 0.6882
+      },
+      {
+        "id": 1250841,
+        "slug": "1250841-lee-su-geun",
+        "name": "Lee Su-geun",
+        "character": "Self",
+        "profilePath": "https://image.tmdb.org/t/p/w342/zwEmEAS7CAuJLwhLhvSB09La1QM.jpg",
+        "popularity": 0.6975
+      },
+      {
+        "id": 1241032,
+        "slug": "1241032-kim-hee-chul",
+        "name": "Kim Hee-chul",
+        "character": "Self",
+        "profilePath": "https://image.tmdb.org/t/p/w342/w521FQ30VXdvjEfj0sZcn1sON5b.jpg",
+        "popularity": 1.0867
+      },
+      {
+        "id": 1662829,
+        "slug": "1662829-seo-jang-hoon",
+        "name": "Seo Jang-hoon",
+        "character": "Self",
+        "profilePath": "https://image.tmdb.org/t/p/w342/w0sGoIEqQE1cKAgL7vlBxwbNDSd.jpg",
+        "popularity": 0.7244
+      },
+      {
+        "id": 1253793,
+        "slug": "1253793-lee-sang-min",
+        "name": "Lee Sang-min",
+        "character": "Self",
+        "profilePath": "https://image.tmdb.org/t/p/w342/y9is5HFbPIyZtUpuKlbWyJPMlFn.jpg",
+        "popularity": 0.7258
+      }
+    ],
+    "updatedAt": "2026-11-17T12:40:14.514Z"
+  },
+  {
+    "id": "infinite-challenge",
+    "slug": "infinite-challenge",
+    "tmdbId": 5092,
+    "imdbId": "tt4546568",
+    "tvdbId": 284209,
+    "title": "Infinite Challenge",
+    "hindiTitle": "Infinite Challenge (Hindi Dubbed)",
+    "country": "Korean",
+    "year": 2005,
+    "rating": 7.7,
+    "views": "201K",
+    "duration": "90 min",
+    "totalEpisodes": 616,
+    "genres": [
+      "Reality",
+      "Comedy"
+    ],
+    "overview": "Infinite Challenge has been reported as the first \"Real-Variety\" show in Korean television history. The program is largely unscripted, and follows a similar format of challenge-based Reality Television programs, familiar to the audiences in the West, but the challenges are often silly, absurd, or impossible to achieve, so the program takes on the aspect of a satirical comedy variety show, rather than a more standard reality or contest program. In order to achieve its comedic purposes its 6 hosts and staff continuously proclaim, the elements of this show are the 3-Ds, Dirty, Dangerous, and Difficult.",
+    "poster": "https://image.tmdb.org/t/p/w500/3ZIPTvMnzI5ThmdGeEYQFxJV5Sg.jpg",
+    "backdrop": "https://image.tmdb.org/t/p/original/s2qJb1FLwp1Mse9lY08JqgMp0kw.jpg",
+    "status": "Completed",
+    "type": "tv",
+    "language": "Hindi Dubbed",
+    "latestEpisode": 616,
+    "seasons": [
+      {
+        "seasonNumber": 1,
+        "name": "Reckless Challenge",
+        "episodeCount": 27,
+        "airDate": "2005-04-23",
+        "poster": "https://image.tmdb.org/t/p/w342/4Nn3JUVrB4O6Qqo5yze051OG07O.jpg"
+      },
+      {
+        "seasonNumber": 2,
+        "name": "Excessive Challenge and Master of Quiz",
+        "episodeCount": 26,
+        "airDate": "2005-10-29",
+        "poster": "https://image.tmdb.org/t/p/w342/swZx9NztltaiPQutg0lzDnOk0y9.jpg"
+      },
+      {
+        "seasonNumber": 3,
+        "name": "Infinite Challenge",
+        "episodeCount": 563,
+        "airDate": "2006-05-06",
+        "poster": "https://image.tmdb.org/t/p/w342/tYMiQJJLu7oHCreRNWWDhtLexFY.jpg"
+      }
+    ],
+    "cast": [
+      {
+        "id": 1239240,
+        "slug": "1239240-yu-jae-seok",
+        "name": "Yu Jae-seok",
+        "character": "Self",
+        "profilePath": "https://image.tmdb.org/t/p/w342/1uktAM7R2Hgc3dynIXvzfACOmnW.jpg",
+        "popularity": 1.8459
+      },
+      {
+        "id": 1619313,
+        "slug": "1619313-park-myung-soo",
+        "name": "Park Myung-soo",
+        "character": "Self",
+        "profilePath": "https://image.tmdb.org/t/p/w342/pYCikF57BmoIMqOYJZEqLpSSk0O.jpg",
+        "popularity": 0.7135
+      },
+      {
+        "id": 1234597,
+        "slug": "1234597-jeong-jun-ha",
+        "name": "Jeong Jun-ha",
+        "character": "Self",
+        "profilePath": "https://image.tmdb.org/t/p/w342/fNcdFdfAQuQXVd6fBLwH1ijXwvs.jpg",
+        "popularity": 0.7073
+      },
+      {
+        "id": 138519,
+        "slug": "138519-haha",
+        "name": "Haha",
+        "character": "Self",
+        "profilePath": "https://image.tmdb.org/t/p/w342/i3vcj3GI3TCmDlnI3aLA7pWKIuN.jpg",
+        "popularity": 1.1414
+      },
+      {
+        "id": 1710469,
+        "slug": "1710469-yang-se-hyung",
+        "name": "Yang Se-hyung",
+        "character": "Self",
+        "profilePath": "https://image.tmdb.org/t/p/w342/5KFgASri0lSN7P2J1BCZCnXOsbC.jpg",
+        "popularity": 0.7045
+      },
+      {
+        "id": 1547167,
+        "slug": "1547167-jeong-hyeong-don",
+        "name": "Jeong Hyeong-don",
+        "character": "Self",
+        "profilePath": "https://image.tmdb.org/t/p/w342/9L4RG3cujCgTHjtDhFAG88gZiOX.jpg",
+        "popularity": 0.5314
+      },
+      {
+        "id": 1254667,
+        "slug": "1254667-noh-hong-chul",
+        "name": "Noh Hong-chul",
+        "character": "Self",
+        "profilePath": "https://image.tmdb.org/t/p/w342/d0UQQd792Y75IRNYzwxcz8uvN4N.jpg",
+        "popularity": 0.6542
+      },
+      {
+        "id": 1619560,
+        "slug": "1619560-gil",
+        "name": "Gil",
+        "character": "Self",
+        "profilePath": "https://image.tmdb.org/t/p/w342/tQ4E9MhTkPnsOnuAxD2TQWjrc5L.jpg",
+        "popularity": 0.458
+      }
+    ],
+    "updatedAt": "2026-11-17T12:40:14.608Z"
+  },
+  {
+    "id": "home-alone",
+    "slug": "home-alone",
+    "tmdbId": 65282,
+    "imdbId": "tt7997010",
+    "tvdbId": 298704,
+    "youtubeKey": "HlhfxNkfROE",
+    "title": "Home Alone",
+    "hindiTitle": "Home Alone (Hindi Dubbed)",
+    "country": "Korean",
+    "year": 2013,
+    "rating": 7.2,
+    "views": "182K",
+    "duration": "90 min",
+    "totalEpisodes": 672,
+    "genres": [
+      "Reality"
+    ],
+    "overview": "It can be a badge of honor to be “single.” “I Live Alone” is a documentary-style South Korean reality series that follows the members of a self-formed club called Rainbow, which is comprised of  celebrities who are single and live alone.",
+    "poster": "https://image.tmdb.org/t/p/w500/1hqGagr94soBq70Lq7tPHvNmmxy.jpg",
+    "backdrop": "https://image.tmdb.org/t/p/original/sztoil0XfQ0cSHy4PXmYW6uAdfQ.jpg",
+    "status": "Ongoing",
+    "type": "tv",
+    "language": "Hindi Dubbed",
+    "latestEpisode": 672,
+    "seasons": [
+      {
+        "seasonNumber": 1,
+        "name": "Season 1",
+        "episodeCount": 675,
+        "airDate": "2013-03-22",
+        "poster": "https://image.tmdb.org/t/p/w342/erlStRPzGNGEljuh3tRsTQwpVJO.jpg"
+      }
+    ],
+    "cast": [
+      {
+        "id": 1703375,
+        "slug": "1703375-park-na-rae",
+        "name": "Park Na-rae",
+        "character": "Main Role",
+        "profilePath": "https://image.tmdb.org/t/p/w342/dUqQeDICulymBkia4eqQ40LKHPa.jpg",
+        "popularity": 0.8763
+      },
+      {
+        "id": 1594539,
+        "slug": "1594539-jeon-hyun-moo",
+        "name": "Jeon Hyun-moo",
+        "character": "Main Role",
+        "profilePath": "https://image.tmdb.org/t/p/w342/rJ1890Fh0ln5IQ4JywD3pkdlALY.jpg",
+        "popularity": 1.0868
+      },
+      {
+        "id": 1620765,
+        "slug": "1620765-key",
+        "name": "Key",
+        "character": "Main Role",
+        "profilePath": "https://image.tmdb.org/t/p/w342/2f2n3A2cDtc8lgKfkd1NdsvEKhB.jpg",
+        "popularity": 2.6515
+      },
+      {
+        "id": 2332076,
+        "slug": "2332076-hwasa",
+        "name": "Hwasa",
+        "character": "Main Role",
+        "profilePath": "https://image.tmdb.org/t/p/w342/zfIgRBmgxUZB5ASKfKWw30KEsQm.jpg",
+        "popularity": 1.0667
+      },
+      {
+        "id": 2318652,
+        "slug": "2318652-code-kunst",
+        "name": "Code Kunst",
+        "character": "Main Role",
+        "profilePath": "https://image.tmdb.org/t/p/w342/jrNqyZRJpNfYypaChI5yFZkhp3g.jpg",
+        "popularity": 0.7053
+      },
+      {
+        "id": 2332082,
+        "slug": "2332082-kian84",
+        "name": "Kian84",
+        "character": "Main Role",
+        "profilePath": "https://image.tmdb.org/t/p/w342/wjNKFnCPaEEuhXVmgWUbi4qgdWq.jpg",
+        "popularity": 0.6521
+      },
+      {
+        "id": 1348986,
+        "slug": "1348986-lee-jang-woo",
+        "name": "Lee Jang-woo",
+        "character": "Main Role",
+        "profilePath": "https://image.tmdb.org/t/p/w342/bZq5YpRBgtVflLvoDQU8nivrpCz.jpg",
+        "popularity": 0.6115
+      },
+      {
+        "id": 1134769,
+        "slug": "1134769-lee-ju-seung",
+        "name": "Lee Ju-seung",
+        "character": "Main Role",
+        "profilePath": "https://image.tmdb.org/t/p/w342/6yJqT18fiQDEPtMEoU2OWU5x4tG.jpg",
+        "popularity": 0.9902
+      }
+    ],
+    "updatedAt": "2026-11-17T12:40:14.699Z"
+  },
+  {
+    "id": "you-hee-yeol-s-sketchbook",
+    "slug": "you-hee-yeol-s-sketchbook",
+    "tmdbId": 39429,
+    "tvdbId": 318869,
+    "title": "You Hee-yeol's Sketchbook",
+    "hindiTitle": "You Hee-yeol's Sketchbook (Hindi Dubbed)",
+    "country": "Korean",
+    "year": 2009,
+    "rating": 6.3,
+    "views": "180K",
+    "duration": "80 min",
+    "totalEpisodes": 600,
+    "genres": [
+      "Talk"
+    ],
+    "overview": "You Hee-yeol's Sketchbook is a Korean pop music program that is both a talk show and live music show. The host of this program is You Hee-yeol, also known as Toy, a one-man project band. This program has aired since April 24, 2009.",
+    "poster": "https://image.tmdb.org/t/p/w500/5zsoaVX483aJG90rJhlAup1VAXI.jpg",
+    "backdrop": "https://image.tmdb.org/t/p/original/gWTJDV0iRWkkiwlL5uXHQvRPbkk.jpg",
+    "status": "Completed",
+    "type": "tv",
+    "language": "Hindi Dubbed",
+    "latestEpisode": 600,
+    "seasons": [
+      {
+        "seasonNumber": 1,
+        "name": "Season 1",
+        "episodeCount": 600,
+        "airDate": "2009-04-24",
+        "poster": "https://image.tmdb.org/t/p/w342/oOQFWzTAux0Xw0vxiRz6i7Tq0wF.jpg"
+      }
+    ],
+    "cast": [
+      {
+        "id": 1831750,
+        "slug": "1831750-you-hee-yeol",
+        "name": "You Hee-yeol",
+        "character": "Self - Host",
+        "profilePath": "https://image.tmdb.org/t/p/w342/yG6W3e81Q5gFgIzZut0ic2H1tIO.jpg",
+        "popularity": 0.5075
+      }
+    ],
+    "updatedAt": "2026-11-17T12:40:14.788Z"
+  },
+  {
+    "id": "law-of-the-jungle",
+    "slug": "law-of-the-jungle",
+    "tmdbId": 52910,
+    "imdbId": "tt4938990",
+    "tvdbId": 283923,
+    "title": "Law of the Jungle",
+    "hindiTitle": "Law of the Jungle (Hindi Dubbed)",
+    "country": "Korean",
+    "year": 2011,
+    "rating": 5.5,
+    "views": "158K",
+    "duration": "45 min",
+    "totalEpisodes": 893,
+    "genres": [
+      "Reality"
+    ],
+    "overview": "Law of the Jungle is a hybrid reality show combining elements of drama and documentary. The show is hosted by comedian Kim Byung Man, and each episode invites various celebrities from the various field. So far, many of idol stars and famous actors have appeared on the show. The show introduces viewers to exotic locations around the world where celebrities must work together in order to complete missions and survive. The cast celebrities travel to less habituated, natural places to survive on their own and experience life with local tribes and people. In each location, the guests are tasked to hunt and prepare their meals and also create shelter for the tribe. They sometimes confronted by many difficult challenges. Where will the tribe visit? And how will they survive on their own? Stay tuned to check out!",
+    "poster": "https://image.tmdb.org/t/p/w500/zgMOq3H27nYikqjykeXCIIFRbjK.jpg",
+    "backdrop": "https://image.tmdb.org/t/p/original/sgE2evtpaP5b9tavrgYCy2nKYLT.jpg",
+    "status": "Completed",
+    "type": "tv",
+    "language": "Hindi Dubbed",
+    "latestEpisode": 893,
+    "seasons": [
+      {
+        "seasonNumber": 1,
+        "name": "Season 1",
+        "episodeCount": 453,
+        "airDate": "2011-10-21",
+        "poster": "https://image.tmdb.org/t/p/w342/lnbpPAG1JHjAA6H5aA2wboxNNdh.jpg"
+      },
+      {
+        "seasonNumber": 2,
+        "name": "Good Sunday – Kim Byung-man's Law of the Jungle in Vanuatu",
+        "episodeCount": 10,
+        "airDate": "2012-05-06",
+        "poster": "https://image.tmdb.org/t/p/w342/o8YYdDP0T4CIRMEJtJ5mxpvaXBm.jpg"
+      },
+      {
+        "seasonNumber": 3,
+        "name": "Good Sunday – Kim Byung-man's Law of the Jungle in Siberia",
+        "episodeCount": 6,
+        "airDate": "2012-07-14",
+        "poster": "https://image.tmdb.org/t/p/w342/4n8LOKmjTw8KiHe435F6DfPHI8E.jpg"
+      },
+      {
+        "seasonNumber": 4,
+        "name": "Good Sunday – Kim Byung-man's Law of the Jungle in Madagascar",
+        "episodeCount": 12,
+        "airDate": "2012-09-01",
+        "poster": "https://image.tmdb.org/t/p/w342/kxzhkHJTZFkrHu877HzGlDjE4EE.jpg"
+      },
+      {
+        "seasonNumber": 5,
+        "name": "Law of the Jungle in Amazon/Galapagos",
+        "episodeCount": 10,
+        "airDate": "2012-12-27",
+        "poster": "https://image.tmdb.org/t/p/w342/7aUSuyt7Zx6T6LG4RqcVnLvLhEC.jpg"
+      },
+      {
+        "seasonNumber": 6,
+        "name": "Law of the Jungle in New Zealand",
+        "episodeCount": 10,
+        "airDate": "2013-03-07",
+        "poster": "https://image.tmdb.org/t/p/w342/it8fpI8XD7B4X3DVZXTmwS7agcE.jpg"
+      },
+      {
+        "seasonNumber": 7,
+        "name": "Law of the Jungle in Himalayas",
+        "episodeCount": 10,
+        "airDate": "2013-05-16",
+        "poster": "https://image.tmdb.org/t/p/w342/d9HJWKlqLQKNWai7SPectXIkvHH.jpg"
+      },
+      {
+        "seasonNumber": 8,
+        "name": "Law of the Jungle in Caribbean/Maya Jungle",
+        "episodeCount": 10,
+        "airDate": "2013-07-25",
+        "poster": "https://image.tmdb.org/t/p/w342/5IQ5DUuoClPTslWCIVaVUZltZuh.jpg"
+      },
+      {
+        "seasonNumber": 9,
+        "name": "Law of the Jungle in Savanna",
+        "episodeCount": 9,
+        "airDate": "2013-10-03",
+        "poster": "https://image.tmdb.org/t/p/w342/91rydut5qRjDK0gAUSpvlaFvM4I.jpg"
+      },
+      {
+        "seasonNumber": 10,
+        "name": "Law of the Jungle in Micronesia",
+        "episodeCount": 10,
+        "airDate": "2013-12-19",
+        "poster": "https://image.tmdb.org/t/p/w342/vThHba8aoitc02nh1oZf4PQ9uQE.jpg"
+      },
+      {
+        "seasonNumber": 11,
+        "name": "Law of the Jungle in Borneo: the Hunger Games",
+        "episodeCount": 8,
+        "airDate": "2014-02-27",
+        "poster": "https://image.tmdb.org/t/p/w342/5eYPChGmjJaYyxjhHcPkoXzKUTZ.jpg"
+      },
+      {
+        "seasonNumber": 12,
+        "name": "Law of the Jungle in Brazil",
+        "episodeCount": 9,
+        "airDate": "2014-05-08",
+        "poster": "https://image.tmdb.org/t/p/w342/5yJyteUBUtuI5pAB6JDP8bS3mCo.jpg"
+      },
+      {
+        "seasonNumber": 13,
+        "name": "Law of the Jungle in Indian Ocean",
+        "episodeCount": 9,
+        "airDate": "2014-07-10",
+        "poster": "https://image.tmdb.org/t/p/w342/sQ1UA1tS8ZlnVaNM2DlAZ1vaaEB.jpg"
+      },
+      {
+        "seasonNumber": 14,
+        "name": "Law of the Jungle in Solomon Islands",
+        "episodeCount": 11,
+        "airDate": "2014-09-11",
+        "poster": "https://image.tmdb.org/t/p/w342/aYLhLJtrFkuY3OZGbrn0pdmmcfl.jpg"
+      },
+      {
+        "seasonNumber": 15,
+        "name": "Law of the Jungle in Costa Rica",
+        "episodeCount": 9,
+        "airDate": "2014-11-27",
+        "poster": "https://image.tmdb.org/t/p/w342/rE2OBJXdSY9OouXa8bRfXccfW0t.jpg"
+      },
+      {
+        "seasonNumber": 16,
+        "name": "Law of the Jungle with Friends",
+        "episodeCount": 8,
+        "airDate": "2015-01-29",
+        "poster": "https://image.tmdb.org/t/p/w342/eBfab4RWYPBLrtpcmxMXfW54fDo.jpg"
+      },
+      {
+        "seasonNumber": 17,
+        "name": "Law of the Jungle in Indochina",
+        "episodeCount": 9,
+        "airDate": "2015-03-26",
+        "poster": "https://image.tmdb.org/t/p/w342/op2gI8ZU3AowGNUXaoC7AccnxNa.jpg"
+      },
+      {
+        "seasonNumber": 18,
+        "name": "Law of the Jungle in Yap",
+        "episodeCount": 8,
+        "airDate": "2015-05-28",
+        "poster": "https://image.tmdb.org/t/p/w342/oKYkmcuBb7totYjSvGFwKoFwrEm.jpg"
+      },
+      {
+        "seasonNumber": 19,
+        "name": "Law of the Jungle: Hidden Kingdom Special",
+        "episodeCount": 4,
+        "airDate": "2015-07-23",
+        "poster": "https://image.tmdb.org/t/p/w342/zLS3grpEhF3WLTH0dv1E4YPX4py.jpg"
+      },
+      {
+        "seasonNumber": 20,
+        "name": "Law of the Jungle: Hidden Kingdom Special",
+        "episodeCount": 3,
+        "airDate": "2015-08-20",
+        "poster": "https://image.tmdb.org/t/p/w342/ljjvTYEMVr0d2p5prBpqQmrMufd.jpg"
+      },
+      {
+        "seasonNumber": 21,
+        "name": "Law of the Jungle in Nicaragua",
+        "episodeCount": 8,
+        "airDate": "2015-09-11",
+        "poster": "https://image.tmdb.org/t/p/w342/23NtBsnZWnsk3fy6wssjoldNRri.jpg"
+      },
+      {
+        "seasonNumber": 22,
+        "name": "Law of the Jungle in Samoa",
+        "episodeCount": 9,
+        "airDate": "2015-11-05",
+        "poster": "https://image.tmdb.org/t/p/w342/afbqpjSBVhEQYKzmyVvYSdYmPU1.jpg"
+      },
+      {
+        "seasonNumber": 23,
+        "name": "Law of the Jungle in Panama",
+        "episodeCount": 8,
+        "airDate": "2016-01-07",
+        "poster": "https://image.tmdb.org/t/p/w342/mmNm5c5SzhPYQOdKZJ3zWs2L8NR.jpg"
+      },
+      {
+        "seasonNumber": 24,
+        "name": "Law of the Jungle in Tonga",
+        "episodeCount": 9,
+        "airDate": "2016-03-03",
+        "poster": "https://image.tmdb.org/t/p/w342/49f4WUxkhkcBmA0y6fAWxqJPRDD.jpg"
+      },
+      {
+        "seasonNumber": 25,
+        "name": "Law of the Jungle in Papua New Guinea",
+        "episodeCount": 8,
+        "airDate": "2016-05-05",
+        "poster": "https://image.tmdb.org/t/p/w342/jgxqRTTdPrslBMJxBpuBTM26QQC.jpg"
+      },
+      {
+        "seasonNumber": 26,
+        "name": "Law of the Jungle in New Caledonia",
+        "episodeCount": 9,
+        "airDate": "2016-06-30",
+        "poster": "https://image.tmdb.org/t/p/w342/wDknHUO8eVVawYq9juZaHjgkH5c.jpg"
+      },
+      {
+        "seasonNumber": 27,
+        "name": "Law of the Jungle in Mongolia",
+        "episodeCount": 9,
+        "airDate": "2016-09-01",
+        "poster": "https://image.tmdb.org/t/p/w342/n2x10V5JM8l883VM5ReiOXYlrQg.jpg"
+      },
+      {
+        "seasonNumber": 28,
+        "name": "Law of the Jungle in East Timor",
+        "episodeCount": 9,
+        "airDate": "2016-11-03",
+        "poster": "https://image.tmdb.org/t/p/w342/yLTqLak7AFco3iVDS9PhUHPBz6W.jpg"
+      },
+      {
+        "seasonNumber": 29,
+        "name": "Law of the Jungle in Kota Manado",
+        "episodeCount": 9,
+        "airDate": "2017-01-05",
+        "poster": "https://image.tmdb.org/t/p/w342/17YGbHNk88NK9tESVrcV2UtMo5s.jpg"
+      },
+      {
+        "seasonNumber": 30,
+        "name": "Law of the Jungle in Sumatra",
+        "episodeCount": 9,
+        "airDate": "2017-03-17",
+        "poster": "https://image.tmdb.org/t/p/w342/1rsjliLgDo2mcLzUP7srfhhXgF4.jpg"
+      },
+      {
+        "seasonNumber": 31,
+        "name": "Law of the Jungle in Wild New Zealand",
+        "episodeCount": 9,
+        "airDate": "2017-05-18",
+        "poster": "https://image.tmdb.org/t/p/w342/oWbrMDKhWQwSgBecF5ltTFeHtCL.jpg"
+      },
+      {
+        "seasonNumber": 32,
+        "name": "Law of the Jungle in Komodo",
+        "episodeCount": 9,
+        "airDate": "2017-07-20",
+        "poster": "https://image.tmdb.org/t/p/w342/nUucEYsTfLeGNzs8pmZFhDq8GJA.jpg"
+      },
+      {
+        "seasonNumber": 33,
+        "name": "Law of the Jungle in Fiji",
+        "episodeCount": 10,
+        "airDate": "2017-09-21",
+        "poster": "https://image.tmdb.org/t/p/w342/5bOFH3rKOrjJSJuyMmwr1VnvDnf.jpg"
+      },
+      {
+        "seasonNumber": 34,
+        "name": "Law Of The Jungle in Cook Islands",
+        "episodeCount": 9,
+        "airDate": "2017-12-01",
+        "poster": "https://image.tmdb.org/t/p/w342/pF6JzPZLq7aH0JEkWl8pLpNCgIQ.jpg"
+      },
+      {
+        "seasonNumber": 35,
+        "name": "Law Of The Jungle in Patagonia",
+        "episodeCount": 9,
+        "airDate": "2018-02-01",
+        "poster": "https://image.tmdb.org/t/p/w342/xUmoqIsZfEYfXZanDLf5Fy8XMfu.jpg"
+      },
+      {
+        "seasonNumber": 36,
+        "name": "Law Of The Jungle in Antarctica",
+        "episodeCount": 4,
+        "airDate": "2018-04-12",
+        "poster": "https://image.tmdb.org/t/p/w342/rWLDF8eAsn4hdQTlijOekCHkqI4.jpg"
+      },
+      {
+        "seasonNumber": 37,
+        "name": "Law of the Jungle in Mexico",
+        "episodeCount": 10,
+        "airDate": "2018-05-17"
+      },
+      {
+        "seasonNumber": 38,
+        "name": "Law of the Jungle in Sabah",
+        "episodeCount": 9,
+        "airDate": "2018-07-26",
+        "poster": "https://image.tmdb.org/t/p/w342/qBXFcggyVDkpl8700gwzJx5rJIv.jpg"
+      },
+      {
+        "seasonNumber": 39,
+        "name": "Season 39",
+        "episodeCount": 10,
+        "airDate": "2018-09-28",
+        "poster": "https://image.tmdb.org/t/p/w342/i2sK0xWvQKWrZ2UZmnmSB87AFMk.jpg"
+      },
+      {
+        "seasonNumber": 40,
+        "name": "Season 40",
+        "episodeCount": 9,
+        "airDate": "2018-12-21",
+        "poster": "https://image.tmdb.org/t/p/w342/dZhI7WaJtnpyz9wf6t0JRjlhua6.jpg"
+      },
+      {
+        "seasonNumber": 41,
+        "name": "Season 41",
+        "episodeCount": 10,
+        "airDate": "2019-03-02"
+      },
+      {
+        "seasonNumber": 42,
+        "name": "Season 42",
+        "episodeCount": 10,
+        "airDate": "2019-05-11",
+        "poster": "https://image.tmdb.org/t/p/w342/xosI5PBftz1ztAFgcifeZqvoRCm.jpg"
+      },
+      {
+        "seasonNumber": 43,
+        "name": "Season 43",
+        "episodeCount": 10,
+        "airDate": "2019-07-20",
+        "poster": "https://image.tmdb.org/t/p/w342/AdSyPLb8qUbkUrlJ0s2ePinlmqi.jpg"
+      },
+      {
+        "seasonNumber": 44,
+        "name": "Season 44",
+        "episodeCount": 10,
+        "airDate": "2019-09-28",
+        "poster": "https://image.tmdb.org/t/p/w342/eUA95l9eSPk2HKGhAiHRvrCvPux.jpg"
+      },
+      {
+        "seasonNumber": 45,
+        "name": "Season 45",
+        "episodeCount": 10,
+        "airDate": "2019-12-14",
+        "poster": "https://image.tmdb.org/t/p/w342/lZwTwHuemIsq4EdaDAHRbkynwEM.jpg"
+      },
+      {
+        "seasonNumber": 46,
+        "name": "Season 46",
+        "episodeCount": 13,
+        "airDate": "2020-02-29",
+        "poster": "https://image.tmdb.org/t/p/w342/4oIcxv5yLcQAMSFmFTa6eKERbD9.jpg"
+      },
+      {
+        "seasonNumber": 47,
+        "name": "Season 47",
+        "episodeCount": 4,
+        "airDate": "2020-08-29",
+        "poster": "https://image.tmdb.org/t/p/w342/9o363B6b4b105DPijrWV0QlGFZj.jpg"
+      },
+      {
+        "seasonNumber": 48,
+        "name": "Season 48",
+        "episodeCount": 3,
+        "airDate": "2020-09-26",
+        "poster": "https://image.tmdb.org/t/p/w342/waYyUeMPM5JgAkQ0ZRCr7KjRvcw.jpg"
+      },
+      {
+        "seasonNumber": 49,
+        "name": "Zero Point",
+        "episodeCount": 4,
+        "airDate": "2020-10-24",
+        "poster": "https://image.tmdb.org/t/p/w342/iVjjYvzO4s62n1VkN6obLJRbGWq.jpg"
+      },
+      {
+        "seasonNumber": 50,
+        "name": "Season 50",
+        "episodeCount": 3,
+        "airDate": "2020-11-21",
+        "poster": "https://image.tmdb.org/t/p/w342/kIIvOEfbuKxHyyO5iHrq267T5HK.jpg"
+      },
+      {
+        "seasonNumber": 51,
+        "name": "Season 51",
+        "episodeCount": 4,
+        "airDate": "2020-12-12",
+        "poster": "https://image.tmdb.org/t/p/w342/dsxZ97SFeDzCDxgK3GXS4bRTU5c.jpg"
+      },
+      {
+        "seasonNumber": 52,
+        "name": "Season 52",
+        "episodeCount": 4,
+        "airDate": "2021-01-16",
+        "poster": "https://image.tmdb.org/t/p/w342/Aa4czqtMXUEqFQzHew5Z1dJq1FS.jpg"
+      },
+      {
+        "seasonNumber": 53,
+        "name": "Season 53",
+        "episodeCount": 5,
+        "airDate": "2021-02-20",
+        "poster": "https://image.tmdb.org/t/p/w342/2p0L5cU81YJahCAYvwNx3EbV5HD.jpg"
+      },
+      {
+        "seasonNumber": 54,
+        "name": "Season 54",
+        "episodeCount": 3,
+        "airDate": "2021-03-27",
+        "poster": "https://image.tmdb.org/t/p/w342/5ymfvPl6AF1lxwQquctwuJ9LEQ7.jpg"
+      },
+      {
+        "seasonNumber": 55,
+        "name": "Season 55",
+        "episodeCount": 3,
+        "airDate": "2021-04-17",
+        "poster": "https://image.tmdb.org/t/p/w342/dBCdO6HgICWYX8GXsj1qk7Cgw3N.jpg"
+      },
+      {
+        "seasonNumber": 56,
+        "name": "Season 56",
+        "episodeCount": 2,
+        "airDate": "2021-05-07",
+        "poster": "https://image.tmdb.org/t/p/w342/gQvxKvAaAWblvLbt8xc7hyTmXEf.jpg"
+      },
+      {
+        "seasonNumber": 57,
+        "name": "Season 57",
+        "episodeCount": 2,
+        "airDate": "2021-05-22",
+        "poster": "https://image.tmdb.org/t/p/w342/kmmIO7gQDK5tY0qUYYpWlynQr3Z.jpg"
+      }
+    ],
+    "cast": [
+      {
+        "id": 1260409,
+        "slug": "1260409-kim-byung-man",
+        "name": "Kim Byung-man",
+        "character": "Self",
+        "profilePath": "https://image.tmdb.org/t/p/w342/rEZ4LALVCDh6RXvd3l3SzYbzKlb.jpg",
+        "popularity": 0.4812
+      }
+    ],
+    "updatedAt": "2026-11-17T12:40:14.879Z"
+  },
+  {
+    "id": "my-little-old-boy",
+    "slug": "my-little-old-boy",
+    "tmdbId": 72896,
+    "imdbId": "tt33336849",
+    "tvdbId": 318856,
+    "title": "My Little Old Boy",
+    "hindiTitle": "My Little Old Boy (Hindi Dubbed)",
+    "country": "Korean",
+    "year": 2016,
+    "rating": 7.3,
+    "views": "146K",
+    "duration": "100 min",
+    "totalEpisodes": 520,
+    "genres": [
+      "Reality",
+      "Talk"
+    ],
+    "overview": "How much do you know about your grown up son? In Mom’s Diary, the daily lives of the grown up celebrity sons are closely observed by their mothers. Do you know why your son drinks so much these days? How much do you know about your son’s philosophy in his life style? Heart-warming moments of observational communication between a mother and a son can be seen on Mom’s Diary.",
+    "poster": "https://image.tmdb.org/t/p/w500/fgeWRIiigNHLxy3qEzM0HqNcFHT.jpg",
+    "backdrop": "https://image.tmdb.org/t/p/original/vrLDuQ5L45f7vFWpMT17WopdWx0.jpg",
+    "status": "Ongoing",
+    "type": "tv",
+    "language": "Hindi Dubbed",
+    "latestEpisode": 520,
+    "seasons": [
+      {
+        "seasonNumber": 1,
+        "name": "Season 1",
+        "episodeCount": 521,
+        "airDate": "2016-08-26",
+        "poster": "https://image.tmdb.org/t/p/w342/fgeWRIiigNHLxy3qEzM0HqNcFHT.jpg"
+      }
+    ],
+    "cast": [
+      {
+        "id": 1350138,
+        "slug": "1350138-shin-dong-yup",
+        "name": "Shin Dong-yup",
+        "character": "Self - MC",
+        "profilePath": "https://image.tmdb.org/t/p/w342/iMzzz78MnoBpzrVyjMnG6DqkfmZ.jpg",
+        "popularity": 1.2447
+      },
+      {
+        "id": 1662829,
+        "slug": "1662829-seo-jang-hoon",
+        "name": "Seo Jang-hoon",
+        "character": "Self - MC",
+        "profilePath": "https://image.tmdb.org/t/p/w342/w0sGoIEqQE1cKAgL7vlBxwbNDSd.jpg",
+        "popularity": 0.7244
+      }
+    ],
+    "updatedAt": "2026-11-17T12:40:14.964Z"
+  },
+  {
+    "id": "2-days-and-1-night",
+    "slug": "2-days-and-1-night",
+    "tmdbId": 30801,
+    "imdbId": "tt3247300",
+    "tvdbId": 212151,
+    "title": "2 Days and 1 Night",
+    "hindiTitle": "2 Days and 1 Night (Hindi Dubbed)",
+    "country": "Korean",
+    "year": 2007,
+    "rating": 6.7,
+    "views": "126K",
+    "duration": "90 min",
+    "totalEpisodes": 925,
+    "genres": [
+      "Comedy",
+      "Reality"
+    ],
+    "overview": "2 Days & 1 Night is a South Korean reality-variety show with the motto \"real wild road variety.\" Its main concept is to recommend various places of interest that viewers can visit in South Korea.",
+    "poster": "https://image.tmdb.org/t/p/w500/qezeCEkIKHQM5iwyVeYBuXmYA2h.jpg",
+    "backdrop": "https://image.tmdb.org/t/p/original/32iRX9xqNH3ErJN6FowxdtgYmiY.jpg",
+    "status": "Ongoing",
+    "type": "tv",
+    "language": "Hindi Dubbed",
+    "latestEpisode": 925,
+    "seasons": [
+      {
+        "seasonNumber": 1,
+        "name": "Season 1",
+        "episodeCount": 232,
+        "airDate": "2007-08-05",
+        "poster": "https://image.tmdb.org/t/p/w342/r8bWuiyCxKstFudGnvwPpXGh6c4.jpg"
+      },
+      {
+        "seasonNumber": 2,
+        "name": "Season 2",
+        "episodeCount": 89,
+        "airDate": "2012-06-24",
+        "poster": "https://image.tmdb.org/t/p/w342/jumidoRzlRfdpJrbM9fGKqgsuu7.jpg"
+      },
+      {
+        "seasonNumber": 3,
+        "name": "Season 3",
+        "episodeCount": 257,
+        "poster": "https://image.tmdb.org/t/p/w342/uoAWUyOx7bbhIbjLziLAgIDRcjG.jpg"
+      },
+      {
+        "seasonNumber": 4,
+        "name": "Season 4",
+        "episodeCount": 350,
+        "airDate": "2019-12-08",
+        "poster": "https://image.tmdb.org/t/p/w342/qezeCEkIKHQM5iwyVeYBuXmYA2h.jpg"
+      }
+    ],
+    "cast": [
+      {
+        "id": 1250843,
+        "slug": "1250843-kim-jong-min",
+        "name": "Kim Jong-min",
+        "character": "Self",
+        "profilePath": "https://image.tmdb.org/t/p/w342/bKnGJpF0t1uUlMG9v7Ju0lM51j4.jpg",
+        "popularity": 1.4694
+      },
+      {
+        "id": 1574049,
+        "slug": "1574049-moon-se-yoon",
+        "name": "Moon Se-yoon",
+        "character": "Self",
+        "profilePath": "https://image.tmdb.org/t/p/w342/yZcIy4f26nucELl6m3DcLahX0FR.jpg",
+        "popularity": 0.6737
+      },
+      {
+        "id": 1875834,
+        "slug": "1875834-dindin",
+        "name": "DinDin",
+        "character": "Self",
+        "profilePath": "https://image.tmdb.org/t/p/w342/3blQZpmbPuxQ9iMTkV0oaOnrd0s.jpg",
+        "popularity": 0.746
+      },
+      {
+        "id": 1894261,
+        "slug": "1894261-yoo-seon-ho",
+        "name": "Yoo Seon-ho",
+        "character": "Self",
+        "profilePath": "https://image.tmdb.org/t/p/w342/hVtbZIWtXsXN6z9JGO9HI2tKpLq.jpg",
+        "popularity": 1.0004
+      },
+      {
+        "id": 1523030,
+        "slug": "1523030-jo-se-ho",
+        "name": "Jo Se-ho",
+        "character": "Self",
+        "profilePath": "https://image.tmdb.org/t/p/w342/byV2UFSUJg39LPJyOutL1z0v2HY.jpg",
+        "popularity": 1.0188
+      },
+      {
+        "id": 1257963,
+        "slug": "1257963-lee-joon",
+        "name": "Lee Joon",
+        "character": "Self",
+        "profilePath": "https://image.tmdb.org/t/p/w342/bF3Zg2vzl4wUnFgcPhcS1J3Csxe.jpg",
+        "popularity": 1.4455
+      }
+    ],
+    "updatedAt": "2026-11-17T12:40:15.063Z"
+  },
+  {
+    "id": "amazing-saturday",
+    "slug": "amazing-saturday",
+    "tmdbId": 78648,
+    "imdbId": "tt10160132",
+    "tvdbId": 350134,
+    "youtubeKey": "apJOlU1WB94",
+    "title": "Amazing Saturday",
+    "hindiTitle": "Amazing Saturday (Hindi Dubbed)",
+    "country": "Korean",
+    "year": 2018,
+    "rating": 7.6,
+    "views": "120K",
+    "duration": "75 min",
+    "totalEpisodes": 434,
+    "genres": [
+      "Comedy",
+      "Reality"
+    ],
+    "overview": "A group of hungry celebrities listen to poppin’ tunes, from recent hits to all-time-favorites, to correctly dictate a part of the lyrics.\n\nThe songs may sound familiar, but the part they must dictate are unclear to the naked ear, as the lyrics are slurred, muffled by strong beats, etc.\n\nIf they get the lyrics right, they get to share exquisite regional dishes. But if they get them wrong, a professional eater gobbles it up instead.",
+    "poster": "https://image.tmdb.org/t/p/w500/nEwybsfZBSPjcZamPpKDTaTI5g.jpg",
+    "backdrop": "https://image.tmdb.org/t/p/original/pNdUVPm6RwvG9Ycd2cuYpLbM7lk.jpg",
+    "status": "Ongoing",
+    "type": "tv",
+    "language": "Hindi Dubbed",
+    "latestEpisode": 434,
+    "seasons": [
+      {
+        "seasonNumber": 1,
+        "name": "Season 1",
+        "episodeCount": 434,
+        "airDate": "2018-04-07",
+        "poster": "https://image.tmdb.org/t/p/w342/nEwybsfZBSPjcZamPpKDTaTI5g.jpg"
+      }
+    ],
+    "cast": [
+      {
+        "id": 1350138,
+        "slug": "1350138-shin-dong-yup",
+        "name": "Shin Dong-yup",
+        "character": "Self",
+        "profilePath": "https://image.tmdb.org/t/p/w342/iMzzz78MnoBpzrVyjMnG6DqkfmZ.jpg",
+        "popularity": 1.2447
+      },
+      {
+        "id": 1703375,
+        "slug": "1703375-park-na-rae",
+        "name": "Park Na-rae",
+        "character": "Self",
+        "profilePath": "https://image.tmdb.org/t/p/w342/dUqQeDICulymBkia4eqQ40LKHPa.jpg",
+        "popularity": 0.8763
+      },
+      {
+        "id": 83382,
+        "slug": "83382-kim-dong-hyun",
+        "name": "Kim Dong-hyun",
+        "character": "Self",
+        "profilePath": "https://image.tmdb.org/t/p/w342/jDq3sZAtOczM09AG1NvCrXSsK7s.jpg",
+        "popularity": 0.934
+      },
+      {
+        "id": 1625142,
+        "slug": "1625142-lee-min-ho",
+        "name": "Lee Min-ho",
+        "character": "Self / Main Host",
+        "profilePath": "https://image.tmdb.org/t/p/w342/gfdninENLAwox0le8TImLwMYSOd.jpg",
+        "popularity": 0.6158
+      },
+      {
+        "id": 1574049,
+        "slug": "1574049-moon-se-yoon",
+        "name": "Moon Se-yoon",
+        "character": "Self",
+        "profilePath": "https://image.tmdb.org/t/p/w342/yZcIy4f26nucELl6m3DcLahX0FR.jpg",
+        "popularity": 0.6737
+      },
+      {
+        "id": 1620765,
+        "slug": "1620765-key",
+        "name": "Key",
+        "character": "Self",
+        "profilePath": "https://image.tmdb.org/t/p/w342/2f2n3A2cDtc8lgKfkd1NdsvEKhB.jpg",
+        "popularity": 2.6515
+      },
+      {
+        "id": 2018022,
+        "slug": "2018022-hanhae",
+        "name": "Hanhae",
+        "character": "Self",
+        "profilePath": "https://image.tmdb.org/t/p/w342/valsCMfJQo4EgMWxVqDT622IY8g.jpg",
+        "popularity": 0.6047
+      },
+      {
+        "id": 1260310,
+        "slug": "1260310-taeyeon",
+        "name": "Taeyeon",
+        "character": "Self",
+        "profilePath": "https://image.tmdb.org/t/p/w342/oDHFWR6JHmQnmNbl73et1G4KzGc.jpg",
+        "popularity": 1.1979
+      }
+    ],
+    "updatedAt": "2026-11-17T12:40:15.155Z"
+  },
+  {
+    "id": "inkigayo",
+    "slug": "inkigayo",
+    "tmdbId": 65278,
+    "imdbId": "tt6050846",
+    "tvdbId": 284138,
+    "title": "Inkigayo",
+    "hindiTitle": "Inkigayo (Hindi Dubbed)",
+    "country": "Korean",
+    "year": 1998,
+    "rating": 7.5,
+    "views": "117K",
+    "duration": "70 min",
+    "totalEpisodes": 1597,
+    "genres": [
+      "Reality",
+      "Family"
+    ],
+    "overview": "The program is a weekly music show that features and introduces viewers to the most popular artists in Korea. Every week, they ask viewers to vote and select the most popular song of the week.",
+    "poster": "https://image.tmdb.org/t/p/w500/hvY5NH73JRvfJI714MF6Ja4TM3.jpg",
+    "backdrop": "https://image.tmdb.org/t/p/original/eXySrZkDWeOel45DlXTcSWiM6NH.jpg",
+    "status": "Ongoing",
+    "type": "tv",
+    "language": "Hindi Dubbed",
+    "latestEpisode": 1597,
+    "seasons": [
+      {
+        "seasonNumber": 1,
+        "name": "Season 1",
+        "episodeCount": 1573,
+        "airDate": "1998-02-01",
+        "poster": "https://image.tmdb.org/t/p/w342/tiJQs4euOHdIPc7tTnB0eonQvqV.jpg"
+      },
+      {
+        "seasonNumber": 24,
+        "name": "Season 24",
+        "episodeCount": 24,
+        "airDate": "2021-10-10"
+      }
+    ],
+    "cast": [],
+    "updatedAt": "2026-11-17T12:40:15.250Z"
+  },
+  {
+    "id": "mystery-music-show-king-of-mask-singer",
+    "slug": "mystery-music-show-king-of-mask-singer",
+    "tmdbId": 66046,
+    "imdbId": "tt6289510",
+    "tvdbId": 296529,
+    "youtubeKey": "hiBPUpCJ7MQ",
+    "title": "Mystery Music Show: King of Mask Singer",
+    "hindiTitle": "Mystery Music Show: King of Mask Singer (Hindi Dubbed)",
+    "country": "Korean",
+    "year": 2015,
+    "rating": 5.6,
+    "views": "131K",
+    "duration": "105 min",
+    "totalEpisodes": 525,
+    "genres": [
+      "Reality"
+    ],
+    "overview": "Competitors are given elaborate masks to wear in order to conceal their identity, thus removing factors such as popularity, career and age that could lead to prejudiced voting. In the first round, a pair of competitors sing the same song, while in the second and third rounds they each sing a solo song. After the First Generation, the winner of the Third Round goes on to challenge the Mask King, and is either eliminated or replaces the previous Mask King through live voting. The identities of the singers are not revealed unless they have been eliminated.",
+    "poster": "https://image.tmdb.org/t/p/w500/vlnAfmirzYx1TSxXuaPhHjkPPmK.jpg",
+    "backdrop": "https://image.tmdb.org/t/p/original/xDXaptzkHFHGyQ2QGZ3aGnEE1dK.jpg",
+    "status": "Ongoing",
+    "type": "tv",
+    "language": "Hindi Dubbed",
+    "latestEpisode": 525,
+    "seasons": [
+      {
+        "seasonNumber": 1,
+        "name": "Season 1",
+        "episodeCount": 525,
+        "airDate": "2015-04-05",
+        "poster": "https://image.tmdb.org/t/p/w342/4gqwuEUyjufUbJIZQr16cz5yyKz.jpg"
+      }
+    ],
+    "cast": [
+      {
+        "id": 1644622,
+        "slug": "1644622-kim-sung-joo",
+        "name": "Kim Sung-joo",
+        "character": "Self - Host",
+        "profilePath": "https://image.tmdb.org/t/p/w342/3C1Hkef7umuLjbboSQvJtFudmpE.jpg",
+        "popularity": 0.8166
+      },
+      {
+        "id": 1628212,
+        "slug": "1628212-kim-gu-ra",
+        "name": "Kim Gu-ra",
+        "character": "Self - Panelist",
+        "profilePath": "https://image.tmdb.org/t/p/w342/eYj0vwQ99Pzfb91TX6CBgnV7Ne.jpg",
+        "popularity": 0.6932
+      }
+    ],
+    "updatedAt": "2026-11-17T12:40:15.349Z"
+  },
+  {
+    "id": "nonstop",
+    "slug": "nonstop",
+    "tmdbId": 18495,
+    "imdbId": "tt0477526",
+    "title": "Nonstop",
+    "hindiTitle": "Nonstop (Hindi Dubbed)",
+    "country": "Korean",
+    "year": 2000,
+    "rating": 5.3,
+    "views": "119K",
+    "duration": "25 min",
+    "totalEpisodes": 1320,
+    "genres": [
+      "Drama",
+      "Comedy"
+    ],
+    "overview": "Nonstop is a South Korean slice-of-life sitcom that broadcast its first season in 2000 on MBC. It continued with 5 more seasons. The series was popular for its cast of teen idols, many who debuted through the show..",
+    "poster": "https://image.tmdb.org/t/p/w500/elXJzhz1dM0lO7fK2BfO2pVtC7l.jpg",
+    "backdrop": "https://image.tmdb.org/t/p/original/6HBi1vfb70PfeTx78BKv2md42mm.jpg",
+    "status": "Completed",
+    "type": "tv",
+    "language": "Hindi Dubbed",
+    "latestEpisode": 1320,
+    "seasons": [
+      {
+        "seasonNumber": 1,
+        "name": "Nonstop",
+        "episodeCount": 50,
+        "airDate": "2000-05-15",
+        "poster": "https://image.tmdb.org/t/p/w342/A0sTztzcURFtxRl13drPE9Hp49A.jpg"
+      },
+      {
+        "seasonNumber": 2,
+        "name": "New Nonstop",
+        "episodeCount": 422,
+        "airDate": "2000-07-31",
+        "poster": "https://image.tmdb.org/t/p/w342/bn4jik38yiufKE1a7SFdzRmvWER.jpg"
+      },
+      {
+        "seasonNumber": 3,
+        "name": "Nonstop 3",
+        "episodeCount": 301,
+        "airDate": "2002-05-20",
+        "poster": "https://image.tmdb.org/t/p/w342/ucXBaorHnrv3PDae0hdTdrDCUqL.jpg"
+      },
+      {
+        "seasonNumber": 4,
+        "name": "Nonstop 4",
+        "episodeCount": 250,
+        "airDate": "2003-09-15",
+        "poster": "https://image.tmdb.org/t/p/w342/aWG6GbPWUR7cfMK4u0Bvf6NhASO.jpg"
+      },
+      {
+        "seasonNumber": 5,
+        "name": "Nonstop 5",
+        "episodeCount": 257,
+        "airDate": "2004-10-04",
+        "poster": "https://image.tmdb.org/t/p/w342/psxne4ha7keuv5Y9TtdlPNMfzxV.jpg"
+      },
+      {
+        "seasonNumber": 6,
+        "name": "Rainbow Romance",
+        "episodeCount": 40,
+        "airDate": "2005-10-24",
+        "poster": "https://image.tmdb.org/t/p/w342/4NaEGdl3tieDABndH5YAFlcKmNp.jpg"
+      }
+    ],
+    "cast": [
+      {
+        "id": 232017,
+        "slug": "232017-lim-eun-kyung",
+        "name": "Lim Eun-kyung",
+        "character": "Main Role",
+        "profilePath": "https://image.tmdb.org/t/p/w342/6XB6iMIWHb2KBFOxEKXPWogRc9Y.jpg",
+        "popularity": 0.5946
+      },
+      {
+        "id": 1623703,
+        "slug": "1623703-park-hee-jin",
+        "name": "Park Hee-jin",
+        "character": "Main Role",
+        "profilePath": "https://image.tmdb.org/t/p/w342/h6ZyfT570WgvhZ9wrmgTovnxuMS.jpg",
+        "popularity": 0.6943
+      },
+      {
+        "id": 1623724,
+        "slug": "1623724-lee-sang-mi",
+        "name": "Lee Sang-mi",
+        "character": "Main Role",
+        "profilePath": "https://image.tmdb.org/t/p/w342/jyc9HDQDmJC4PthBUdw95XJJog9.jpg",
+        "popularity": 0.2082
+      },
+      {
+        "id": 1623728,
+        "slug": "1623728-uhm-hyun-kyung",
+        "name": "Uhm Hyun-kyung",
+        "character": "Main Role",
+        "profilePath": "https://image.tmdb.org/t/p/w342/ekBPnpmP8nN2XMpujoC3A4SU6IJ.jpg",
+        "popularity": 1.1999
+      },
+      {
+        "id": 1623729,
+        "slug": "1623729-lee-ayumi",
+        "name": "Lee Ayumi",
+        "character": "Main Role",
+        "profilePath": "https://image.tmdb.org/t/p/w342/a7iJ7kM6EJ6IkEM5hJ7N9eAo5tl.jpg",
+        "popularity": 0.5247
+      },
+      {
+        "id": 1623730,
+        "slug": "1623730-choi-won-joon",
+        "name": "Choi Won Joon",
+        "character": "Main Role",
+        "profilePath": "https://image.tmdb.org/t/p/w342/29x2C9oCp5KoVwoeiWImP29ffi.jpg",
+        "popularity": 0
+      },
+      {
+        "id": 63441,
+        "slug": "63441-kim-chang-wan",
+        "name": "Kim Chang-wan",
+        "character": "Main Role",
+        "profilePath": "https://image.tmdb.org/t/p/w342/g1F7rIJ1FVMct4O0Q6B63RD7ICd.jpg",
+        "popularity": 1.2273
+      },
+      {
+        "id": 117376,
+        "slug": "117376-seo-jae-kyeong",
+        "name": "Seo Jae-kyeong",
+        "character": "Main Role",
+        "profilePath": "https://image.tmdb.org/t/p/w342/nnbCQ5nNo81lHZrWB8QVPXD9gIC.jpg",
+        "popularity": 0.3875
+      }
+    ],
+    "updatedAt": "2026-11-17T12:40:15.434Z"
+  },
+  {
+    "id": "show-music-core",
+    "slug": "show-music-core",
+    "tmdbId": 35024,
+    "imdbId": "tt2375022",
+    "tvdbId": 343498,
+    "youtubeKey": "yLDaFHi7tcI",
+    "title": "Show! Music Core",
+    "hindiTitle": "Show! Music Core (Hindi Dubbed)",
+    "country": "Korean",
+    "year": 2005,
+    "rating": 7,
+    "views": "111K",
+    "duration": "65 min",
+    "totalEpisodes": 972,
+    "genres": [
+      "Reality"
+    ],
+    "overview": "Show! Music Core is a music show that has been aired since 2005. Not like any other music shows, this show doesn't include any charts or awards. There are a few segments such as This Week's Hot 3, Chart Up Core and Core of Rising Stars.",
+    "poster": "https://image.tmdb.org/t/p/w500/AkoQr6axSoFdpTuPt0dY3WekIeY.jpg",
+    "backdrop": "https://image.tmdb.org/t/p/original/ivHoFv1aJCmtpi8Kejs3ubjLYAR.jpg",
+    "status": "Ongoing",
+    "type": "tv",
+    "language": "Hindi Dubbed",
+    "latestEpisode": 972,
+    "seasons": [
+      {
+        "seasonNumber": 1,
+        "name": "Season 1",
+        "episodeCount": 977,
+        "airDate": "2005-10-29",
+        "poster": "https://image.tmdb.org/t/p/w342/gf9sdLzo1B0saiO1I0fG2bzoF29.jpg"
+      }
+    ],
+    "cast": [
+      {
+        "id": 2762543,
+        "slug": "2762543-younghoon",
+        "name": "Younghoon",
+        "character": "MC (Episode 832 - Present)",
+        "profilePath": "https://image.tmdb.org/t/p/w342/xWqz59CHi5XP6jOF8IAhmhW99ZV.jpg",
+        "popularity": 0.8772
+      },
+      {
+        "id": 2176671,
+        "slug": "2176671-lee-jung-ha",
+        "name": "Lee Jung-ha",
+        "character": "MC (Episode 832 - Present)",
+        "profilePath": "https://image.tmdb.org/t/p/w342/pCUlAO603SXqfvpp5cOCccNFsgL.jpg",
+        "popularity": 1.2457
+      },
+      {
+        "id": 3786426,
+        "slug": "3786426-sullyoon",
+        "name": "Sullyoon",
+        "character": "MC (Episode 804 - Present)",
+        "profilePath": "https://image.tmdb.org/t/p/w342/7225PexjDkZvdJ80RI50zJgY4Di.jpg",
+        "popularity": 1.0617
+      },
+      {
+        "id": 2368916,
+        "slug": "2368916-jungwoo",
+        "name": "Jungwoo",
+        "character": "MC",
+        "profilePath": "https://image.tmdb.org/t/p/w342/pVvj4tdP6VcCGHSxhfiFzlBeqxX.jpg",
+        "popularity": 0.7179
+      },
+      {
+        "id": 2021737,
+        "slug": "2021737-lee-know",
+        "name": "Lee Know",
+        "character": "MC",
+        "profilePath": "https://image.tmdb.org/t/p/w342/sAjPzyMO6ClA667zAEH3DoT5TD2.jpg",
+        "popularity": 0.94
+      },
+      {
+        "id": 2117360,
+        "slug": "2117360-kim-min-ju",
+        "name": "Kim Min-ju",
+        "character": "MC",
+        "profilePath": "https://image.tmdb.org/t/p/w342/egMmX5YaltrE86tH6ywukCWoeqS.jpg",
+        "popularity": 1.6448
+      }
+    ],
+    "updatedAt": "2026-11-17T12:40:15.669Z"
+  },
+  {
+    "id": "tv-animal-farm",
+    "slug": "tv-animal-farm",
+    "tmdbId": 64369,
+    "imdbId": "tt25605188",
+    "tvdbId": 345781,
+    "title": "TV Animal Farm",
+    "hindiTitle": "TV Animal Farm (Hindi Dubbed)",
+    "country": "Korean",
+    "year": 2001,
+    "rating": 7.6,
+    "views": "107K",
+    "duration": "45 min",
+    "totalEpisodes": 1293,
+    "genres": [
+      "Family",
+      "Reality"
+    ],
+    "overview": "Watch TV Animal Farm Hindi Dubbed full episodes online in HD on HindiDrama.net.",
+    "poster": "https://image.tmdb.org/t/p/w500/7FZZHXxlujrtq3EUkP78tm5aVkX.jpg",
+    "backdrop": "https://image.tmdb.org/t/p/original/1eUNe8eP5GnEL6RLgPLSVOiVTvU.jpg",
+    "status": "Ongoing",
+    "type": "tv",
+    "language": "Hindi Dubbed",
+    "latestEpisode": 1293,
+    "seasons": [
+      {
+        "seasonNumber": 1,
+        "name": "Season 1",
+        "episodeCount": 1296,
+        "airDate": "2001-05-06",
+        "poster": "https://image.tmdb.org/t/p/w342/2SDZ1GnwH5kAxxyNCBPtKyGHbCi.jpg"
+      }
+    ],
+    "cast": [
+      {
+        "id": 3028280,
+        "slug": "3028280-jung-sun-hee",
+        "name": "Jung Sun-hee",
+        "character": "진행자",
+        "profilePath": "https://image.tmdb.org/t/p/w342/4uv6JEHDLt7jNiYOl3g1aLYO1tI.jpg",
+        "popularity": 0.2582
+      },
+      {
+        "id": 1350138,
+        "slug": "1350138-shin-dong-yup",
+        "name": "Shin Dong-yup",
+        "character": "진행자",
+        "profilePath": "https://image.tmdb.org/t/p/w342/iMzzz78MnoBpzrVyjMnG6DqkfmZ.jpg",
+        "popularity": 1.2447
+      },
+      {
+        "id": 1619570,
+        "slug": "1619570-tony-an",
+        "name": "Tony An",
+        "character": "진행자",
+        "profilePath": "https://image.tmdb.org/t/p/w342/sNMkQmafV2IE06JtAUc4vnkG532.jpg",
+        "popularity": 0.4187
+      },
+      {
+        "id": 1547207,
+        "slug": "1547207-joy",
+        "name": "JOY",
+        "character": "Main Role",
+        "profilePath": "https://image.tmdb.org/t/p/w342/4S14P69iASzrsAPaSJqBlh07hj0.jpg",
+        "popularity": 1.5117
+      }
+    ],
+    "updatedAt": "2026-11-17T12:40:15.763Z"
+  },
+  {
+    "id": "idol-radio",
+    "slug": "idol-radio",
+    "tmdbId": 244984,
+    "youtubeKey": "vQbKhvWEwZQ",
+    "title": "Idol Radio",
+    "hindiTitle": "Idol Radio (Hindi Dubbed)",
+    "country": "Korean",
+    "year": 2018,
+    "rating": 8.2,
+    "views": "106K",
+    "duration": "60 min",
+    "totalEpisodes": 1063,
+    "genres": [
+      "Drama",
+      "Romance"
+    ],
+    "overview": "A South Korean radio show created by MBC Radio specially for idols.",
+    "poster": "https://image.tmdb.org/t/p/w500/k4lmwjHqJBtLRhSn51wIWNTtEQd.jpg",
+    "backdrop": "https://image.tmdb.org/t/p/original/qV98q6BLTHWBVjVZQdwUkQhzD9y.jpg",
+    "status": "Ongoing",
+    "type": "tv",
+    "language": "Hindi Dubbed",
+    "latestEpisode": 1063,
+    "seasons": [
+      {
+        "seasonNumber": 1,
+        "name": "Season 1",
+        "episodeCount": 714,
+        "airDate": "2018-07-23"
+      },
+      {
+        "seasonNumber": 2,
+        "name": "Season 2",
+        "episodeCount": 110,
+        "airDate": "2021-08-09",
+        "poster": "https://image.tmdb.org/t/p/w342/v46ORrc58nF64rlz4P89Nm8JGGD.jpg"
+      },
+      {
+        "seasonNumber": 3,
+        "name": "Season 3",
+        "episodeCount": 146,
+        "airDate": "2022-09-12"
+      },
+      {
+        "seasonNumber": 4,
+        "name": "Season 4",
+        "episodeCount": 93,
+        "airDate": "2024-02-19",
+        "poster": "https://image.tmdb.org/t/p/w342/8KyNlSbL1L6PhpumR4h5IAEAtnD.jpg"
+      }
+    ],
+    "cast": [
+      {
+        "id": 3121203,
+        "slug": "3121203-sunwoo",
+        "name": "Sunwoo",
+        "character": "DJ",
+        "profilePath": "https://image.tmdb.org/t/p/w342/eklk8KH3kvCwmyVQmDY37Kstp2j.jpg",
+        "popularity": 0.8029
+      },
+      {
+        "id": 3121204,
+        "slug": "3121204-eric",
+        "name": "Eric",
+        "character": "DJ",
+        "profilePath": "https://image.tmdb.org/t/p/w342/vHDof1Pl8L8vGXTqECnk5m8z6Dg.jpg",
+        "popularity": 0.6977
+      }
+    ],
+    "updatedAt": "2026-11-17T12:40:15.866Z"
+  },
+  {
+    "id": "hope",
+    "slug": "hope",
+    "tmdbId": 1058424,
+    "imdbId": "tt27369017",
+    "youtubeKey": "JNJ6luyhR2I",
+    "title": "Hope",
+    "hindiTitle": "Hope (Hindi Dubbed)",
+    "country": "Korean",
+    "year": 2026,
+    "rating": 6.8,
+    "views": "378K",
+    "duration": "157 min",
+    "totalEpisodes": 1,
+    "genres": [
+      "Science Fiction",
+      "Mystery",
+      "Action"
+    ],
+    "overview": "In the remote South Korean village of Hope Harbor, police chief Bum-seok and officer Sung-ae are called to investigate a mysterious creature wreaking havoc on the community. But all is not as it seems, and perceptions can be misleading. What begins as ignorance plants the seed of disaster, escalating through human conflict into a tragedy of cosmic proportions.",
+    "poster": "https://image.tmdb.org/t/p/w500/6VY1ZKgpsc8CfGsQcCGiYEgHdH0.jpg",
+    "backdrop": "https://image.tmdb.org/t/p/original/qqHFLg90IUSoTmSMpKOOW5RyqN3.jpg",
+    "status": "Completed",
+    "type": "movie",
+    "language": "Hindi Dubbed",
+    "latestEpisode": 1,
+    "cast": [
+      {
+        "id": 68903,
+        "slug": "68903-hwang-jung-min",
+        "name": "Hwang Jung-min",
+        "character": "Go Bum-seok",
+        "profilePath": "https://image.tmdb.org/t/p/w342/hKF1uh0iEfuZlBE79CXPw415qyn.jpg",
+        "popularity": 2.2359
+      },
+      {
+        "id": 127564,
+        "slug": "127564-zo-in-sung",
+        "name": "Zo In-sung",
+        "character": "Go Sung-ki",
+        "profilePath": "https://image.tmdb.org/t/p/w342/69gbyFI0ET0l0dyjKChlx1Zx269.jpg",
+        "popularity": 2.0418
+      },
+      {
+        "id": 3194501,
+        "slug": "3194501-hoyeon",
+        "name": "Hoyeon",
+        "character": "Lim Sung-ae",
+        "profilePath": "https://image.tmdb.org/t/p/w342/AfQFFyGeG9xOQnEJb1Ash1RomkP.jpg",
+        "popularity": 2.5411
+      },
+      {
+        "id": 227454,
+        "slug": "227454-alicia-vikander",
+        "name": "Alicia Vikander",
+        "character": "J'aur",
+        "profilePath": "https://image.tmdb.org/t/p/w342/lZu8qiTwiQIN96cuptgqMCCaUtg.jpg",
+        "popularity": 3.1448
+      },
+      {
+        "id": 17288,
+        "slug": "17288-michael-fassbender",
+        "name": "Michael Fassbender",
+        "character": "Ma'veyyo",
+        "profilePath": "https://image.tmdb.org/t/p/w342/xvbnUiB2ZBR3QIt595OzNy657Vw.jpg",
+        "popularity": 5.1099
+      },
+      {
+        "id": 1353827,
+        "slug": "1353827-taylor-russell",
+        "name": "Taylor Russell",
+        "character": "Ai'dovor",
+        "profilePath": "https://image.tmdb.org/t/p/w342/3kW1SvpzyOPPZHxbz7cgR7ilmtQ.jpg",
+        "popularity": 1.5282
+      },
+      {
+        "id": 1286537,
+        "slug": "1286537-cameron-britton",
+        "name": "Cameron Britton",
+        "character": "Va'migere",
+        "profilePath": "https://image.tmdb.org/t/p/w342/9HFxi8ZnBiby3AQ7tBOPDxXFkCT.jpg",
+        "popularity": 1.0987
+      },
+      {
+        "id": 564847,
+        "slug": "564847-lee-sang-hee",
+        "name": "Lee Sang-hee",
+        "character": "Nak-yeon",
+        "profilePath": "https://image.tmdb.org/t/p/w342/wOYFSg20yGe48VFALqGAlrLjFHV.jpg",
+        "popularity": 0.6527
+      }
+    ],
+    "updatedAt": "2026-11-17T12:40:15.968Z"
+  },
+  {
+    "id": "colony",
+    "slug": "colony",
+    "tmdbId": 1375646,
+    "imdbId": "tt34385135",
+    "youtubeKey": "NfGp80JHhB4",
+    "title": "Colony",
+    "hindiTitle": "Colony (Hindi Dubbed)",
+    "country": "Korean",
+    "year": 2026,
+    "rating": 8.2,
+    "views": "71K",
+    "duration": "123 min",
+    "totalEpisodes": 1,
+    "genres": [
+      "Horror",
+      "Action",
+      "Science Fiction"
+    ],
+    "overview": "Professor Se-jeong is thrust into a bloody nightmare when a rapidly mutating virus is released during a biotech conference causing authorities to seal the facility. Trapped inside with no escape, Se-jeong along with a small group of survivors must fight to stay alive while the infected undergo horrific transformations.",
+    "poster": "https://image.tmdb.org/t/p/w500/enz3WLx5QU1FUyhXZld04QWIc6N.jpg",
+    "backdrop": "https://image.tmdb.org/t/p/original/iGViga8sDCET1S6GfwOlAbuhSGQ.jpg",
+    "status": "Completed",
+    "type": "movie",
+    "language": "Hindi Dubbed",
+    "latestEpisode": 1,
+    "cast": [
+      {
+        "id": 63436,
+        "slug": "63436-gianna-jun",
+        "name": "Gianna Jun",
+        "character": "Kwon Se-jeong",
+        "profilePath": "https://image.tmdb.org/t/p/w342/qejOQBdIzN18e69yRcsiD0JQi4c.jpg",
+        "popularity": 2.1729
+      },
+      {
+        "id": 1096458,
+        "slug": "1096458-koo-kyo-hwan",
+        "name": "Koo Kyo-hwan",
+        "character": "Seo Young-cheol",
+        "profilePath": "https://image.tmdb.org/t/p/w342/aFwCpSKPGFqoiTStY6ljXnD5CwH.jpg",
+        "popularity": 1.6298
+      },
+      {
+        "id": 1253391,
+        "slug": "1253391-ji-chang-wook",
+        "name": "Ji Chang-wook",
+        "character": "Choi Hyun-seok",
+        "profilePath": "https://image.tmdb.org/t/p/w342/sBmHrO5Tn27Ot5hy0yAKniROmNb.jpg",
+        "popularity": 4.0645
+      },
+      {
+        "id": 3038410,
+        "slug": "3038410-kim-shin-rock",
+        "name": "Kim Shin-rock",
+        "character": "Choi Hyun-hee",
+        "profilePath": "https://image.tmdb.org/t/p/w342/x4zo2mSbehnQY80PbuldAZ7ruGm.jpg",
+        "popularity": 0.9441
+      },
+      {
+        "id": 1254975,
+        "slug": "1254975-shin-hyun-been",
+        "name": "Shin Hyun-been",
+        "character": "Kong Seol-hee",
+        "profilePath": "https://image.tmdb.org/t/p/w342/lU0yMFh5KgOEWZRThLYbB6ZI1hE.jpg",
+        "popularity": 1.3112
+      },
+      {
+        "id": 85173,
+        "slug": "85173-go-soo",
+        "name": "Go Soo",
+        "character": "Han Kyu-seong",
+        "profilePath": "https://image.tmdb.org/t/p/w342/77209yRtUHOEk3ILJY1rG3X3VUj.jpg",
+        "popularity": 1.2448
+      },
+      {
+        "id": 2133923,
+        "slug": "2133923-lee-joong-ok",
+        "name": "Lee Joong-ok",
+        "character": "Lee Bong-seok",
+        "profilePath": "https://image.tmdb.org/t/p/w342/fMkBpHRElwNatevfGinSv248bYg.jpg",
+        "popularity": 0.7598
+      },
+      {
+        "id": 3134668,
+        "slug": "3134668-kim-jong-tae",
+        "name": "Kim Jong-tae",
+        "character": "Kang Woo-cheol",
+        "profilePath": "https://image.tmdb.org/t/p/w342/vf3R5QU7UCVEr3dOGt3bdFbypzu.jpg",
+        "popularity": 1.0288
+      }
+    ],
+    "updatedAt": "2026-11-17T12:40:16.064Z"
+  },
+  {
+    "id": "parasite",
+    "slug": "parasite",
+    "tmdbId": 496243,
+    "imdbId": "tt6751668",
+    "youtubeKey": "fLlosedYVlo",
+    "title": "Parasite",
+    "hindiTitle": "Parasite (Hindi Dubbed)",
+    "country": "Korean",
+    "year": 2019,
+    "rating": 8.5,
+    "views": "45K",
+    "duration": "133 min",
+    "totalEpisodes": 1,
+    "genres": [
+      "Comedy",
+      "Thriller",
+      "Drama"
+    ],
+    "overview": "All unemployed, Ki-taek's family takes peculiar interest in the wealthy and glamorous Parks for their livelihood until they get entangled in an unexpected incident.",
+    "poster": "https://image.tmdb.org/t/p/w500/7IiTTgloJzvGI1TAYymCfbfl3vT.jpg",
+    "backdrop": "https://image.tmdb.org/t/p/original/TU9NIjwzjoKPwQHoHshkFcQUCG.jpg",
+    "status": "Completed",
+    "type": "movie",
+    "language": "Hindi Dubbed",
+    "latestEpisode": 1,
+    "cast": [
+      {
+        "id": 20738,
+        "slug": "20738-song-kang-ho",
+        "name": "Song Kang-ho",
+        "character": "Kim Ki-taek",
+        "profilePath": "https://image.tmdb.org/t/p/w342/kBM9UTPYXUA2RNk210DXhztLFns.jpg",
+        "popularity": 2.7752
+      },
+      {
+        "id": 115290,
+        "slug": "115290-lee-sun-kyun",
+        "name": "Lee Sun-kyun",
+        "character": "Park Dong-ik",
+        "profilePath": "https://image.tmdb.org/t/p/w342/nHFBbSFohzOUOvMxPVwe3Es2nJw.jpg",
+        "popularity": 1.2402
+      },
+      {
+        "id": 556435,
+        "slug": "556435-cho-yeo-jeong",
+        "name": "Cho Yeo-jeong",
+        "character": "Yeon-kyo",
+        "profilePath": "https://image.tmdb.org/t/p/w342/5MgWM8pkUiYkj9MEaEpO0Ir1FD9.jpg",
+        "popularity": 4.2366
+      },
+      {
+        "id": 1255881,
+        "slug": "1255881-choi-woo-shik",
+        "name": "Choi Woo-shik",
+        "character": "Ki-woo",
+        "profilePath": "https://image.tmdb.org/t/p/w342/9mZ9DNopxpCLUjXd0rLd42TLamw.jpg",
+        "popularity": 2.3799
+      },
+      {
+        "id": 1442583,
+        "slug": "1442583-park-so-dam",
+        "name": "Park So-dam",
+        "character": "Ki-jung",
+        "profilePath": "https://image.tmdb.org/t/p/w342/fGVOikpvivopeATDy6ZzLdKYXDu.jpg",
+        "popularity": 2.2016
+      },
+      {
+        "id": 1572354,
+        "slug": "1572354-lee-jung-eun",
+        "name": "Lee Jung-eun",
+        "character": "Moon-gwang",
+        "profilePath": "https://image.tmdb.org/t/p/w342/4r3K47UpSmzZ5t9cyTRRqRl9rdz.jpg",
+        "popularity": 2.2279
+      },
+      {
+        "id": 2158882,
+        "slug": "2158882-jang-hye-jin",
+        "name": "Jang Hye-jin",
+        "character": "Chung-sook",
+        "profilePath": "https://image.tmdb.org/t/p/w342/pZiQXSWwo9F4gncHfa1yw0CQjxk.jpg",
+        "popularity": 2.5288
+      },
+      {
+        "id": 1694435,
+        "slug": "1694435-park-myung-hoon",
+        "name": "Park Myung-hoon",
+        "character": "Geun-se",
+        "profilePath": "https://image.tmdb.org/t/p/w342/5SucrxkigHss7UuJKrkfAZX5MXz.jpg",
+        "popularity": 1.0354
+      }
+    ],
+    "updatedAt": "2026-11-17T12:40:16.149Z"
+  },
+  {
+    "id": "possible-love",
+    "slug": "possible-love",
+    "tmdbId": 1483525,
+    "imdbId": "tt37803364",
+    "youtubeKey": "Fd0yUFfCCCU",
+    "title": "Possible Love",
+    "hindiTitle": "Possible Love (Hindi Dubbed)",
+    "country": "Korean",
+    "year": 2026,
+    "rating": 7.2,
+    "views": "42K",
+    "duration": "165 min",
+    "totalEpisodes": 1,
+    "genres": [
+      "Drama"
+    ],
+    "overview": "A laid-off worker and his wife cross paths with a documentary filmmaker and her spouse and confront their hidden desires.",
+    "poster": "https://image.tmdb.org/t/p/w500/1ERGPNiKtnEcsvJS1ywsmqmcIDO.jpg",
+    "backdrop": "https://image.tmdb.org/t/p/original/k0BY5D4Ya6NHhsvNYMmaabpvUtS.jpg",
+    "status": "Completed",
+    "type": "movie",
+    "language": "Hindi Dubbed",
+    "latestEpisode": 1,
+    "cast": [
+      {
+        "id": 20737,
+        "slug": "20737-jeon-do-yeon",
+        "name": "Jeon Do-yeon",
+        "character": "Mi-ok",
+        "profilePath": "https://image.tmdb.org/t/p/w342/ev2tT7ZbReE06rZy7SX0Mv8evZ7.jpg",
+        "popularity": 3.409
+      },
+      {
+        "id": 85008,
+        "slug": "85008-sul-kyung-gu",
+        "name": "Sul Kyung-gu",
+        "character": "Ho-seok",
+        "profilePath": "https://image.tmdb.org/t/p/w342/teD7AMzfNl4qhQO2b6MAWwLtPVn.jpg",
+        "popularity": 2.4329
+      },
+      {
+        "id": 127564,
+        "slug": "127564-zo-in-sung",
+        "name": "Zo In-sung",
+        "character": "Sang-woo",
+        "profilePath": "https://image.tmdb.org/t/p/w342/69gbyFI0ET0l0dyjKChlx1Zx269.jpg",
+        "popularity": 2.0418
+      },
+      {
+        "id": 556435,
+        "slug": "556435-cho-yeo-jeong",
+        "name": "Cho Yeo-jeong",
+        "character": "Ye-ji",
+        "profilePath": "https://image.tmdb.org/t/p/w342/5MgWM8pkUiYkj9MEaEpO0Ir1FD9.jpg",
+        "popularity": 4.2366
+      },
+      {
+        "id": 2359937,
+        "slug": "2359937-jo-yuri",
+        "name": "Jo Yuri",
+        "character": "Young Mi-ok",
+        "profilePath": "https://image.tmdb.org/t/p/w342/4GwoDQFPwpaKldOTpGrIJUzBa9h.jpg",
+        "popularity": 1.6972
+      },
+      {
+        "id": 6498027,
+        "slug": "6498027-choi-min",
+        "name": "Choi Min",
+        "character": "Young Ho-seok",
+        "profilePath": "https://image.tmdb.org/t/p/w342/jyc9HDQDmJC4PthBUdw95XJJog9.jpg",
+        "popularity": 0.2446
+      },
+      {
+        "id": 6498023,
+        "slug": "6498023-jeong-seop",
+        "name": "Jeong Seop",
+        "character": "Cheol",
+        "profilePath": "https://image.tmdb.org/t/p/w342/vMbZObKiMc2am3OOFWAlxlPHnpn.jpg",
+        "popularity": 0.4027
+      },
+      {
+        "id": 6591471,
+        "slug": "6591471-kang-chang-gwon",
+        "name": "Kang Chang-gwon",
+        "character": "Min-sik",
+        "profilePath": "https://image.tmdb.org/t/p/w342/jyc9HDQDmJC4PthBUdw95XJJog9.jpg",
+        "popularity": 0.1084
+      }
+    ],
+    "updatedAt": "2026-11-17T12:40:16.232Z"
+  },
+  {
+    "id": "0-0mhz",
+    "slug": "0-0mhz",
+    "tmdbId": 584586,
+    "imdbId": "tt10341248",
+    "youtubeKey": "3qW-Cosj3ew",
+    "title": "0.0MHz",
+    "hindiTitle": "0.0MHz (Hindi Dubbed)",
+    "country": "Korean",
+    "year": 2019,
+    "rating": 5,
+    "views": "35K",
+    "duration": "102 min",
+    "totalEpisodes": 1,
+    "genres": [
+      "Horror"
+    ],
+    "overview": "The members of a supernatural exploration club called 0.0MHz explores a haunted house to prove the existence of frequencies that attract ghosts.",
+    "poster": "https://image.tmdb.org/t/p/w500/4Ufe3fAm3VMvNezlKZaCVEfOzbo.jpg",
+    "backdrop": "https://image.tmdb.org/t/p/original/aWuESNzOu1hfpBxCKR8v5kf5zwr.jpg",
+    "status": "Completed",
+    "type": "movie",
+    "language": "Hindi Dubbed",
+    "latestEpisode": 1,
+    "cast": [
+      {
+        "id": 2275300,
+        "slug": "2275300-jung-won-chang",
+        "name": "Jung Won-chang",
+        "character": "Tae-soo",
+        "profilePath": "https://image.tmdb.org/t/p/w342/1rmdrN0gbQuLfPrw18BUQarD8o0.jpg",
+        "popularity": 0.8916
+      },
+      {
+        "id": 547972,
+        "slug": "547972-choi-yoon-young",
+        "name": "Choi Yoon-young",
+        "character": "Yoon-jung",
+        "profilePath": "https://image.tmdb.org/t/p/w342/2JuT2FEDW3bvvgRYByS4Gh1Zkkj.jpg",
+        "popularity": 0.972
+      },
+      {
+        "id": 1949863,
+        "slug": "1949863-shin-ju-hwan",
+        "name": "Shin Ju-hwan",
+        "character": "Han-seok",
+        "profilePath": "https://image.tmdb.org/t/p/w342/3xGIfoLkL9xZP0cN3ntG3IEZC6v.jpg",
+        "popularity": 0.466
+      },
+      {
+        "id": 1257603,
+        "slug": "1257603-jung-eun-ji",
+        "name": "Jung Eun-ji",
+        "character": "So-hee",
+        "profilePath": "https://image.tmdb.org/t/p/w342/omS5dArrZFSj6mFy0FfbhHzHMGi.jpg",
+        "popularity": 1.3151
+      },
+      {
+        "id": 1402693,
+        "slug": "1402693-lee-sung-yeol",
+        "name": "Lee Sung-yeol",
+        "character": "Sang-yeob",
+        "profilePath": "https://image.tmdb.org/t/p/w342/12EcjmGsuj3dEI1oSy03zdLjiOC.jpg",
+        "popularity": 0.5727
+      },
+      {
+        "id": 1128110,
+        "slug": "1128110-nam-jung-hee",
+        "name": "Nam Jung-hee",
+        "character": "So-hee's Grandmother",
+        "profilePath": "https://image.tmdb.org/t/p/w342/jCHYqFX1kxSiLAwedfBbIpRuJpL.jpg",
+        "popularity": 0.48
+      },
+      {
+        "id": 96663,
+        "slug": "96663-park-myung-shin",
+        "name": "Park Myung-shin",
+        "character": "So-hee's Mother",
+        "profilePath": "https://image.tmdb.org/t/p/w342/9aRFozglCaE05NR3zdkhW3AUodR.jpg",
+        "popularity": 0.7128
+      },
+      {
+        "id": 2747548,
+        "slug": "2747548-kim-nan-hee",
+        "name": "Kim Nan-hee",
+        "character": "Mother of Suicide Woman",
+        "profilePath": "https://image.tmdb.org/t/p/w342/2az9hGV2g3a8jManigyDwGSIIaD.jpg",
+        "popularity": 0.2931
+      }
+    ],
+    "updatedAt": "2026-11-17T12:40:16.325Z"
+  },
+  {
+    "id": "summer-with-mika",
+    "slug": "summer-with-mika",
+    "tmdbId": 399783,
+    "imdbId": "tt5885620",
+    "title": "Summer with Mika",
+    "hindiTitle": "Summer with Mika (Hindi Dubbed)",
+    "country": "Korean",
+    "year": 2016,
+    "rating": 2.7,
+    "views": "30K",
+    "duration": "85 min",
+    "totalEpisodes": 1,
+    "genres": [
+      "Romance"
+    ],
+    "overview": "Jeong Min is a writer. He comes to a coffee shop because his writing comes to a stand. Inspired by a Japanese woman who drops by the coffee shop for job, Jeong Min decides to write 3 short stories of a Japanese woman / omnibus fantasy melodrama.",
+    "poster": "https://image.tmdb.org/t/p/w500/uPD3uYiJD5PKmR1bM4id6LUAwYh.jpg",
+    "backdrop": "https://image.tmdb.org/t/p/original/eeuafT0yXn0T7YA9ScmAbp1XMoO.jpg",
+    "status": "Completed",
+    "type": "movie",
+    "language": "Hindi Dubbed",
+    "latestEpisode": 1,
+    "cast": [
+      {
+        "id": 1011130,
+        "slug": "1011130-kim-min-ki",
+        "name": "Kim Min-ki",
+        "character": "Jeong Min, son",
+        "profilePath": "https://image.tmdb.org/t/p/w342/qQQDY9yuVyfinFfgQUmj2fmfEXR.jpg",
+        "popularity": 0.46
+      },
+      {
+        "id": 1484374,
+        "slug": "1484374-iori-kogawa",
+        "name": "Iori Kogawa",
+        "character": "Mika, Eun-ji's friend",
+        "profilePath": "https://image.tmdb.org/t/p/w342/sctcocTUKCNeytAo0Q4HSnIGrBH.jpg",
+        "popularity": 0
+      },
+      {
+        "id": 1696022,
+        "slug": "1696022-an-min-young",
+        "name": "An Min-young",
+        "character": "Eun-ji and Jeong Min's mother",
+        "profilePath": "https://image.tmdb.org/t/p/w342/mLweJKWvz4CGP5l2GSYI3MHKbmv.jpg",
+        "popularity": 0.7152
+      },
+      {
+        "id": 6015309,
+        "slug": "6015309-ahn-so-ri",
+        "name": "Ahn So-ri",
+        "character": "Eun-ji",
+        "profilePath": "https://image.tmdb.org/t/p/w342/jyc9HDQDmJC4PthBUdw95XJJog9.jpg",
+        "popularity": 0.2367
+      }
+    ],
+    "updatedAt": "2026-11-17T12:40:16.412Z"
+  },
+  {
+    "id": "the-handmaiden",
+    "slug": "the-handmaiden",
+    "tmdbId": 290098,
+    "imdbId": "tt4016934",
+    "youtubeKey": "nkH2QoDVdKs",
+    "title": "The Handmaiden",
+    "hindiTitle": "The Handmaiden (Hindi Dubbed)",
+    "country": "Korean",
+    "year": 2016,
+    "rating": 8.2,
+    "views": "28K",
+    "duration": "145 min",
+    "totalEpisodes": 1,
+    "genres": [
+      "Thriller",
+      "Drama",
+      "Romance"
+    ],
+    "overview": "1930s Korea, in the period of Japanese occupation, a new girl, Sook-hee, is hired as a handmaiden to a Japanese heiress, Hideko, who lives a secluded life on a large countryside estate with her domineering Uncle Kouzuki. But the maid has a secret. She is a pickpocket recruited by a swindler posing as a Japanese Count to help him seduce the Lady to steal her fortune.",
+    "poster": "https://image.tmdb.org/t/p/w500/dLlH4aNHdnmf62umnInL8xPlPzw.jpg",
+    "backdrop": "https://image.tmdb.org/t/p/original/2b3RNXF7ca9bgX8FrjRBYfLnNQC.jpg",
+    "status": "Completed",
+    "type": "movie",
+    "language": "Hindi Dubbed",
+    "latestEpisode": 1,
+    "cast": [
+      {
+        "id": 123664,
+        "slug": "123664-kim-min-hee",
+        "name": "Kim Min-hee",
+        "character": "Lady Hideko",
+        "profilePath": "https://image.tmdb.org/t/p/w342/zZ41nW0GJqesHB75hFP6qllPS9y.jpg",
+        "popularity": 1.918
+      },
+      {
+        "id": 1537768,
+        "slug": "1537768-kim-tae-ri",
+        "name": "Kim Tae-ri",
+        "character": "Nam Sook-hee / Tamako",
+        "profilePath": "https://image.tmdb.org/t/p/w342/gFofVUeVlIvBJMUv7maHQwWdfsk.jpg",
+        "popularity": 1.5791
+      },
+      {
+        "id": 75913,
+        "slug": "75913-ha-jung-woo",
+        "name": "Ha Jung-woo",
+        "character": "Count Fujiwara",
+        "profilePath": "https://image.tmdb.org/t/p/w342/9KINm0XIwbt4Qql4oZX55krzKxg.jpg",
+        "popularity": 1.9309
+      },
+      {
+        "id": 138336,
+        "slug": "138336-cho-jin-woong",
+        "name": "Cho Jin-woong",
+        "character": "Uncle Kouzuki",
+        "profilePath": "https://image.tmdb.org/t/p/w342/r3o7eKsqVCQu0ppIY88d16VLCsj.jpg",
+        "popularity": 1.3136
+      },
+      {
+        "id": 93252,
+        "slug": "93252-kim-hae-sook",
+        "name": "Kim Hae-sook",
+        "character": "Ms. Sasaki",
+        "profilePath": "https://image.tmdb.org/t/p/w342/dt5bmKeG7qbvDwHrxFZFxiGc9fZ.jpg",
+        "popularity": 2.0545
+      },
+      {
+        "id": 83122,
+        "slug": "83122-moon-so-ri",
+        "name": "Moon So-ri",
+        "character": "Hideko's Aunt",
+        "profilePath": "https://image.tmdb.org/t/p/w342/iXfIsmrzohNAAf2gyPCE06rJM1N.jpg",
+        "popularity": 2.036
+      },
+      {
+        "id": 557743,
+        "slug": "557743-lee-yong-nyeo",
+        "name": "Lee Yong-nyeo",
+        "character": "Bok-soon",
+        "profilePath": "https://image.tmdb.org/t/p/w342/jS6PtHgyd6GNepvboyLrtnR8qZp.jpg",
+        "popularity": 0.7568
+      },
+      {
+        "id": 3553480,
+        "slug": "3553480-kwak-eun-jin",
+        "name": "Kwak Eun-jin",
+        "character": "Kkeut-dan",
+        "profilePath": "https://image.tmdb.org/t/p/w342/tYbmsI4Wzt2fv5PWSZJg1SjkC2t.jpg",
+        "popularity": 0.5694
+      }
+    ],
+    "updatedAt": "2026-11-17T12:40:16.505Z"
+  },
+  {
+    "id": "the-intern",
+    "slug": "the-intern",
+    "tmdbId": 607833,
+    "imdbId": "tt43741215",
+    "youtubeKey": "zpLvun9INnQ",
+    "title": "The Intern",
+    "hindiTitle": "The Intern (Hindi Dubbed)",
+    "country": "Korean",
+    "year": 2026,
+    "rating": 6.5,
+    "views": "31K",
+    "duration": "132 min",
+    "totalEpisodes": 1,
+    "genres": [
+      "Drama",
+      "Comedy"
+    ],
+    "overview": "Ki-ho, a retiree with 37 years of experience, joins fashion start-up WOO22 a senior intern, he struggles with its digital, unconventional culture. Despite their differences, Ki-ho and Sun-woo, the start-up's young CEO, learn from each other and form an unexpected bond.",
+    "poster": "https://image.tmdb.org/t/p/w500/pDJEuLTnzYMOPsvpyg3VRWilalp.jpg",
+    "backdrop": "https://image.tmdb.org/t/p/original/OroFBNgB2RBzj2X65CweVhhQQG.jpg",
+    "status": "Completed",
+    "type": "movie",
+    "language": "Hindi Dubbed",
+    "latestEpisode": 1,
+    "cast": [
+      {
+        "id": 64880,
+        "slug": "64880-choi-min-sik",
+        "name": "Choi Min-sik",
+        "character": "Kim Ki-ho",
+        "profilePath": "https://image.tmdb.org/t/p/w342/sd7gIA6nEkq6zumkDCfxSE0YSSV.jpg",
+        "popularity": 2.3395
+      },
+      {
+        "id": 2112859,
+        "slug": "2112859-han-so-hee",
+        "name": "Han So-hee",
+        "character": "Lee Sun-woo",
+        "profilePath": "https://image.tmdb.org/t/p/w342/hOVKA03jcKft8iWRyi4pl7SSgc1.jpg",
+        "popularity": 2.4316
+      },
+      {
+        "id": 2054220,
+        "slug": "2054220-kim-jun-han",
+        "name": "Kim Jun-han",
+        "character": "Young-hwan",
+        "profilePath": "https://image.tmdb.org/t/p/w342/sGEVz3KHa7LVuD0YOvMa4X3Q6fE.jpg",
+        "popularity": 0.8506
+      },
+      {
+        "id": 1386540,
+        "slug": "1386540-ryu-hye-young",
+        "name": "Ryu Hye-young",
+        "character": "Choi Min-ah",
+        "profilePath": "https://image.tmdb.org/t/p/w342/y9ePzFIHiKskVdQ6G1bFvsUcjs5.jpg",
+        "popularity": 1.3451
+      },
+      {
+        "id": 2441975,
+        "slug": "2441975-kim-keum-soon",
+        "name": "Kim Keum-soon",
+        "character": "Hee-sook",
+        "profilePath": "https://image.tmdb.org/t/p/w342/jzMDWmOfa87MOQe84BXBqDYa97X.jpg",
+        "popularity": 1.1394
+      },
+      {
+        "id": 4475212,
+        "slug": "4475212-kim-yo-han",
+        "name": "Kim Yo-han",
+        "character": "Ju-seong",
+        "profilePath": "https://image.tmdb.org/t/p/w342/eWhB8DN0YQGfIesZNJDzf9k87E5.jpg",
+        "popularity": 0.6457
+      },
+      {
+        "id": 3762395,
+        "slug": "3762395-park-ye-ni",
+        "name": "Park Ye-ni",
+        "character": "Yu-jin",
+        "profilePath": "https://image.tmdb.org/t/p/w342/zQplIBdjf5elAloeXQGXJXyrg74.jpg",
+        "popularity": 0.7356
+      },
+      {
+        "id": 3481219,
+        "slug": "3481219-yoon-sang-jeong",
+        "name": "Yoon Sang-jeong",
+        "character": "Yoon-hee",
+        "profilePath": "https://image.tmdb.org/t/p/w342/pOwEfgsFJhYQ8PtxtQW0aaeW0nR.jpg",
+        "popularity": 1.2191
+      }
+    ],
+    "updatedAt": "2026-11-17T12:40:16.590Z"
   }
 ]
