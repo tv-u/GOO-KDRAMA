@@ -1,0 +1,62 @@
+name: Repair Bun Lockfile and Cloudflare Build
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - '.github/workflows/repair-bun-lockfile.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: bun-lockfile-repair
+  cancel-in-progress: false
+
+jobs:
+  repair-and-build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          persist-credentials: true
+
+      - name: Install Bun
+        uses: oven-sh/setup-bun@v2
+
+      - name: Show versions
+        run: |
+          node --version
+          bun --version
+
+      - name: Synchronize lockfile
+        run: bun install
+
+      - name: Verify frozen lockfile
+        run: bun install --frozen-lockfile
+
+      - name: Production build
+        run: bun run build
+
+      - name: Verify build output
+        run: |
+          test -s dist/index.html
+          echo "Production build verified."
+
+      - name: Commit updated lockfile
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          if ! git diff --quiet -- bun.lock; then
+            git add bun.lock
+            git commit -m "fix: synchronize Bun lockfile for Cloudflare"
+            git push origin HEAD:main
+          else
+            echo "Lockfile already synchronized."
+          fi
