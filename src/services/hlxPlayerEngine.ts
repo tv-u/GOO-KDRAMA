@@ -190,6 +190,30 @@ export const HLX_SERVERS: HlxServerNode[] = [
     movieUrl: ({ tmdbId, lang }) =>
       `https://multiembed.mov/?video_id=${tmdbId}&tmdb=1&server=mixdrop&host=mixdrop&lang=${lang}`,
   },
+  {
+    id: 10,
+    key: 'vidhide',
+    name: 'VidHide',
+    qualityTag: 'HD',
+    mode: 'hlx-relay',
+    supportsRelay: false,
+    tvUrl: ({ tmdbId, season, episode, lang }) =>
+      `https://multiembed.mov/?video_id=${tmdbId}&tmdb=1&s=${season}&e=${episode}&server=vidhide&host=vidhide&lang=${lang}`,
+    movieUrl: ({ tmdbId, lang }) =>
+      `https://multiembed.mov/?video_id=${tmdbId}&tmdb=1&server=vidhide&host=vidhide&lang=${lang}`,
+  },
+  {
+    id: 11,
+    key: 'streamwish',
+    name: 'Streamwish',
+    qualityTag: 'HD',
+    mode: 'hlx-relay',
+    supportsRelay: false,
+    tvUrl: ({ tmdbId, season, episode, lang }) =>
+      `https://multiembed.mov/?video_id=${tmdbId}&tmdb=1&s=${season}&e=${episode}&server=streamwish&host=streamwish&lang=${lang}`,
+    movieUrl: ({ tmdbId, lang }) =>
+      `https://multiembed.mov/?video_id=${tmdbId}&tmdb=1&server=streamwish&host=streamwish&lang=${lang}`,
+  },
 ];
 
 export function buildHlxDirectUrl(server: HlxServerNode, ctx: HlxRouteContext): string {

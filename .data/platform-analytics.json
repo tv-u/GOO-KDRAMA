@@ -1,12 +1,13 @@
 {
-  "totalVisits": 12,
+  "totalVisits": 15,
   "uniqueVisitorIds": [
     "v_mwgbpbq1_accumoxk",
     "v_mwgyf7re_t9sjmuo3",
-    "v_mwgkjnk6_bk7tw7si"
+    "v_mwgkjnk6_bk7tw7si",
+    "test-sess-1"
   ],
-  "totalPosterClicks": 3,
-  "totalEpisodePlays": 9,
+  "totalPosterClicks": 6,
+  "totalEpisodePlays": 12,
   "titleStats": {
     "my-demon": {
       "slug": "my-demon",
@@ -28,6 +29,13 @@
       "visits": 5,
       "posterClicks": 1,
       "episodePlays": 4
+    },
+    "squid-game": {
+      "slug": "squid-game",
+      "title": "Squid Game",
+      "visits": 0,
+      "posterClicks": 3,
+      "episodePlays": 3
     }
   },
   "episodeStats": {
@@ -58,6 +66,13 @@
       "dramaTitle": "100 Days My Prince",
       "episode": 3,
       "plays": 4
+    },
+    "squid-game::ep-1": {
+      "key": "squid-game::ep-1",
+      "dramaSlug": "squid-game",
+      "dramaTitle": "Squid Game",
+      "episode": 1,
+      "plays": 3
     }
   },
   "sourceHealth": {
@@ -93,6 +108,346 @@
   },
   "failedReports": [],
   "syncLogs": [
+    {
+      "trigger": "scheduled",
+      "added": 0,
+      "updated": 0,
+      "episodesDiscovered": 0,
+      "duplicatesSkipped": 0,
+      "errors": [],
+      "id": "sync_1794941307768_che4",
+      "timestamp": "2026-11-17T18:48:27.768Z"
+    },
+    {
+      "trigger": "scheduled",
+      "added": 0,
+      "updated": 0,
+      "episodesDiscovered": 0,
+      "duplicatesSkipped": 0,
+      "errors": [],
+      "id": "sync_1794939507616_0490",
+      "timestamp": "2026-11-17T18:18:27.616Z"
+    },
+    {
+      "trigger": "scheduled",
+      "added": 0,
+      "updated": 0,
+      "episodesDiscovered": 0,
+      "duplicatesSkipped": 0,
+      "errors": [],
+      "id": "sync_1794937695528_hd3q",
+      "timestamp": "2026-11-17T17:48:15.528Z"
+    },
+    {
+      "trigger": "scheduled",
+      "added": 0,
+      "updated": 0,
+      "episodesDiscovered": 0,
+      "duplicatesSkipped": 0,
+      "errors": [],
+      "id": "sync_1794935868441_266b",
+      "timestamp": "2026-11-17T17:17:48.441Z"
+    },
+    {
+      "trigger": "scheduled",
+      "added": 0,
+      "updated": 0,
+      "episodesDiscovered": 0,
+      "duplicatesSkipped": 0,
+      "errors": [],
+      "id": "sync_1794932616264_0god",
+      "timestamp": "2026-11-17T16:23:36.264Z"
+    },
+    {
+      "trigger": "scheduled",
+      "added": 0,
+      "updated": 0,
+      "episodesDiscovered": 0,
+      "duplicatesSkipped": 0,
+      "errors": [],
+      "id": "sync_1794930815633_zp2o",
+      "timestamp": "2026-11-17T15:53:35.633Z"
+    },
+    {
+      "trigger": "scheduled",
+      "added": 0,
+      "updated": 0,
+      "episodesDiscovered": 0,
+      "duplicatesSkipped": 0,
+      "errors": [],
+      "id": "sync_1794929013917_ek6k",
+      "timestamp": "2026-11-17T15:23:33.917Z"
+    },
+    {
+      "trigger": "scheduled",
+      "added": 0,
+      "updated": 0,
+      "episodesDiscovered": 0,
+      "duplicatesSkipped": 0,
+      "errors": [],
+      "id": "sync_1794927209994_rh1v",
+      "timestamp": "2026-11-17T14:53:29.994Z"
+    },
+    {
+      "trigger": "scheduled",
+      "added": 0,
+      "updated": 0,
+      "episodesDiscovered": 0,
+      "duplicatesSkipped": 0,
+      "errors": [],
+      "id": "sync_1794925411789_5rk7",
+      "timestamp": "2026-11-17T14:23:31.789Z"
+    },
+    {
+      "trigger": "scheduled",
+      "added": 0,
+      "updated": 0,
+      "episodesDiscovered": 0,
+      "duplicatesSkipped": 0,
+      "errors": [],
+      "id": "sync_1794922547343_xj8b",
+      "timestamp": "2026-11-17T13:35:47.343Z"
+    },
+    {
+      "trigger": "scheduled",
+      "added": 0,
+      "updated": 0,
+      "episodesDiscovered": 0,
+      "duplicatesSkipped": 0,
+      "errors": [],
+      "id": "sync_1794919771067_kl62",
+      "timestamp": "2026-11-17T12:49:31.067Z"
+    },
+    {
+      "trigger": "scheduled",
+      "added": 0,
+      "updated": 0,
+      "episodesDiscovered": 0,
+      "duplicatesSkipped": 0,
+      "errors": [],
+      "id": "sync_1794917630519_0r9g",
+      "timestamp": "2026-11-17T12:13:50.520Z"
+    },
+    {
+      "trigger": "scheduled",
+      "added": 0,
+      "updated": 0,
+      "episodesDiscovered": 0,
+      "duplicatesSkipped": 0,
+      "errors": [],
+      "id": "sync_1794914031552_z43v",
+      "timestamp": "2026-11-17T11:13:51.552Z"
+    },
+    {
+      "trigger": "scheduled",
+      "added": 0,
+      "updated": 0,
+      "episodesDiscovered": 0,
+      "duplicatesSkipped": 0,
+      "errors": [],
+      "id": "sync_1794912055464_fr41",
+      "timestamp": "2026-11-17T10:40:55.464Z"
+    },
+    {
+      "trigger": "scheduled",
+      "added": 0,
+      "updated": 0,
+      "episodesDiscovered": 0,
+      "duplicatesSkipped": 0,
+      "errors": [],
+      "id": "sync_1794910254272_d5qj",
+      "timestamp": "2026-11-17T10:10:54.272Z"
+    },
+    {
+      "trigger": "scheduled",
+      "added": 0,
+      "updated": 0,
+      "episodesDiscovered": 0,
+      "duplicatesSkipped": 0,
+      "errors": [],
+      "id": "sync_1794908385233_0v3b",
+      "timestamp": "2026-11-17T09:39:45.234Z"
+    },
+    {
+      "trigger": "scheduled",
+      "added": 0,
+      "updated": 0,
+      "episodesDiscovered": 0,
+      "duplicatesSkipped": 0,
+      "errors": [],
+      "id": "sync_1794905502207_pzd0",
+      "timestamp": "2026-11-17T08:51:42.207Z"
+    },
+    {
+      "trigger": "scheduled",
+      "added": 0,
+      "updated": 0,
+      "episodesDiscovered": 0,
+      "duplicatesSkipped": 0,
+      "errors": [],
+      "id": "sync_1794903555271_budq",
+      "timestamp": "2026-11-17T08:19:15.271Z"
+    },
+    {
+      "trigger": "scheduled",
+      "added": 0,
+      "updated": 0,
+      "episodesDiscovered": 0,
+      "duplicatesSkipped": 0,
+      "errors": [],
+      "id": "sync_1794901651964_b7f5",
+      "timestamp": "2026-11-17T07:47:31.964Z"
+    },
+    {
+      "trigger": "scheduled",
+      "added": 0,
+      "updated": 0,
+      "episodesDiscovered": 0,
+      "duplicatesSkipped": 0,
+      "errors": [],
+      "id": "sync_1794899851655_t0jo",
+      "timestamp": "2026-11-17T07:17:31.655Z"
+    },
+    {
+      "trigger": "scheduled",
+      "added": 0,
+      "updated": 0,
+      "episodesDiscovered": 0,
+      "duplicatesSkipped": 0,
+      "errors": [],
+      "id": "sync_1794896268052_mffy",
+      "timestamp": "2026-11-17T06:17:48.052Z"
+    },
+    {
+      "trigger": "scheduled",
+      "added": 0,
+      "updated": 0,
+      "episodesDiscovered": 0,
+      "duplicatesSkipped": 0,
+      "errors": [],
+      "id": "sync_1794894467845_eyhn",
+      "timestamp": "2026-11-17T05:47:47.845Z"
+    },
+    {
+      "trigger": "scheduled",
+      "added": 0,
+      "updated": 0,
+      "episodesDiscovered": 0,
+      "duplicatesSkipped": 0,
+      "errors": [],
+      "id": "sync_1794892249685_8ojm",
+      "timestamp": "2026-11-17T05:10:49.685Z"
+    },
+    {
+      "trigger": "scheduled",
+      "added": 0,
+      "updated": 0,
+      "episodesDiscovered": 0,
+      "duplicatesSkipped": 0,
+      "errors": [],
+      "id": "sync_1794890448624_vcjt",
+      "timestamp": "2026-11-17T04:40:48.624Z"
+    },
+    {
+      "trigger": "scheduled",
+      "added": 0,
+      "updated": 0,
+      "episodesDiscovered": 0,
+      "duplicatesSkipped": 0,
+      "errors": [],
+      "id": "sync_1794888648548_2woa",
+      "timestamp": "2026-11-17T04:10:48.548Z"
+    },
+    {
+      "trigger": "scheduled",
+      "added": 0,
+      "updated": 0,
+      "episodesDiscovered": 0,
+      "duplicatesSkipped": 0,
+      "errors": [],
+      "id": "sync_1794886535032_0e7a",
+      "timestamp": "2026-11-17T03:35:35.032Z"
+    },
+    {
+      "trigger": "scheduled",
+      "added": 0,
+      "updated": 0,
+      "episodesDiscovered": 0,
+      "duplicatesSkipped": 0,
+      "errors": [],
+      "id": "sync_1794878462004_9qji",
+      "timestamp": "2026-11-17T01:21:02.004Z"
+    },
+    {
+      "trigger": "scheduled",
+      "added": 0,
+      "updated": 0,
+      "episodesDiscovered": 0,
+      "duplicatesSkipped": 0,
+      "errors": [],
+      "id": "sync_1794869563422_2f5i",
+      "timestamp": "2026-11-16T22:52:43.423Z"
+    },
+    {
+      "trigger": "scheduled",
+      "added": 0,
+      "updated": 0,
+      "episodesDiscovered": 0,
+      "duplicatesSkipped": 0,
+      "errors": [],
+      "id": "sync_1794867763065_ttr0",
+      "timestamp": "2026-11-16T22:22:43.065Z"
+    },
+    {
+      "trigger": "scheduled",
+      "added": 0,
+      "updated": 0,
+      "episodesDiscovered": 0,
+      "duplicatesSkipped": 0,
+      "errors": [],
+      "id": "sync_1794865963153_7w3o",
+      "timestamp": "2026-11-16T21:52:43.153Z"
+    },
+    {
+      "trigger": "scheduled",
+      "added": 0,
+      "updated": 0,
+      "episodesDiscovered": 0,
+      "duplicatesSkipped": 0,
+      "errors": [],
+      "id": "sync_1794864163070_jmhx",
+      "timestamp": "2026-11-16T21:22:43.070Z"
+    },
+    {
+      "trigger": "scheduled",
+      "added": 0,
+      "updated": 0,
+      "episodesDiscovered": 0,
+      "duplicatesSkipped": 0,
+      "errors": [],
+      "id": "sync_1794862363673_e4qq",
+      "timestamp": "2026-11-16T20:52:43.674Z"
+    },
+    {
+      "trigger": "scheduled",
+      "added": 0,
+      "updated": 0,
+      "episodesDiscovered": 0,
+      "duplicatesSkipped": 0,
+      "errors": [],
+      "id": "sync_1794860545460_gmq0",
+      "timestamp": "2026-11-16T20:22:25.460Z"
+    },
+    {
+      "trigger": "scheduled",
+      "added": 598,
+      "updated": 0,
+      "episodesDiscovered": 1798,
+      "duplicatesSkipped": 0,
+      "errors": [],
+      "id": "sync_1794858746505_mxf7",
+      "timestamp": "2026-11-16T19:52:26.505Z"
+    },
     {
       "trigger": "scheduled",
       "added": 598,
@@ -152,56 +507,6 @@
       "errors": [],
       "id": "sync_1794771653180_1idn",
       "timestamp": "2026-11-15T19:40:53.181Z"
-    },
-    {
-      "trigger": "scheduled",
-      "added": 598,
-      "updated": 0,
-      "episodesDiscovered": 1798,
-      "duplicatesSkipped": 0,
-      "errors": [],
-      "id": "sync_1794771294183_p5es",
-      "timestamp": "2026-11-15T19:34:54.183Z"
-    },
-    {
-      "trigger": "scheduled",
-      "added": 598,
-      "updated": 0,
-      "episodesDiscovered": 1798,
-      "duplicatesSkipped": 0,
-      "errors": [],
-      "id": "sync_1794766039796_suc4",
-      "timestamp": "2026-11-15T18:07:19.796Z"
-    },
-    {
-      "trigger": "scheduled",
-      "added": 598,
-      "updated": 0,
-      "episodesDiscovered": 1798,
-      "duplicatesSkipped": 0,
-      "errors": [],
-      "id": "sync_1794765965485_o3zt",
-      "timestamp": "2026-11-15T18:06:05.485Z"
-    },
-    {
-      "trigger": "scheduled",
-      "added": 598,
-      "updated": 0,
-      "episodesDiscovered": 1798,
-      "duplicatesSkipped": 0,
-      "errors": [],
-      "id": "sync_1794765759421_xznh",
-      "timestamp": "2026-11-15T18:02:39.421Z"
-    },
-    {
-      "trigger": "scheduled",
-      "added": 598,
-      "updated": 0,
-      "episodesDiscovered": 1798,
-      "duplicatesSkipped": 0,
-      "errors": [],
-      "id": "sync_1794765392875_lxfy",
-      "timestamp": "2026-11-15T17:56:32.875Z"
     }
   ],
   "manualSources": []
