@@ -399,6 +399,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               </a>
             );
           })}
+          <a href="/blockbuster/" className="px-3 py-1 rounded-md text-xs sm:text-sm font-bold whitespace-nowrap shrink-0 text-emerald-300 hover:bg-[#111622]">🎬 BLOCKBUSTER</a>
         </nav>
       </div>
 

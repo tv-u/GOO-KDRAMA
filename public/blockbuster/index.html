@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>BLOCKBUSTER | GOO-KDRAMA</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#080c15;color:#fff;font-family:Arial,sans-serif}
+header{padding:22px 5%;background:#101827;border-bottom:1px solid #263248}
+h1{margin:0;color:#00d6a0;letter-spacing:2px;font-size:25px}
+main{max-width:1250px;margin:auto;padding:24px 16px}
+#grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(155px,1fr));gap:18px}
+.card{background:#121b2b;border:1px solid #25334a;border-radius:12px;overflow:hidden}
+.poster{width:100%;aspect-ratio:2/3;object-fit:cover;background:linear-gradient(140deg,#182b42,#07111d)}
+.info{padding:11px}.name{font-weight:bold;font-size:14px;min-height:36px}
+button{border:0;border-radius:7px;background:#00d6a0;color:#00130e;font-weight:bold;padding:11px;width:100%;margin-top:10px;cursor:pointer}
+#player{display:none;position:fixed;inset:0;background:#000e;z-index:5;align-items:center;justify-content:center;padding:12px}
+#playerbox{width:min(950px,100%);background:#101827;padding:12px;border-radius:12px}
+#screen{width:100%;height:min(65vh,540px);background:#000;border:0}
+#close{width:auto;background:#e34b58;color:white;float:right;margin:0 0 10px 10px}
+#empty{color:#9eacc1;text-align:center;padding:50px 10px}
+a{color:#00d6a0}
+</style>
+</head>
+<body>
+<header><h1>🎬 BLOCKBUSTER</h1><p>Movies • Direct Play • HD Streaming</p></header>
+<main><div id="grid"></div><div id="empty" hidden>No movies added yet.</div></main>
+<div id="player"><div id="playerbox"><button id="close">CLOSE ✕</button><div style="clear:both"></div><div id="screen"></div></div></div>
+<script src="https://cdn.jsdelivr.net/npm/hls.js@1"></script>
+<script>
+const grid=document.getElementById('grid'),empty=document.getElementById('empty');
+const modal=document.getElementById('player'),screen=document.getElementById('screen');
+function safeUrl(s){try{let u=new URL(s);return ['http:','https:'].includes(u.protocol)?u.href:''}catch{return ''}}
+function play(raw){
+ const u=safeUrl(raw);if(!u)return;
+ screen.innerHTML='';
+ const url=new URL(u),host=url.hostname.toLowerCase();
+ let src=u;
+ if(host.includes('dailymotion.com')||host==='dai.ly'){
+  let id=url.pathname.match(/(?:video|embed|hub)\/([a-zA-Z0-9]+)/)?.[1]||url.pathname.split('/').filter(Boolean)[0];
+  if(id)src='https://www.dailymotion.com/embed/video/'+id;
+ }
+ else if(host.includes('youtu.be')||host.includes('youtube.com')){
+  let id=host.includes('youtu.be')?url.pathname.slice(1):(url.searchParams.get('v')||url.pathname.match(/\/(?:embed|shorts)\/([^/?]+)/)?.[1]);
+  if(id)src='https://www.youtube.com/embed/'+id;
+ }
+ else if(host.includes('vimeo.com')){
+  let id=url.pathname.match(/\/(\d+)/)?.[1];if(id)src='https://player.vimeo.com/video/'+id;
+ }
+ else if(host.includes('drive.google.com')){
+  let id=url.pathname.match(/\/file\/d\/([^/]+)/)?.[1];if(id)src='https://drive.google.com/file/d/'+id+'/preview';
+ }
+ const direct=/\.(mp4|webm|ogg)(?:$|[?#])/i.test(u);
+ const hls=/\.m3u8(?:$|[?#])/i.test(u);
+ if(direct||hls){
+  const v=document.createElement('video');v.controls=true;v.autoplay=true;v.playsInline=true;v.style='width:100%;height:min(65vh,540px);background:#000';
+  screen.appendChild(v);
+  if(hls&&window.Hls&&Hls.isSupported()){const h=new Hls();h.loadSource(u);h.attachMedia(v);modal.dataset.hls='1';window.currentBlockHls=h}
+  else {v.src=u;v.play().catch(()=>{})}
+ }else{
+  const f=document.createElement('iframe');f.src=src;f.allow='autoplay; fullscreen; picture-in-picture';f.allowFullscreen=true;f.style='width:100%;height:min(65vh,540px);border:0';screen.appendChild(f);
+ }
+ modal.style.display='flex';
+}
+document.getElementById('close').onclick=()=>{modal.style.display='none';if(window.currentBlockHls){window.currentBlockHls.destroy();window.currentBlockHls=null}screen.innerHTML=''};
+fetch('/blockbuster/movies.json?'+Date.now()).then(r=>r.json()).then(items=>{
+ if(!Array.isArray(items)||!items.length){empty.hidden=false;return}
+ items.slice().reverse().forEach(m=>{
+  const card=document.createElement('article');card.className='card';
+  const img=document.createElement('img');img.className='poster';img.loading='lazy';img.src=safeUrl(m.poster)||'';
+  img.alt=m.title||'Movie poster';img.onerror=()=>{img.style.background='linear-gradient(140deg,#182b42,#07111d)'};
+  const info=document.createElement('div');info.className='info';
+  const name=document.createElement('div');name.className='name';name.textContent=m.title||'Movie';
+  const btn=document.createElement('button');btn.textContent='▶ PLAY NOW';btn.onclick=()=>play(m.url);
+  info.append(name,btn);card.append(img,info);grid.append(card);
+ });
+}).catch(()=>{empty.hidden=false;empty.textContent='Unable to load movie list.'});
+</script>
+</body></html>
