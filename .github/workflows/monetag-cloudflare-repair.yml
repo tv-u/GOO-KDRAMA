@@ -1,0 +1,51 @@
+name: Monetag and Cloudflare Build Repair
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'public/sw.js'
+      - '.github/workflows/monetag-cloudflare-repair.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: monetag-cloudflare-repair
+  cancel-in-progress: false
+
+jobs:
+  repair:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: 1.4.4
+
+      - name: Regenerate lockfile
+        run: bun install
+
+      - name: Verify frozen lockfile
+        run: bun install --frozen-lockfile
+
+      - name: Commit corrected lockfile
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          if ! git diff --quiet -- bun.lock; then
+            git add bun.lock
+            git commit -m "fix: synchronize Bun lockfile"
+            git push origin HEAD:main
+          else
+            echo "Bun lockfile already synchronized."
+          fi
