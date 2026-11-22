@@ -66,7 +66,7 @@
     "hindiTitle": "The Remarried Empress (Hindi Dubbed)",
     "country": "Korean",
     "year": 2025,
-    "rating": 8.8,
+    "rating": 8.7,
     "views": "3.4K",
     "duration": "45 min",
     "totalEpisodes": 10,
@@ -102,7 +102,7 @@
         "name": "Shin Min-a",
         "character": "Navier Ellie Trovi",
         "profilePath": "https://image.tmdb.org/t/p/w342/6CjxjYvZBuvbAQTcuoPb8EeVrUI.jpg",
-        "popularity": 3.1025
+        "popularity": 2.8391
       },
       {
         "id": 150125,
@@ -110,7 +110,7 @@
         "name": "Ju Ji-hoon",
         "character": "Sovieshu Vict",
         "profilePath": "https://image.tmdb.org/t/p/w342/7PYfUrBBXhYv5PIsTalJhjbRteg.jpg",
-        "popularity": 2.3877
+        "popularity": 2.3929
       },
       {
         "id": 1095818,
@@ -118,7 +118,7 @@
         "name": "Lee Jong-suk",
         "character": "Heinrey Alles Lazlo",
         "profilePath": "https://image.tmdb.org/t/p/w342/eW73DbmKQrqb6xDC52oMbVehw6G.jpg",
-        "popularity": 3.83
+        "popularity": 4.308
       },
       {
         "id": 1257142,
@@ -126,10 +126,10 @@
         "name": "Lee Se-young",
         "character": "Rashta Isqua",
         "profilePath": "https://image.tmdb.org/t/p/w342/58jlu0lSO0rWEzsWPjGLoEI0NWr.jpg",
-        "popularity": 1.6961
+        "popularity": 1.9037
       }
     ],
-    "updatedAt": "2026-11-21T11:56:41.943Z"
+    "updatedAt": "2026-11-22T12:10:26.868Z"
   },
   {
     "id": "love-in-disguise",
@@ -174,7 +174,7 @@
         "name": "Yim Si-wan",
         "character": "Yoon Yi-jun",
         "profilePath": "https://image.tmdb.org/t/p/w342/xhItkYqo5DnFunTLBe65npwi0Me.jpg",
-        "popularity": 6.0621
+        "popularity": 6.6284
       },
       {
         "id": 1761412,
@@ -182,7 +182,7 @@
         "name": "Seorina",
         "character": "Kang Jae-hee",
         "profilePath": "https://image.tmdb.org/t/p/w342/nfHLot4nBfqWQKwcXykeol4Owjb.jpg",
-        "popularity": 5.5802
+        "popularity": 6.1303
       },
       {
         "id": 1619435,
@@ -190,7 +190,7 @@
         "name": "Kim Jung-hyun",
         "character": "Kim Si-hyeon",
         "profilePath": "https://image.tmdb.org/t/p/w342/hSv3ihM8sK6aGPirXq6j758m05P.jpg",
-        "popularity": 2.0067
+        "popularity": 2.1304
       },
       {
         "id": 1875826,
@@ -198,10 +198,10 @@
         "name": "Yeon Woo",
         "character": "Lee Hye-jung",
         "profilePath": "https://image.tmdb.org/t/p/w342/tn2g5D33zqea9eKTpwVFFneyr2s.jpg",
-        "popularity": 2.4635
+        "popularity": 2.3663
       }
     ],
-    "updatedAt": "2026-11-21T11:56:42.449Z"
+    "updatedAt": "2026-11-22T12:10:27.106Z"
   },
   {
     "id": "final-table",
@@ -2353,7 +2353,7 @@
         "name": "Mayumi Tanaka",
         "character": "Monkey D. Luffy (voice)",
         "profilePath": "https://image.tmdb.org/t/p/w342/by4t1tYtEXsfbFj9TvOjozBmQla.jpg",
-        "popularity": 2.4775
+        "popularity": 2.5394
       },
       {
         "id": 84507,
@@ -2361,15 +2361,7 @@
         "name": "Kazuya Nakai",
         "character": "Roronoa Zoro (voice)",
         "profilePath": "https://image.tmdb.org/t/p/w342/cOHSa0FBrG3u9P6g8A56sInkvod.jpg",
-        "popularity": 2.6699
-      },
-      {
-        "id": 1089376,
-        "slug": "1089376-mari-yaguchi",
-        "name": "Mari Yaguchi",
-        "character": "Yoko (voice)",
-        "profilePath": "https://image.tmdb.org/t/p/w342/edjVzlYS9elEzDHJdAunceWhkWR.jpg",
-        "popularity": 1.0945
+        "popularity": 2.7009
       },
       {
         "id": 90133,
@@ -2377,7 +2369,7 @@
         "name": "Akemi Okamura",
         "character": "Nami (voice)",
         "profilePath": "https://image.tmdb.org/t/p/w342/qEwVfsrA23SCzRZMSlghw2sHctQ.jpg",
-        "popularity": 2.1793
+        "popularity": 2.293
       },
       {
         "id": 68472,
@@ -2385,7 +2377,7 @@
         "name": "Kappei Yamaguchi",
         "character": "Usopp (voice)",
         "profilePath": "https://image.tmdb.org/t/p/w342/mJyxKRZxLv9D7LH5KcNSkjSKYOB.jpg",
-        "popularity": 3.5432
+        "popularity": 3.9939
       },
       {
         "id": 84505,
@@ -2393,7 +2385,7 @@
         "name": "Hiroaki Hirata",
         "character": "Sanji (voice)",
         "profilePath": "https://image.tmdb.org/t/p/w342/mMWEdlssJm3TVuXW4Wb7pQeX20Z.jpg",
-        "popularity": 2.7889
+        "popularity": 2.4512
       },
       {
         "id": 73044,
@@ -2401,7 +2393,7 @@
         "name": "Ikue Otani",
         "character": "Tony Tony Chopper (voice)",
         "profilePath": "https://image.tmdb.org/t/p/w342/my8LBLQ4MsK4hRz1PAATIqtieaI.jpg",
-        "popularity": 3.8745
+        "popularity": 3.8014
       },
       {
         "id": 77933,
@@ -2410,9 +2402,17 @@
         "character": "Nico Robin (voice)",
         "profilePath": "https://image.tmdb.org/t/p/w342/14hV8oOMkZddPpvdpVSODRwVPgv.jpg",
         "popularity": 0
+      },
+      {
+        "id": 112276,
+        "slug": "112276-kazuki-yao",
+        "name": "Kazuki Yao",
+        "character": "Franky (voice)",
+        "profilePath": "https://image.tmdb.org/t/p/w342/kjETB1FaDaGozGjdq4Hu1UjrQDf.jpg",
+        "popularity": 2.2106
       }
     ],
-    "updatedAt": "2026-11-21T11:56:42.283Z"
+    "updatedAt": "2026-11-22T12:10:26.949Z"
   },
   {
     "id": "running-man",
@@ -2456,7 +2456,7 @@
         "name": "Yu Jae-seok",
         "character": "Self",
         "profilePath": "https://image.tmdb.org/t/p/w342/1uktAM7R2Hgc3dynIXvzfACOmnW.jpg",
-        "popularity": 1.4656
+        "popularity": 1.9169
       },
       {
         "id": 1239238,
@@ -2464,7 +2464,7 @@
         "name": "Jee Seok-jin",
         "character": "Self",
         "profilePath": "https://image.tmdb.org/t/p/w342/mB3mQ3FOqFR5dIrbtyEpvckhCib.jpg",
-        "popularity": 0.7361
+        "popularity": 0.7947
       },
       {
         "id": 1241035,
@@ -2472,7 +2472,7 @@
         "name": "Kim Jong-kook",
         "character": "Self",
         "profilePath": "https://image.tmdb.org/t/p/w342/56y9LaL65dbeaWZJt9dB7ifAUhR.jpg",
-        "popularity": 1.0421
+        "popularity": 1.1581
       },
       {
         "id": 138519,
@@ -2480,7 +2480,7 @@
         "name": "Haha",
         "character": "Self",
         "profilePath": "https://image.tmdb.org/t/p/w342/i3vcj3GI3TCmDlnI3aLA7pWKIuN.jpg",
-        "popularity": 1.1284
+        "popularity": 1.1399
       },
       {
         "id": 85174,
@@ -2488,7 +2488,7 @@
         "name": "Song Ji-hyo",
         "character": "Self",
         "profilePath": "https://image.tmdb.org/t/p/w342/f3QRDGEqHkeLBQZfWe3GbmHeuuX.jpg",
-        "popularity": 2.0885
+        "popularity": 2.036
       },
       {
         "id": 1703373,
@@ -2496,7 +2496,7 @@
         "name": "Yang Se-chan",
         "character": "Self",
         "profilePath": "https://image.tmdb.org/t/p/w342/odyq0zKjgZjX9o9OWZDImsBCDHQ.jpg",
-        "popularity": 0.7162
+        "popularity": 0.8339
       },
       {
         "id": 4159889,
@@ -2504,7 +2504,7 @@
         "name": "Ji Ye-eun",
         "character": "Self",
         "profilePath": "https://image.tmdb.org/t/p/w342/fTJfTdEvOjeKpO4Q4sbFxS7fy6E.jpg",
-        "popularity": 0.7122
+        "popularity": 0.9632
       },
       {
         "id": 126351,
@@ -2512,10 +2512,10 @@
         "name": "Jeon So-min",
         "character": "Self – Former Member",
         "profilePath": "https://image.tmdb.org/t/p/w342/eKTdMgKkvMGrrb7Xj8U1EH8ooYu.jpg",
-        "popularity": 1.2909
+        "popularity": 1.2398
       }
     ],
-    "updatedAt": "2026-11-21T11:56:42.540Z"
+    "updatedAt": "2026-11-22T12:10:26.969Z"
   },
   {
     "id": "radio-star",
@@ -2557,7 +2557,7 @@
         "name": "Kim Gu-ra",
         "character": "Self",
         "profilePath": "https://image.tmdb.org/t/p/w342/eYj0vwQ99Pzfb91TX6CBgnV7Ne.jpg",
-        "popularity": 0.6171
+        "popularity": 0.6497
       },
       {
         "id": 2205888,
@@ -2565,7 +2565,7 @@
         "name": "Kim Guk-jin",
         "character": "Self",
         "profilePath": "https://image.tmdb.org/t/p/w342/aQuLoFCQ7XU6ovPtdrVykDS3Jxv.jpg",
-        "popularity": 0.3326
+        "popularity": 0.2456
       },
       {
         "id": 1594569,
@@ -2573,7 +2573,7 @@
         "name": "Yoo Se-yoon",
         "character": "Self",
         "profilePath": "https://image.tmdb.org/t/p/w342/5pP9ttOJnsCI9wrFC6mdiFsis7O.jpg",
-        "popularity": 0.7878
+        "popularity": 0.7153
       },
       {
         "id": 1703372,
@@ -2581,10 +2581,10 @@
         "name": "Jang Do-yeon",
         "character": "Main Role",
         "profilePath": "https://image.tmdb.org/t/p/w342/jf5izJkEzXrBhoC6QxwTjH1uOlG.jpg",
-        "popularity": 0.8531
+        "popularity": 0.7307
       }
     ],
-    "updatedAt": "2026-11-21T11:56:42.714Z"
+    "updatedAt": "2026-11-22T12:10:27.007Z"
   },
   {
     "id": "chicago-typewriter",
@@ -2717,7 +2717,7 @@
       {
         "seasonNumber": 1,
         "name": "Men on a Mission (Knowing Bros)",
-        "episodeCount": 553,
+        "episodeCount": 555,
         "airDate": "2015-12-05",
         "poster": "https://image.tmdb.org/t/p/w342/2jIi55JtYKJTL1km8qHMuUilOWo.jpg"
       }
@@ -2729,7 +2729,7 @@
         "name": "Kim Young-cheol",
         "character": "Self",
         "profilePath": "https://image.tmdb.org/t/p/w342/f0O90cm6qFi8PvBKYuD2ugRLNlD.jpg",
-        "popularity": 0.3774
+        "popularity": 0.3847
       },
       {
         "id": 1622151,
@@ -2737,7 +2737,7 @@
         "name": "Min Kyung-hoon",
         "character": "Self",
         "profilePath": "https://image.tmdb.org/t/p/w342/pRaOrGX36dTTnnxrswegaCoSCYI.jpg",
-        "popularity": 0.4107
+        "popularity": 0.4868
       },
       {
         "id": 1250840,
@@ -2745,7 +2745,7 @@
         "name": "Kang Ho-dong",
         "character": "Self",
         "profilePath": "https://image.tmdb.org/t/p/w342/tceyY4cqTxkiar4jFjPnEaZ6QRZ.jpg",
-        "popularity": 1.0134
+        "popularity": 0.8382
       },
       {
         "id": 1250841,
@@ -2753,7 +2753,7 @@
         "name": "Lee Su-geun",
         "character": "Self",
         "profilePath": "https://image.tmdb.org/t/p/w342/zwEmEAS7CAuJLwhLhvSB09La1QM.jpg",
-        "popularity": 0.6541
+        "popularity": 0.5592
       },
       {
         "id": 1241032,
@@ -2761,7 +2761,7 @@
         "name": "Kim Hee-chul",
         "character": "Self",
         "profilePath": "https://image.tmdb.org/t/p/w342/w521FQ30VXdvjEfj0sZcn1sON5b.jpg",
-        "popularity": 1.0293
+        "popularity": 0.9827
       },
       {
         "id": 1662829,
@@ -2769,7 +2769,7 @@
         "name": "Seo Jang-hoon",
         "character": "Self",
         "profilePath": "https://image.tmdb.org/t/p/w342/w0sGoIEqQE1cKAgL7vlBxwbNDSd.jpg",
-        "popularity": 0.6445
+        "popularity": 0.8825
       },
       {
         "id": 1253793,
@@ -2777,10 +2777,10 @@
         "name": "Lee Sang-min",
         "character": "Self",
         "profilePath": "https://image.tmdb.org/t/p/w342/y9is5HFbPIyZtUpuKlbWyJPMlFn.jpg",
-        "popularity": 0.5409
+        "popularity": 0.7228
       }
     ],
-    "updatedAt": "2026-11-21T11:56:42.971Z"
+    "updatedAt": "2026-11-22T12:10:27.088Z"
   },
   {
     "id": "infinite-challenge",
@@ -2837,7 +2837,7 @@
         "name": "Yu Jae-seok",
         "character": "Self",
         "profilePath": "https://image.tmdb.org/t/p/w342/1uktAM7R2Hgc3dynIXvzfACOmnW.jpg",
-        "popularity": 1.4656
+        "popularity": 1.9169
       },
       {
         "id": 1619313,
@@ -2845,7 +2845,7 @@
         "name": "Park Myung-soo",
         "character": "Self",
         "profilePath": "https://image.tmdb.org/t/p/w342/pYCikF57BmoIMqOYJZEqLpSSk0O.jpg",
-        "popularity": 0.9943
+        "popularity": 0.9906
       },
       {
         "id": 1234597,
@@ -2853,7 +2853,7 @@
         "name": "Jeong Jun-ha",
         "character": "Self",
         "profilePath": "https://image.tmdb.org/t/p/w342/fNcdFdfAQuQXVd6fBLwH1ijXwvs.jpg",
-        "popularity": 1.0173
+        "popularity": 1.0611
       },
       {
         "id": 138519,
@@ -2861,7 +2861,7 @@
         "name": "Haha",
         "character": "Self",
         "profilePath": "https://image.tmdb.org/t/p/w342/i3vcj3GI3TCmDlnI3aLA7pWKIuN.jpg",
-        "popularity": 1.1284
+        "popularity": 1.1399
       },
       {
         "id": 1710469,
@@ -2869,7 +2869,7 @@
         "name": "Yang Se-hyung",
         "character": "Self",
         "profilePath": "https://image.tmdb.org/t/p/w342/5KFgASri0lSN7P2J1BCZCnXOsbC.jpg",
-        "popularity": 0.5513
+        "popularity": 0.6838
       },
       {
         "id": 1547167,
@@ -2877,7 +2877,7 @@
         "name": "Jeong Hyeong-don",
         "character": "Self",
         "profilePath": "https://image.tmdb.org/t/p/w342/9L4RG3cujCgTHjtDhFAG88gZiOX.jpg",
-        "popularity": 0.649
+        "popularity": 0.6287
       },
       {
         "id": 1254667,
@@ -2885,7 +2885,7 @@
         "name": "Noh Hong-chul",
         "character": "Self",
         "profilePath": "https://image.tmdb.org/t/p/w342/d0UQQd792Y75IRNYzwxcz8uvN4N.jpg",
-        "popularity": 0.6526
+        "popularity": 0.8325
       },
       {
         "id": 1619560,
@@ -2893,10 +2893,10 @@
         "name": "Gil",
         "character": "Self",
         "profilePath": "https://image.tmdb.org/t/p/w342/tQ4E9MhTkPnsOnuAxD2TQWjrc5L.jpg",
-        "popularity": 0.3247
+        "popularity": 0.2915
       }
     ],
-    "updatedAt": "2026-11-21T11:56:42.628Z"
+    "updatedAt": "2026-11-22T12:10:26.990Z"
   },
   {
     "id": "home-alone",
@@ -2939,7 +2939,7 @@
         "name": "Park Na-rae",
         "character": "Main Role",
         "profilePath": "https://image.tmdb.org/t/p/w342/dUqQeDICulymBkia4eqQ40LKHPa.jpg",
-        "popularity": 0.9626
+        "popularity": 0.9767
       },
       {
         "id": 1594539,
@@ -2947,7 +2947,7 @@
         "name": "Jeon Hyun-moo",
         "character": "Main Role",
         "profilePath": "https://image.tmdb.org/t/p/w342/rJ1890Fh0ln5IQ4JywD3pkdlALY.jpg",
-        "popularity": 0.518
+        "popularity": 0.769
       },
       {
         "id": 1620765,
@@ -2955,7 +2955,7 @@
         "name": "Key",
         "character": "Main Role",
         "profilePath": "https://image.tmdb.org/t/p/w342/2f2n3A2cDtc8lgKfkd1NdsvEKhB.jpg",
-        "popularity": 2.132
+        "popularity": 1.9004
       },
       {
         "id": 2332076,
@@ -2963,7 +2963,7 @@
         "name": "Hwasa",
         "character": "Main Role",
         "profilePath": "https://image.tmdb.org/t/p/w342/zfIgRBmgxUZB5ASKfKWw30KEsQm.jpg",
-        "popularity": 0.9487
+        "popularity": 0.9478
       },
       {
         "id": 2318652,
@@ -2971,7 +2971,7 @@
         "name": "Code Kunst",
         "character": "Main Role",
         "profilePath": "https://image.tmdb.org/t/p/w342/jrNqyZRJpNfYypaChI5yFZkhp3g.jpg",
-        "popularity": 0.4822
+        "popularity": 0.6046
       },
       {
         "id": 2332082,
@@ -2979,7 +2979,7 @@
         "name": "Kian84",
         "character": "Main Role",
         "profilePath": "https://image.tmdb.org/t/p/w342/wjNKFnCPaEEuhXVmgWUbi4qgdWq.jpg",
-        "popularity": 0.5359
+        "popularity": 0.6602
       },
       {
         "id": 1348986,
@@ -2987,7 +2987,7 @@
         "name": "Lee Jang-woo",
         "character": "Main Role",
         "profilePath": "https://image.tmdb.org/t/p/w342/bZq5YpRBgtVflLvoDQU8nivrpCz.jpg",
-        "popularity": 0.6061
+        "popularity": 0.6329
       },
       {
         "id": 1134769,
@@ -2995,10 +2995,10 @@
         "name": "Lee Ju-seung",
         "character": "Main Role",
         "profilePath": "https://image.tmdb.org/t/p/w342/6yJqT18fiQDEPtMEoU2OWU5x4tG.jpg",
-        "popularity": 0.8674
+        "popularity": 0.9427
       }
     ],
-    "updatedAt": "2026-11-21T11:56:42.878Z"
+    "updatedAt": "2026-11-22T12:10:27.050Z"
   },
   {
     "id": "you-hee-yeol-s-sketchbook",
@@ -3039,10 +3039,10 @@
         "name": "You Hee-yeol",
         "character": "Self - Host",
         "profilePath": "https://image.tmdb.org/t/p/w342/yG6W3e81Q5gFgIzZut0ic2H1tIO.jpg",
-        "popularity": 0.497
+        "popularity": 0.4604
       }
     ],
-    "updatedAt": "2026-11-21T11:56:42.794Z"
+    "updatedAt": "2026-11-22T12:10:27.024Z"
   },
   {
     "id": "law-of-the-jungle",
@@ -3474,10 +3474,10 @@
         "name": "Kim Byung-man",
         "character": "Self",
         "profilePath": "https://image.tmdb.org/t/p/w342/rEZ4LALVCDh6RXvd3l3SzYbzKlb.jpg",
-        "popularity": 0.3741
+        "popularity": 0.4576
       }
     ],
-    "updatedAt": "2026-11-21T11:56:43.054Z"
+    "updatedAt": "2026-11-22T12:10:27.069Z"
   },
   {
     "id": "my-little-old-boy",
@@ -3520,7 +3520,7 @@
         "name": "Shin Dong-yup",
         "character": "Self - MC",
         "profilePath": "https://image.tmdb.org/t/p/w342/iMzzz78MnoBpzrVyjMnG6DqkfmZ.jpg",
-        "popularity": 1.2676
+        "popularity": 1.4519
       },
       {
         "id": 1662829,
@@ -3528,10 +3528,10 @@
         "name": "Seo Jang-hoon",
         "character": "Self - MC",
         "profilePath": "https://image.tmdb.org/t/p/w342/w0sGoIEqQE1cKAgL7vlBxwbNDSd.jpg",
-        "popularity": 0.6445
+        "popularity": 0.8825
       }
     ],
-    "updatedAt": "2026-11-21T11:56:43.135Z"
+    "updatedAt": "2026-11-22T12:10:27.123Z"
   },
   {
     "id": "2-days-and-1-night",
@@ -3594,7 +3594,7 @@
         "name": "Kim Jong-min",
         "character": "Self",
         "profilePath": "https://image.tmdb.org/t/p/w342/bKnGJpF0t1uUlMG9v7Ju0lM51j4.jpg",
-        "popularity": 1.4771
+        "popularity": 2.4547
       },
       {
         "id": 1574049,
@@ -3602,7 +3602,7 @@
         "name": "Moon Se-yoon",
         "character": "Self",
         "profilePath": "https://image.tmdb.org/t/p/w342/yZcIy4f26nucELl6m3DcLahX0FR.jpg",
-        "popularity": 0.5021
+        "popularity": 0.6162
       },
       {
         "id": 1875834,
@@ -3610,7 +3610,7 @@
         "name": "DinDin",
         "character": "Self",
         "profilePath": "https://image.tmdb.org/t/p/w342/3blQZpmbPuxQ9iMTkV0oaOnrd0s.jpg",
-        "popularity": 0.6775
+        "popularity": 0.7936
       },
       {
         "id": 1894261,
@@ -3618,7 +3618,7 @@
         "name": "Yoo Seon-ho",
         "character": "Self",
         "profilePath": "https://image.tmdb.org/t/p/w342/hVtbZIWtXsXN6z9JGO9HI2tKpLq.jpg",
-        "popularity": 0.716
+        "popularity": 0.7482
       },
       {
         "id": 1523030,
@@ -3626,7 +3626,7 @@
         "name": "Jo Se-ho",
         "character": "Self",
         "profilePath": "https://image.tmdb.org/t/p/w342/byV2UFSUJg39LPJyOutL1z0v2HY.jpg",
-        "popularity": 0.9713
+        "popularity": 0.9673
       },
       {
         "id": 1257963,
@@ -3634,10 +3634,10 @@
         "name": "Lee Joon",
         "character": "Self",
         "profilePath": "https://image.tmdb.org/t/p/w342/bF3Zg2vzl4wUnFgcPhcS1J3Csxe.jpg",
-        "popularity": 1.283
+        "popularity": 1.2391
       }
     ],
-    "updatedAt": "2026-11-21T11:56:43.213Z"
+    "updatedAt": "2026-11-22T12:10:27.141Z"
   },
   {
     "id": "amazing-saturday",
@@ -3681,7 +3681,7 @@
         "name": "Shin Dong-yup",
         "character": "Self",
         "profilePath": "https://image.tmdb.org/t/p/w342/iMzzz78MnoBpzrVyjMnG6DqkfmZ.jpg",
-        "popularity": 1.2676
+        "popularity": 1.4519
       },
       {
         "id": 1703375,
@@ -3689,7 +3689,7 @@
         "name": "Park Na-rae",
         "character": "Self",
         "profilePath": "https://image.tmdb.org/t/p/w342/dUqQeDICulymBkia4eqQ40LKHPa.jpg",
-        "popularity": 0.9626
+        "popularity": 0.9767
       },
       {
         "id": 83382,
@@ -3697,7 +3697,7 @@
         "name": "Kim Dong-hyun",
         "character": "Self",
         "profilePath": "https://image.tmdb.org/t/p/w342/jDq3sZAtOczM09AG1NvCrXSsK7s.jpg",
-        "popularity": 0.8039
+        "popularity": 0.872
       },
       {
         "id": 1625142,
@@ -3705,7 +3705,7 @@
         "name": "Lee Min-ho",
         "character": "Self / Main Host",
         "profilePath": "https://image.tmdb.org/t/p/w342/gfdninENLAwox0le8TImLwMYSOd.jpg",
-        "popularity": 0.5775
+        "popularity": 0.534
       },
       {
         "id": 1574049,
@@ -3713,7 +3713,7 @@
         "name": "Moon Se-yoon",
         "character": "Self",
         "profilePath": "https://image.tmdb.org/t/p/w342/yZcIy4f26nucELl6m3DcLahX0FR.jpg",
-        "popularity": 0.5021
+        "popularity": 0.6162
       },
       {
         "id": 1620765,
@@ -3721,7 +3721,7 @@
         "name": "Key",
         "character": "Self",
         "profilePath": "https://image.tmdb.org/t/p/w342/2f2n3A2cDtc8lgKfkd1NdsvEKhB.jpg",
-        "popularity": 2.132
+        "popularity": 1.9004
       },
       {
         "id": 2018022,
@@ -3729,7 +3729,7 @@
         "name": "Hanhae",
         "character": "Self",
         "profilePath": "https://image.tmdb.org/t/p/w342/valsCMfJQo4EgMWxVqDT622IY8g.jpg",
-        "popularity": 0.7236
+        "popularity": 0.6547
       },
       {
         "id": 1260310,
@@ -3737,10 +3737,10 @@
         "name": "Taeyeon",
         "character": "Self",
         "profilePath": "https://image.tmdb.org/t/p/w342/oDHFWR6JHmQnmNbl73et1G4KzGc.jpg",
-        "popularity": 1.0822
+        "popularity": 1.197
       }
     ],
-    "updatedAt": "2026-11-21T11:56:43.574Z"
+    "updatedAt": "2026-11-22T12:10:27.180Z"
   },
   {
     "id": "inkigayo",
@@ -3783,7 +3783,7 @@
       }
     ],
     "cast": [],
-    "updatedAt": "2026-11-21T11:56:43.298Z"
+    "updatedAt": "2026-11-22T12:10:27.198Z"
   },
   {
     "id": "mystery-music-show-king-of-mask-singer",
@@ -3826,7 +3826,7 @@
         "name": "Kim Sung-joo",
         "character": "Self - Host",
         "profilePath": "https://image.tmdb.org/t/p/w342/3C1Hkef7umuLjbboSQvJtFudmpE.jpg",
-        "popularity": 0.6278
+        "popularity": 0.6508
       },
       {
         "id": 1628212,
@@ -3834,10 +3834,10 @@
         "name": "Kim Gu-ra",
         "character": "Self - Panelist",
         "profilePath": "https://image.tmdb.org/t/p/w342/eYj0vwQ99Pzfb91TX6CBgnV7Ne.jpg",
-        "popularity": 0.6171
+        "popularity": 0.6497
       }
     ],
-    "updatedAt": "2026-11-21T11:56:43.375Z"
+    "updatedAt": "2026-11-22T12:10:27.157Z"
   },
   {
     "id": "nonstop",
@@ -3914,7 +3914,7 @@
         "name": "Lim Eun-kyung",
         "character": "Main Role",
         "profilePath": "https://image.tmdb.org/t/p/w342/6XB6iMIWHb2KBFOxEKXPWogRc9Y.jpg",
-        "popularity": 0.7074
+        "popularity": 0.7307
       },
       {
         "id": 1623703,
@@ -3922,7 +3922,7 @@
         "name": "Park Hee-jin",
         "character": "Main Role",
         "profilePath": "https://image.tmdb.org/t/p/w342/h6ZyfT570WgvhZ9wrmgTovnxuMS.jpg",
-        "popularity": 0.6463
+        "popularity": 0.5902
       },
       {
         "id": 1623724,
@@ -3930,7 +3930,7 @@
         "name": "Lee Sang-mi",
         "character": "Main Role",
         "profilePath": "https://image.tmdb.org/t/p/w342/jyc9HDQDmJC4PthBUdw95XJJog9.jpg",
-        "popularity": 0.0941
+        "popularity": 0.095
       },
       {
         "id": 1623728,
@@ -3938,7 +3938,7 @@
         "name": "Uhm Hyun-kyung",
         "character": "Main Role",
         "profilePath": "https://image.tmdb.org/t/p/w342/ekBPnpmP8nN2XMpujoC3A4SU6IJ.jpg",
-        "popularity": 1.0294
+        "popularity": 0.863
       },
       {
         "id": 1623729,
@@ -3946,7 +3946,7 @@
         "name": "Lee Ayumi",
         "character": "Main Role",
         "profilePath": "https://image.tmdb.org/t/p/w342/a7iJ7kM6EJ6IkEM5hJ7N9eAo5tl.jpg",
-        "popularity": 0.5172
+        "popularity": 0.4489
       },
       {
         "id": 1623730,
@@ -3962,7 +3962,7 @@
         "name": "Kim Chang-wan",
         "character": "Main Role",
         "profilePath": "https://image.tmdb.org/t/p/w342/g1F7rIJ1FVMct4O0Q6B63RD7ICd.jpg",
-        "popularity": 1.2651
+        "popularity": 1.2381
       },
       {
         "id": 117376,
@@ -3970,10 +3970,10 @@
         "name": "Seo Jae-kyeong",
         "character": "Main Role",
         "profilePath": "https://image.tmdb.org/t/p/w342/nnbCQ5nNo81lHZrWB8QVPXD9gIC.jpg",
-        "popularity": 0.2454
+        "popularity": 0.3091
       }
     ],
-    "updatedAt": "2026-11-21T11:56:43.482Z"
+    "updatedAt": "2026-11-22T12:10:27.215Z"
   },
   {
     "id": "show-music-core",
@@ -4016,7 +4016,7 @@
         "name": "Younghoon",
         "character": "MC (Episode 832 - Present)",
         "profilePath": "https://image.tmdb.org/t/p/w342/xWqz59CHi5XP6jOF8IAhmhW99ZV.jpg",
-        "popularity": 0.7182
+        "popularity": 1.0118
       },
       {
         "id": 2176671,
@@ -4024,7 +4024,7 @@
         "name": "Lee Jung-ha",
         "character": "MC (Episode 832 - Present)",
         "profilePath": "https://image.tmdb.org/t/p/w342/pCUlAO603SXqfvpp5cOCccNFsgL.jpg",
-        "popularity": 1.0015
+        "popularity": 1.0647
       },
       {
         "id": 3786426,
@@ -4032,7 +4032,7 @@
         "name": "Sullyoon",
         "character": "MC (Episode 804 - Present)",
         "profilePath": "https://image.tmdb.org/t/p/w342/7225PexjDkZvdJ80RI50zJgY4Di.jpg",
-        "popularity": 0.8111
+        "popularity": 0.7123
       },
       {
         "id": 2368916,
@@ -4040,7 +4040,7 @@
         "name": "Jungwoo",
         "character": "MC",
         "profilePath": "https://image.tmdb.org/t/p/w342/pVvj4tdP6VcCGHSxhfiFzlBeqxX.jpg",
-        "popularity": 0.4427
+        "popularity": 0.4974
       },
       {
         "id": 2021737,
@@ -4048,7 +4048,7 @@
         "name": "Lee Know",
         "character": "MC",
         "profilePath": "https://image.tmdb.org/t/p/w342/sAjPzyMO6ClA667zAEH3DoT5TD2.jpg",
-        "popularity": 2.782
+        "popularity": 2.9204
       },
       {
         "id": 2117360,
@@ -4056,10 +4056,10 @@
         "name": "Kim Min-ju",
         "character": "MC",
         "profilePath": "https://image.tmdb.org/t/p/w342/egMmX5YaltrE86tH6ywukCWoeqS.jpg",
-        "popularity": 1.3174
+        "popularity": 1.2966
       }
     ],
-    "updatedAt": "2026-11-21T11:56:43.652Z"
+    "updatedAt": "2026-11-22T12:10:27.251Z"
   },
   {
     "id": "tv-animal-farm",
@@ -4102,7 +4102,7 @@
         "name": "Jung Sun-hee",
         "character": "진행자",
         "profilePath": "https://image.tmdb.org/t/p/w342/4uv6JEHDLt7jNiYOl3g1aLYO1tI.jpg",
-        "popularity": 0.1975
+        "popularity": 0.2659
       },
       {
         "id": 1350138,
@@ -4110,7 +4110,7 @@
         "name": "Shin Dong-yup",
         "character": "진행자",
         "profilePath": "https://image.tmdb.org/t/p/w342/iMzzz78MnoBpzrVyjMnG6DqkfmZ.jpg",
-        "popularity": 1.2676
+        "popularity": 1.4519
       },
       {
         "id": 1619570,
@@ -4118,7 +4118,7 @@
         "name": "Tony An",
         "character": "진행자",
         "profilePath": "https://image.tmdb.org/t/p/w342/sNMkQmafV2IE06JtAUc4vnkG532.jpg",
-        "popularity": 0.3634
+        "popularity": 0.4561
       },
       {
         "id": 1547207,
@@ -4126,10 +4126,10 @@
         "name": "JOY",
         "character": "Main Role",
         "profilePath": "https://image.tmdb.org/t/p/w342/4S14P69iASzrsAPaSJqBlh07hj0.jpg",
-        "popularity": 1.2457
+        "popularity": 1.2278
       }
     ],
-    "updatedAt": "2026-11-21T11:56:43.913Z"
+    "updatedAt": "2026-11-22T12:10:27.293Z"
   },
   {
     "id": "idol-radio",
@@ -4190,7 +4190,7 @@
         "name": "Sunwoo",
         "character": "DJ",
         "profilePath": "https://image.tmdb.org/t/p/w342/eklk8KH3kvCwmyVQmDY37Kstp2j.jpg",
-        "popularity": 0.5252
+        "popularity": 0.6441
       },
       {
         "id": 3121204,
@@ -4198,10 +4198,10 @@
         "name": "Eric",
         "character": "DJ",
         "profilePath": "https://image.tmdb.org/t/p/w342/vHDof1Pl8L8vGXTqECnk5m8z6Dg.jpg",
-        "popularity": 0.5558
+        "popularity": 0.5049
       }
     ],
-    "updatedAt": "2026-11-21T11:56:43.731Z"
+    "updatedAt": "2026-11-22T12:10:27.232Z"
   },
   {
     "id": "hope",
@@ -4213,7 +4213,7 @@
     "hindiTitle": "Hope (Hindi Dubbed)",
     "country": "Korean",
     "year": 2026,
-    "rating": 6.8,
+    "rating": 6.9,
     "views": "378K",
     "duration": "157 min",
     "totalEpisodes": 1,
@@ -4236,7 +4236,7 @@
         "name": "Hwang Jung-min",
         "character": "Go Bum-seok",
         "profilePath": "https://image.tmdb.org/t/p/w342/hKF1uh0iEfuZlBE79CXPw415qyn.jpg",
-        "popularity": 2.1584
+        "popularity": 2.5045
       },
       {
         "id": 127564,
@@ -4244,7 +4244,7 @@
         "name": "Zo In-sung",
         "character": "Go Sung-ki",
         "profilePath": "https://image.tmdb.org/t/p/w342/69gbyFI0ET0l0dyjKChlx1Zx269.jpg",
-        "popularity": 1.7229
+        "popularity": 1.7314
       },
       {
         "id": 3194501,
@@ -4252,7 +4252,7 @@
         "name": "Hoyeon",
         "character": "Lim Sung-ae",
         "profilePath": "https://image.tmdb.org/t/p/w342/AfQFFyGeG9xOQnEJb1Ash1RomkP.jpg",
-        "popularity": 2.4424
+        "popularity": 3.327
       },
       {
         "id": 227454,
@@ -4260,7 +4260,7 @@
         "name": "Alicia Vikander",
         "character": "J'aur",
         "profilePath": "https://image.tmdb.org/t/p/w342/9pmHTbXeRxUF51jJKthmHI49u9z.jpg",
-        "popularity": 3.1462
+        "popularity": 3.567
       },
       {
         "id": 17288,
@@ -4268,7 +4268,7 @@
         "name": "Michael Fassbender",
         "character": "Ma'veyyo",
         "profilePath": "https://image.tmdb.org/t/p/w342/xvbnUiB2ZBR3QIt595OzNy657Vw.jpg",
-        "popularity": 4.5314
+        "popularity": 4.9722
       },
       {
         "id": 1353827,
@@ -4276,7 +4276,7 @@
         "name": "Taylor Russell",
         "character": "Ai'dovor",
         "profilePath": "https://image.tmdb.org/t/p/w342/3kW1SvpzyOPPZHxbz7cgR7ilmtQ.jpg",
-        "popularity": 1.5431
+        "popularity": 2.0092
       },
       {
         "id": 1286537,
@@ -4284,7 +4284,7 @@
         "name": "Cameron Britton",
         "character": "Va'migere",
         "profilePath": "https://image.tmdb.org/t/p/w342/9HFxi8ZnBiby3AQ7tBOPDxXFkCT.jpg",
-        "popularity": 1.1692
+        "popularity": 1.498
       },
       {
         "id": 564847,
@@ -4292,10 +4292,10 @@
         "name": "Lee Sang-hee",
         "character": "Nak-yeon",
         "profilePath": "https://image.tmdb.org/t/p/w342/wOYFSg20yGe48VFALqGAlrLjFHV.jpg",
-        "popularity": 0.5121
+        "popularity": 0.678
       }
     ],
-    "updatedAt": "2026-11-21T11:56:44.078Z"
+    "updatedAt": "2026-11-22T12:10:27.335Z"
   },
   {
     "id": "colony",
@@ -4330,7 +4330,7 @@
         "name": "Gianna Jun",
         "character": "Kwon Se-jeong",
         "profilePath": "https://image.tmdb.org/t/p/w342/qejOQBdIzN18e69yRcsiD0JQi4c.jpg",
-        "popularity": 1.9428
+        "popularity": 2.0754
       },
       {
         "id": 1096458,
@@ -4338,7 +4338,7 @@
         "name": "Koo Kyo-hwan",
         "character": "Seo Young-cheol",
         "profilePath": "https://image.tmdb.org/t/p/w342/aFwCpSKPGFqoiTStY6ljXnD5CwH.jpg",
-        "popularity": 1.6273
+        "popularity": 1.7901
       },
       {
         "id": 1253391,
@@ -4346,7 +4346,7 @@
         "name": "Ji Chang-wook",
         "character": "Choi Hyun-seok",
         "profilePath": "https://image.tmdb.org/t/p/w342/sBmHrO5Tn27Ot5hy0yAKniROmNb.jpg",
-        "popularity": 3.5287
+        "popularity": 3.6807
       },
       {
         "id": 3038410,
@@ -4354,7 +4354,7 @@
         "name": "Kim Shin-rock",
         "character": "Choi Hyun-hee",
         "profilePath": "https://image.tmdb.org/t/p/w342/x4zo2mSbehnQY80PbuldAZ7ruGm.jpg",
-        "popularity": 1.3779
+        "popularity": 1.2331
       },
       {
         "id": 1254975,
@@ -4362,7 +4362,7 @@
         "name": "Shin Hyun-been",
         "character": "Kong Seol-hee",
         "profilePath": "https://image.tmdb.org/t/p/w342/lU0yMFh5KgOEWZRThLYbB6ZI1hE.jpg",
-        "popularity": 1.0257
+        "popularity": 1.2885
       },
       {
         "id": 85173,
@@ -4370,7 +4370,7 @@
         "name": "Go Soo",
         "character": "Han Kyu-seong",
         "profilePath": "https://image.tmdb.org/t/p/w342/77209yRtUHOEk3ILJY1rG3X3VUj.jpg",
-        "popularity": 1.3019
+        "popularity": 1.1007
       },
       {
         "id": 2133923,
@@ -4378,7 +4378,7 @@
         "name": "Lee Joong-ok",
         "character": "Lee Bong-seok",
         "profilePath": "https://image.tmdb.org/t/p/w342/fMkBpHRElwNatevfGinSv248bYg.jpg",
-        "popularity": 0.6601
+        "popularity": 0.8517
       },
       {
         "id": 3134668,
@@ -4386,10 +4386,10 @@
         "name": "Kim Jong-tae",
         "character": "Kang Woo-cheol",
         "profilePath": "https://image.tmdb.org/t/p/w342/vf3R5QU7UCVEr3dOGt3bdFbypzu.jpg",
-        "popularity": 1.0311
+        "popularity": 1.3158
       }
     ],
-    "updatedAt": "2026-11-21T11:56:44.255Z"
+    "updatedAt": "2026-11-22T12:10:27.377Z"
   },
   {
     "id": "parasite",
@@ -4424,7 +4424,7 @@
         "name": "Song Kang-ho",
         "character": "Kim Ki-taek",
         "profilePath": "https://image.tmdb.org/t/p/w342/kBM9UTPYXUA2RNk210DXhztLFns.jpg",
-        "popularity": 2.4047
+        "popularity": 2.4821
       },
       {
         "id": 115290,
@@ -4432,7 +4432,7 @@
         "name": "Lee Sun-kyun",
         "character": "Park Dong-ik",
         "profilePath": "https://image.tmdb.org/t/p/w342/nHFBbSFohzOUOvMxPVwe3Es2nJw.jpg",
-        "popularity": 1.2631
+        "popularity": 1.3204
       },
       {
         "id": 556435,
@@ -4440,7 +4440,7 @@
         "name": "Cho Yeo-jeong",
         "character": "Yeon-kyo",
         "profilePath": "https://image.tmdb.org/t/p/w342/5MgWM8pkUiYkj9MEaEpO0Ir1FD9.jpg",
-        "popularity": 3.7439
+        "popularity": 3.5275
       },
       {
         "id": 1255881,
@@ -4448,7 +4448,7 @@
         "name": "Choi Woo-shik",
         "character": "Ki-woo",
         "profilePath": "https://image.tmdb.org/t/p/w342/9mZ9DNopxpCLUjXd0rLd42TLamw.jpg",
-        "popularity": 2.1233
+        "popularity": 2.2949
       },
       {
         "id": 1442583,
@@ -4456,7 +4456,7 @@
         "name": "Park So-dam",
         "character": "Ki-jung",
         "profilePath": "https://image.tmdb.org/t/p/w342/fGVOikpvivopeATDy6ZzLdKYXDu.jpg",
-        "popularity": 2.3892
+        "popularity": 2.1959
       },
       {
         "id": 1572354,
@@ -4464,7 +4464,7 @@
         "name": "Lee Jung-eun",
         "character": "Moon-gwang",
         "profilePath": "https://image.tmdb.org/t/p/w342/4r3K47UpSmzZ5t9cyTRRqRl9rdz.jpg",
-        "popularity": 1.6981
+        "popularity": 1.911
       },
       {
         "id": 2158882,
@@ -4472,7 +4472,7 @@
         "name": "Jang Hye-jin",
         "character": "Chung-sook",
         "profilePath": "https://image.tmdb.org/t/p/w342/pZiQXSWwo9F4gncHfa1yw0CQjxk.jpg",
-        "popularity": 1.6605
+        "popularity": 1.7838
       },
       {
         "id": 1694435,
@@ -4480,10 +4480,10 @@
         "name": "Park Myung-hoon",
         "character": "Geun-se",
         "profilePath": "https://image.tmdb.org/t/p/w342/5SucrxkigHss7UuJKrkfAZX5MXz.jpg",
-        "popularity": 1.1104
+        "popularity": 1.2205
       }
     ],
-    "updatedAt": "2026-11-21T11:56:44.343Z"
+    "updatedAt": "2026-11-22T12:10:27.405Z"
   },
   {
     "id": "possible-love",
@@ -4926,7 +4926,7 @@
     "hindiTitle": "Sunshine through the Rain (Hindi Dubbed)",
     "country": "Chinese",
     "year": 2026,
-    "rating": 8.4,
+    "rating": 8.6,
     "views": "48K",
     "duration": "45 min",
     "totalEpisodes": 24,
@@ -4956,7 +4956,7 @@
         "name": "Yang Chaoyue",
         "character": "Zheng Yu",
         "profilePath": "https://image.tmdb.org/t/p/w342/vwzuCGmg99Fh66Re5sbpSoBrWAO.jpg",
-        "popularity": 5.7063
+        "popularity": 5.5038
       },
       {
         "id": 2097331,
@@ -4964,10 +4964,10 @@
         "name": "Winwin",
         "character": "Chen Yanzhou",
         "profilePath": "https://image.tmdb.org/t/p/w342/vvYUbbfjLAYYogInHhHPHs1PqNz.jpg",
-        "popularity": 3.9849
+        "popularity": 4.0745
       }
     ],
-    "updatedAt": "2026-11-20T12:22:57.544Z"
+    "updatedAt": "2026-11-22T12:10:26.930Z"
   },
   {
     "id": "the-rules",
@@ -5206,7 +5206,7 @@
         "name": "Kim Sang-kyung",
         "character": "Woo Jung-sik",
         "profilePath": "https://image.tmdb.org/t/p/w342/qZa6q7nV7ftScf1BOp0BGxl2ujc.jpg",
-        "popularity": 0.9261
+        "popularity": 0.7964
       },
       {
         "id": 84751,
@@ -5214,7 +5214,7 @@
         "name": "Kim Kang-woo",
         "character": "Park Jin-han",
         "profilePath": "https://image.tmdb.org/t/p/w342/1B883y0AG0WPTmGkC14XIggXVLz.jpg",
-        "popularity": 1.1871
+        "popularity": 1.0753
       },
       {
         "id": 1304595,
@@ -5222,7 +5222,7 @@
         "name": "Kim Hee-ae",
         "character": "Yoon Seol-hee",
         "profilePath": "https://image.tmdb.org/t/p/w342/sEZezVeiu6fUaiPBUl8fUldaMbE.jpg",
-        "popularity": 1.6346
+        "popularity": 1.3024
       },
       {
         "id": 2154372,
@@ -5230,7 +5230,7 @@
         "name": "Han Ji-an",
         "character": "Hye-jin",
         "profilePath": "https://image.tmdb.org/t/p/w342/mxNIYV5gpOaoDFN6x4PkIZsDvBG.jpg",
-        "popularity": 0.4545
+        "popularity": 0.4373
       },
       {
         "id": 1591370,
@@ -5238,7 +5238,7 @@
         "name": "Seo Hyun-woo",
         "character": "Dong-gu",
         "profilePath": "https://image.tmdb.org/t/p/w342/i5HP0n06Y5GIZfpsbibFQWAcUjV.jpg",
-        "popularity": 1.561
+        "popularity": 1.7452
       },
       {
         "id": 1551424,
@@ -5246,7 +5246,7 @@
         "name": "Lee Min-ji",
         "character": "Sook-kyung",
         "profilePath": "https://image.tmdb.org/t/p/w342/yAed6xnew66EtJFDdeDBz4dECG3.jpg",
-        "popularity": 0.7375
+        "popularity": 0.7385
       },
       {
         "id": 2159482,
@@ -5254,7 +5254,7 @@
         "name": "Lee Ji-hoon",
         "character": "Seok-won",
         "profilePath": "https://image.tmdb.org/t/p/w342/nGEQUdliUgn5RuVivan3tmfIQAf.jpg",
-        "popularity": 0.778
+        "popularity": 0.6726
       },
       {
         "id": 554945,
@@ -5262,10 +5262,10 @@
         "name": "Kwon Hae-hyo",
         "character": "Police Chief",
         "profilePath": "https://image.tmdb.org/t/p/w342/3sCMSQVdY2mqYYq3jj4u9JWRoTt.jpg",
-        "popularity": 1.371
+        "popularity": 1.1299
       }
     ],
-    "updatedAt": "2026-11-21T11:56:44.162Z"
+    "updatedAt": "2026-11-22T12:10:27.358Z"
   },
   {
     "id": "train-to-busan",
@@ -5373,7 +5373,7 @@
     "hindiTitle": "The Blue Road (Hindi Dubbed)",
     "country": "Korean",
     "year": 2026,
-    "rating": 8,
+    "rating": 6.9,
     "views": "12K",
     "duration": "45 min",
     "totalEpisodes": 8,
@@ -5404,7 +5404,7 @@
         "name": "Son Suk-ku",
         "character": "Kim Seok",
         "profilePath": "https://image.tmdb.org/t/p/w342/natZWFVBAWLKWCYebgVGywHtsME.jpg",
-        "popularity": 2.5178
+        "popularity": 3.3717
       },
       {
         "id": 117975,
@@ -5412,10 +5412,10 @@
         "name": "Eita Nagayama",
         "character": "Inose",
         "profilePath": "https://image.tmdb.org/t/p/w342/10Q2xdJyMJ4Bngx8NDYtFbBcWLQ.jpg",
-        "popularity": 2.5173
+        "popularity": 3.0759
       }
     ],
-    "updatedAt": "2026-11-21T11:56:41.859Z"
+    "updatedAt": "2026-11-22T12:10:26.735Z"
   },
   {
     "id": "weekly-idol",
@@ -5482,7 +5482,7 @@
         "name": "Defconn",
         "character": "Self",
         "profilePath": "https://image.tmdb.org/t/p/w342/rJOPkah2hKdTm0VFatzqxg4tISB.jpg",
-        "popularity": 0.4883
+        "popularity": 0.4468
       },
       {
         "id": 1547167,
@@ -5490,10 +5490,10 @@
         "name": "Jeong Hyeong-don",
         "character": "Self",
         "profilePath": "https://image.tmdb.org/t/p/w342/9L4RG3cujCgTHjtDhFAG88gZiOX.jpg",
-        "popularity": 0.649
+        "popularity": 0.6287
       }
     ],
-    "updatedAt": "2026-11-21T11:56:44.004Z"
+    "updatedAt": "2026-11-22T12:10:27.270Z"
   },
   {
     "id": "memoir-of-a-murderer",
@@ -5528,7 +5528,7 @@
         "name": "Sul Kyung-gu",
         "character": "Byung-su",
         "profilePath": "https://image.tmdb.org/t/p/w342/teD7AMzfNl4qhQO2b6MAWwLtPVn.jpg",
-        "popularity": 1.9804
+        "popularity": 2.1537
       },
       {
         "id": 110388,
@@ -5536,7 +5536,7 @@
         "name": "Kim Nam-gil",
         "character": "Tae-ju",
         "profilePath": "https://image.tmdb.org/t/p/w342/jTMr4gpGMXfHZUeoPyaa2Rq9ZU4.jpg",
-        "popularity": 1.4468
+        "popularity": 1.4954
       },
       {
         "id": 1374514,
@@ -5544,7 +5544,7 @@
         "name": "Kim Seol-hyun",
         "character": "Eun-hee",
         "profilePath": "https://image.tmdb.org/t/p/w342/femMcHRxmj8wRTPP65pSdH0MxfW.jpg",
-        "popularity": 1.2512
+        "popularity": 1.1743
       },
       {
         "id": 77188,
@@ -5552,7 +5552,7 @@
         "name": "Oh Dal-su",
         "character": "Byung-man",
         "profilePath": "https://image.tmdb.org/t/p/w342/hd72oGjq0YKYdgZKMnqtV00MV28.jpg",
-        "popularity": 1.3031
+        "popularity": 1.4602
       },
       {
         "id": 1731537,
@@ -5560,7 +5560,7 @@
         "name": "Hwang Seok-jeong",
         "character": "Yeon-ju",
         "profilePath": "https://image.tmdb.org/t/p/w342/MEhgvZBDS890lfCSeUwHxWL3Xh.jpg",
-        "popularity": 0.8862
+        "popularity": 0.8204
       },
       {
         "id": 2627786,
@@ -5568,7 +5568,7 @@
         "name": "Chae Kook-hee",
         "character": "Mi-ok",
         "profilePath": "https://image.tmdb.org/t/p/w342/jyc9HDQDmJC4PthBUdw95XJJog9.jpg",
-        "popularity": 0.4895
+        "popularity": 0.5655
       },
       {
         "id": 1191711,
@@ -5576,7 +5576,7 @@
         "name": "Kil Hae-yeon",
         "character": "Maria",
         "profilePath": "https://image.tmdb.org/t/p/w342/qoeacxu9ISr3V2Dar2XmEzoP2i9.jpg",
-        "popularity": 0.7658
+        "popularity": 0.6579
       },
       {
         "id": 989991,
@@ -5584,10 +5584,10 @@
         "name": "Lee Byung-joon",
         "character": "Poetry Instructor",
         "profilePath": "https://image.tmdb.org/t/p/w342/zDzNaoUfIJt2mCPyvwka9pcbwZU.jpg",
-        "popularity": 0.859
+        "popularity": 1.0075
       }
     ],
-    "updatedAt": "2026-11-21T11:56:44.429Z"
+    "updatedAt": "2026-11-22T12:10:27.430Z"
   },
   {
     "id": "river-of-no-return",
@@ -5817,7 +5817,7 @@
     "hindiTitle": "Good Partner (Hindi Dubbed)",
     "country": "Korean",
     "year": 2024,
-    "rating": 7.9,
+    "rating": 8,
     "views": "17K",
     "duration": "45 min",
     "totalEpisodes": 32,
@@ -5855,7 +5855,7 @@
         "name": "Jang Na-ra",
         "character": "Cha Eun-kyung",
         "profilePath": "https://image.tmdb.org/t/p/w342/uIIShNFO8torFMbPqbjs6VXVqD8.jpg",
-        "popularity": 1.1654
+        "popularity": 1.4653
       },
       {
         "id": 2214888,
@@ -5863,7 +5863,7 @@
         "name": "Kim Hye-yoon",
         "character": "Kang Hye-seong",
         "profilePath": "https://image.tmdb.org/t/p/w342/ujFBbc3d0UdS4qeioxvO3xRLkdl.jpg",
-        "popularity": 1.9021
+        "popularity": 1.9411
       },
       {
         "id": 1244834,
@@ -5871,7 +5871,7 @@
         "name": "Park Hae-jin",
         "character": "Park Tae-su",
         "profilePath": "https://image.tmdb.org/t/p/w342/hiSahEWd1VH0UXgFpZlMLqaS8JG.jpg",
-        "popularity": 1.165
+        "popularity": 1.3906
       },
       {
         "id": 1878886,
@@ -5879,7 +5879,7 @@
         "name": "P.O",
         "character": "Jeon Eun-ho",
         "profilePath": "https://image.tmdb.org/t/p/w342/rg2fuaF8yRmKBgyGWdpvEmtCBmU.jpg",
-        "popularity": 1.4631
+        "popularity": 1.5473
       },
       {
         "id": 1762692,
@@ -5887,9 +5887,412 @@
         "name": "Ji Seung-hyun",
         "character": "Kim Ji-sang",
         "profilePath": "https://image.tmdb.org/t/p/w342/pV0Bvhrm7RYuNDrWGpUIo5b00cU.jpg",
-        "popularity": 0.8966
+        "popularity": 0.8594
       }
     ],
-    "updatedAt": "2026-11-21T11:56:42.371Z"
+    "updatedAt": "2026-11-22T12:10:26.894Z"
+  },
+  {
+    "id": "fights-break-sphere",
+    "slug": "fights-break-sphere",
+    "tmdbId": 79481,
+    "imdbId": "tt12409194",
+    "tvdbId": 337284,
+    "title": "Fights Break Sphere",
+    "hindiTitle": "Fights Break Sphere (Hindi Dubbed)",
+    "country": "Chinese",
+    "year": 2017,
+    "rating": 8.1,
+    "views": "60K",
+    "duration": "25 min",
+    "totalEpisodes": 279,
+    "genres": [
+      "Animation",
+      "Action & Adventure"
+    ],
+    "overview": "In a land where no magic is present. A land where the strong make the rules and weak have to obey. A land filled with alluring treasures and beauty, yet also filled with unforeseen danger. Three years ago, Xiao Yan, who had shown talents none had seen in decades, suddenly lost everything. His powers, his reputation, and his promise to his mother. What sorcery has caused him to lose all of his powers? And why has his fiancee suddenly shown up?",
+    "poster": "https://image.tmdb.org/t/p/w500/oyoahIcdamTXwjIaL3CqZ1v5CLl.jpg",
+    "backdrop": "https://image.tmdb.org/t/p/original/cTCn2EO69SERNfhaezJMoqBom4G.jpg",
+    "status": "Completed",
+    "type": "tv",
+    "language": "Hindi Dubbed",
+    "latestEpisode": 279,
+    "seasons": [
+      {
+        "seasonNumber": 1,
+        "name": "Season 1",
+        "episodeCount": 12,
+        "airDate": "2017-01-07",
+        "poster": "https://image.tmdb.org/t/p/w342/16CXeIZ7dlyAukrbrUcvDOTmnMN.jpg"
+      },
+      {
+        "seasonNumber": 2,
+        "name": "Season 2",
+        "episodeCount": 12,
+        "airDate": "2018-03-03",
+        "poster": "https://image.tmdb.org/t/p/w342/nu88hbTo8KcHrn3ILs0B7x45tB8.jpg"
+      },
+      {
+        "seasonNumber": 3,
+        "name": "Season 3",
+        "episodeCount": 12,
+        "airDate": "2019-07-21",
+        "poster": "https://image.tmdb.org/t/p/w342/pDJbATQucJ2NipF2NvWs7lwq33s.jpg"
+      },
+      {
+        "seasonNumber": 4,
+        "name": "Season 4",
+        "episodeCount": 24,
+        "airDate": "2021-03-28",
+        "poster": "https://image.tmdb.org/t/p/w342/laV1CTHKyxUKCavZOaIKOQkSozY.jpg"
+      },
+      {
+        "seasonNumber": 5,
+        "name": "Season 5",
+        "episodeCount": 219,
+        "airDate": "2022-07-31",
+        "poster": "https://image.tmdb.org/t/p/w342/4w7z5Y8chYWTU1X6renGTxtjpwl.jpg"
+      }
+    ],
+    "cast": [
+      {
+        "id": 5170011,
+        "slug": "5170011-bu-yi",
+        "name": "Bu Yi",
+        "character": "萧炎 (voice)",
+        "profilePath": "https://image.tmdb.org/t/p/w342/rC30srBjftYqkJgMi82XFe2kWs.jpg",
+        "popularity": 0.5703
+      },
+      {
+        "id": 2340094,
+        "slug": "2340094-liu-yuxuan",
+        "name": "Liu Yuxuan",
+        "character": "药老 / 药尘 (voice)",
+        "profilePath": "https://image.tmdb.org/t/p/w342/jyc9HDQDmJC4PthBUdw95XJJog9.jpg",
+        "popularity": 0.6874
+      },
+      {
+        "id": 3056264,
+        "slug": "3056264-chen-yiwen",
+        "name": "Chen Yiwen",
+        "character": "萧熏儿 / 古熏儿(voice)",
+        "profilePath": "https://image.tmdb.org/t/p/w342/muj3gVK2759u2X9GMYqfw2VTfiu.jpg",
+        "popularity": 0.6319
+      },
+      {
+        "id": 2340095,
+        "slug": "2340095-feng-junhua",
+        "name": "Feng Junhua",
+        "character": "美杜莎 / 彩鳞(voice)",
+        "profilePath": "https://image.tmdb.org/t/p/w342/xGx9YUyaOTDcvxHlu2CXq08FOW9.jpg",
+        "popularity": 0.5532
+      },
+      {
+        "id": 2316886,
+        "slug": "2316886-wen-yixiao",
+        "name": "Wen Yixiao",
+        "character": "紫妍 (voice)",
+        "profilePath": "https://image.tmdb.org/t/p/w342/pztsEIp8rbXSBJfdcddBs6jyxFf.jpg",
+        "popularity": 0.5601
+      },
+      {
+        "id": 1965298,
+        "slug": "1965298-zhu-jun",
+        "name": "Zhu Jun",
+        "character": "纳兰嫣然 /雅菲(voice)",
+        "profilePath": "https://image.tmdb.org/t/p/w342/gFazUOvuMBvBhLMVX7AFvBEHDqS.jpg",
+        "popularity": 0.247
+      },
+      {
+        "id": 1528979,
+        "slug": "1528979-yang-menglu",
+        "name": "Yang Menglu",
+        "character": "云芝/ 云韵(voice)",
+        "profilePath": "https://image.tmdb.org/t/p/w342/jyc9HDQDmJC4PthBUdw95XJJog9.jpg",
+        "popularity": 0.6463
+      },
+      {
+        "id": 2156554,
+        "slug": "2156554-meme-yan",
+        "name": "Meme Yan",
+        "character": "青鳞(voice)",
+        "profilePath": "https://image.tmdb.org/t/p/w342/8Gf8Ji8CKJ3lhnKlnYM2ZpDOIXy.jpg",
+        "popularity": 0.7798
+      }
+    ],
+    "updatedAt": "2026-11-22T12:10:26.814Z"
+  },
+  {
+    "id": "black-clover",
+    "slug": "black-clover",
+    "tmdbId": 73223,
+    "imdbId": "tt7441658",
+    "tvdbId": 331753,
+    "youtubeKey": "QwNWY6z93O4",
+    "title": "Black Clover",
+    "hindiTitle": "Black Clover (Hindi Dubbed)",
+    "country": "Japanese",
+    "year": 2017,
+    "rating": 8.5,
+    "views": "64K",
+    "duration": "24 min",
+    "totalEpisodes": 196,
+    "genres": [
+      "Animation",
+      "Action & Adventure",
+      "Sci-Fi & Fantasy"
+    ],
+    "overview": "Asta and Yuno are two orphans who want the same thing: to become the Wizard King. Locked in a friendly rivalry, they work hard towards their goal. While Yuno excels at magic, Asta has a problem uncommon in this world: he has no powers! But, on the day they receive their grimoires, they surprise everyone. To reach their goal, they’ll each find their own path to greatness—with or without magic.",
+    "poster": "https://image.tmdb.org/t/p/w500/uZUtoVChBGhNj9OfrM2LYpwBm8E.jpg",
+    "backdrop": "https://image.tmdb.org/t/p/original/AsaEmDMgrt9MCCTXxUzY9PtFZko.jpg",
+    "status": "Ongoing",
+    "type": "tv",
+    "language": "Hindi Dubbed",
+    "latestEpisode": 196,
+    "seasons": [
+      {
+        "seasonNumber": 1,
+        "name": "Season 1",
+        "episodeCount": 170,
+        "airDate": "2017-10-03",
+        "poster": "https://image.tmdb.org/t/p/w342/f77D5BapCT4n5mce7bFR8du09Hf.jpg"
+      },
+      {
+        "seasonNumber": 2,
+        "name": "Season 2",
+        "episodeCount": 26,
+        "airDate": "2026-10-03",
+        "poster": "https://image.tmdb.org/t/p/w342/k7XtJOiflFofEOP8l5i75y4p5po.jpg"
+      }
+    ],
+    "cast": [
+      {
+        "id": 1919881,
+        "slug": "1919881-gakuto-kajiwara",
+        "name": "Gakuto Kajiwara",
+        "character": "Asta (voice)",
+        "profilePath": "https://image.tmdb.org/t/p/w342/kUer38jXf7vTD2TGGxJMZVYL5Te.jpg",
+        "popularity": 1.7817
+      },
+      {
+        "id": 1210634,
+        "slug": "1210634-nobunaga-shimazaki",
+        "name": "Nobunaga Shimazaki",
+        "character": "Yuno (voice)",
+        "profilePath": "https://image.tmdb.org/t/p/w342/qke5rZusHsjSlvB0NKlJ5dQF5D.jpg",
+        "popularity": 3.1034
+      },
+      {
+        "id": 1919889,
+        "slug": "1919889-kana-yuuki",
+        "name": "Kana Yuuki",
+        "character": "Noelle Silva (voice)",
+        "profilePath": "https://image.tmdb.org/t/p/w342/gnKY83EbfaJWi1y47dgOtiRegAK.jpg",
+        "popularity": 0.8839
+      },
+      {
+        "id": 9721,
+        "slug": "9721-junichi-suwabe",
+        "name": "Junichi Suwabe",
+        "character": "Yami Sukehiro (voice)",
+        "profilePath": "https://image.tmdb.org/t/p/w342/4S7c3n3r07A83HvkLrnWZGVhiHg.jpg",
+        "popularity": 3.5659
+      },
+      {
+        "id": 1324588,
+        "slug": "1324588-genki-muro",
+        "name": "Genki Muro",
+        "character": "Magna Swing (voice)",
+        "profilePath": "https://image.tmdb.org/t/p/w342/6YF881kJuP2HaSb5PXRO4hWTZA.jpg",
+        "popularity": 1.7619
+      },
+      {
+        "id": 1325230,
+        "slug": "1325230-ayumu-murase",
+        "name": "Ayumu Murase",
+        "character": "Luck Voltia (voice)",
+        "profilePath": "https://image.tmdb.org/t/p/w342/3aGM6KpcCIEKOXP9510tzaKc8uw.jpg",
+        "popularity": 2.2839
+      },
+      {
+        "id": 131563,
+        "slug": "131563-jun-fukuyama",
+        "name": "Jun Fukuyama",
+        "character": "Finral Roulacase (voice)",
+        "profilePath": "https://image.tmdb.org/t/p/w342/eT9eloyIaIkTvTqMmpcsAleP2hM.jpg",
+        "popularity": 2.634
+      },
+      {
+        "id": 224413,
+        "slug": "224413-satoshi-hino",
+        "name": "Satoshi Hino",
+        "character": "Gauche Adlai (voice)",
+        "profilePath": "https://image.tmdb.org/t/p/w342/8ZJIiwIVF2zDyyFr7oXewj0eEuu.jpg",
+        "popularity": 2.7217
+      }
+    ],
+    "updatedAt": "2026-11-22T12:10:26.842Z"
+  },
+  {
+    "id": "natural-high",
+    "slug": "natural-high",
+    "tmdbId": 231620,
+    "imdbId": "tt30461072",
+    "tvdbId": 438307,
+    "title": "Natural High",
+    "hindiTitle": "Natural High (Hindi Dubbed)",
+    "country": "Chinese",
+    "year": 2023,
+    "rating": 7.5,
+    "views": "58K",
+    "duration": "75 min",
+    "totalEpisodes": 113,
+    "genres": [
+      "Reality",
+      "Comedy"
+    ],
+    "overview": "Come and join Shen Teng and his friends as they step away from the bustling crowded cities and reconnect with the beautiful wild nature.",
+    "poster": "https://image.tmdb.org/t/p/w500/oC2MuEWxnLVTyYw70XoK2HFf7nW.jpg",
+    "backdrop": "https://image.tmdb.org/t/p/original/kQ58qbyCGkdmqKZtxMZbLNpgSxX.jpg",
+    "status": "Ongoing",
+    "type": "tv",
+    "language": "Hindi Dubbed",
+    "latestEpisode": 113,
+    "seasons": [
+      {
+        "seasonNumber": 1,
+        "name": "Season 1",
+        "episodeCount": 20,
+        "airDate": "2023-08-13",
+        "poster": "https://image.tmdb.org/t/p/w342/gf3ZP2GNgWdEHyfmyXUN09s1ig.jpg"
+      },
+      {
+        "seasonNumber": 2,
+        "name": "Season 2",
+        "episodeCount": 20,
+        "airDate": "2024-10-26",
+        "poster": "https://image.tmdb.org/t/p/w342/ve0PoM5rpqMLR8n3jhJok158Fgu.jpg"
+      },
+      {
+        "seasonNumber": 3,
+        "name": "Season 3",
+        "episodeCount": 47,
+        "airDate": "2025-10-25",
+        "poster": "https://image.tmdb.org/t/p/w342/mmvlxQ5AXuHLfKvyqkgCDZfVzxM.jpg"
+      },
+      {
+        "seasonNumber": 4,
+        "name": "Season 4",
+        "episodeCount": 29,
+        "airDate": "2026-10-10",
+        "poster": "https://image.tmdb.org/t/p/w342/oC2MuEWxnLVTyYw70XoK2HFf7nW.jpg"
+      }
+    ],
+    "cast": [
+      {
+        "id": 1519026,
+        "slug": "1519026-shen-teng",
+        "name": "Shen Teng",
+        "character": "Main Role",
+        "profilePath": "https://image.tmdb.org/t/p/w342/h9l1fHqty8EdCqDWNWjO5tp48xZ.jpg",
+        "popularity": 2.4746
+      },
+      {
+        "id": 1672869,
+        "slug": "1672869-bai-jingting",
+        "name": "Bai Jingting",
+        "character": "Main Role",
+        "profilePath": "https://image.tmdb.org/t/p/w342/b3kmtLVQtgywB1QKWYHoNLsdqSO.jpg",
+        "popularity": 2.6771
+      },
+      {
+        "id": 2295882,
+        "slug": "2295882-jia-bing",
+        "name": "Jia Bing",
+        "character": "Main Role",
+        "profilePath": "https://image.tmdb.org/t/p/w342/pum0e3d2ZVq9XZyNohZSXt46bkH.jpg",
+        "popularity": 1.5154
+      },
+      {
+        "id": 1989460,
+        "slug": "1989460-hu-xianxu",
+        "name": "Hu Xianxu",
+        "character": "Main Role",
+        "profilePath": "https://image.tmdb.org/t/p/w342/yz3uluzXUzvXLZ17NM6yR4gZKxc.jpg",
+        "popularity": 1.7913
+      },
+      {
+        "id": 1948101,
+        "slug": "1948101-fan-chengcheng",
+        "name": "Fan Chengcheng",
+        "character": "Main Role",
+        "profilePath": "https://image.tmdb.org/t/p/w342/mmpJ9EcYweG9pr1iU5q5aqcsusG.jpg",
+        "popularity": 1.7552
+      },
+      {
+        "id": 1816461,
+        "slug": "1816461-johnny-huang",
+        "name": "Johnny Huang",
+        "character": "Main Role",
+        "profilePath": "https://image.tmdb.org/t/p/w342/mc7HlXJU0Sr5WkodEHS3csaxi6E.jpg",
+        "popularity": 2.7085
+      },
+      {
+        "id": 2271369,
+        "slug": "2271369-wang-churan",
+        "name": "Wang Churan",
+        "character": "Main Role",
+        "profilePath": "https://image.tmdb.org/t/p/w342/trE6PMD0vgcuvEMog7gRpnWr8TQ.jpg",
+        "popularity": 4.5887
+      }
+    ],
+    "updatedAt": "2026-11-22T12:10:26.912Z"
+  },
+  {
+    "id": "how-do-you-play",
+    "slug": "how-do-you-play",
+    "tmdbId": 91121,
+    "imdbId": "tt15334046",
+    "tvdbId": 367340,
+    "youtubeKey": "hx45AWLss3Y",
+    "title": "How Do You Play?",
+    "hindiTitle": "How Do You Play? (Hindi Dubbed)",
+    "country": "Korean",
+    "year": 2019,
+    "rating": 7.2,
+    "views": "101K",
+    "duration": "80 min",
+    "totalEpisodes": 355,
+    "genres": [
+      "Reality",
+      "Comedy"
+    ],
+    "overview": "Yoo Jae-suk reunites the producing team of Infinite Challenge and presents you How Do You Play? The Indefinitely expanding YOONIVERSE, based on Yoo's blood, sweat, and tears, will entertain viewers at home. Let's follow Yoo and his friends' new projects every week.",
+    "poster": "https://image.tmdb.org/t/p/w500/dJd8LFodX9831AeRD3CzWklYcS5.jpg",
+    "backdrop": "https://image.tmdb.org/t/p/original/dgutaqpLcLMoJInkbglyG8cLuji.jpg",
+    "status": "Ongoing",
+    "type": "tv",
+    "language": "Hindi Dubbed",
+    "latestEpisode": 355,
+    "seasons": [
+      {
+        "seasonNumber": 1,
+        "name": "Season 1",
+        "episodeCount": 356,
+        "airDate": "2019-07-27",
+        "poster": "https://image.tmdb.org/t/p/w342/8f95il22f2ue7ZMHnENA5CBYEQl.jpg"
+      }
+    ],
+    "cast": [
+      {
+        "id": 1239240,
+        "slug": "1239240-yu-jae-seok",
+        "name": "Yu Jae-seok",
+        "character": "Self",
+        "profilePath": "https://image.tmdb.org/t/p/w342/1uktAM7R2Hgc3dynIXvzfACOmnW.jpg",
+        "popularity": 1.9169
+      }
+    ],
+    "updatedAt": "2026-11-22T12:10:27.317Z"
   }
 ]
